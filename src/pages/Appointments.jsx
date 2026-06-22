@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 import { 
   Calendar, 
   CheckCircle2, 
@@ -102,7 +103,7 @@ export default function Appointments() {
       : (medicalReportName || referralReportName || null);
 
     try {
-      const response = await fetch('http://localhost:5000/api/appointments', {
+      const response = await fetch(`${API_BASE_URL}/api/appointments`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

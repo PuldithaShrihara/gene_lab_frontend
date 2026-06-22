@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 import { 
   ShieldCheck, Dna, ClipboardList, BookOpen, 
   ChevronRight, Calendar, User, Microscope, 
@@ -11,7 +12,7 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/articles')
+    fetch(`${API_BASE_URL}/api/articles`)
       .then(res => res.json())
       .then(data => setArticles(data.slice(0, 3)))
       .catch(err => console.log('Failed to fetch articles:', err));

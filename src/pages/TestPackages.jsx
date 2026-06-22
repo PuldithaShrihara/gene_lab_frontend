@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../config';
 import { 
   ClipboardList, 
   Clock, 
@@ -29,7 +30,7 @@ export default function TestPackages({ onOpenCallbackModal }) {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/packages')
+    fetch(`${API_BASE_URL}/api/packages`)
       .then(res => {
         if (!res.ok) throw new Error('API Error');
         return res.json();

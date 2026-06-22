@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { X, CheckCircle, AlertCircle } from 'lucide-react';
+import { API_BASE_URL } from '../config';
 
 export default function CallbackModal({ isOpen, onClose }) {
   const [name, setName] = useState('');
@@ -17,7 +18,7 @@ export default function CallbackModal({ isOpen, onClose }) {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:5000/api/contact', {
+      const response = await fetch(`${API_BASE_URL}/api/contact`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
