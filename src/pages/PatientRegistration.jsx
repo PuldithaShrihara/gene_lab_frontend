@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ClipboardCheck, CheckCircle2, AlertCircle, Shield, Upload } from 'lucide-react';
+import { ClipboardCheck, CheckCircle2, AlertCircle, Shield, Upload, Phone, Mail } from 'lucide-react';
 import { API_BASE_URL } from '../config';
 
 export default function PatientRegistration() {

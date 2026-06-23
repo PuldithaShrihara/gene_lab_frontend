@@ -46,6 +46,17 @@ export default function Footer() {
             <p className="footer-desc">
               Specialist clinical genetics, genetic counselling, wellness genomics, NIPT, and genetic report interpretation led by Dr. Lahiru Prabodha.
             </p>
+            {/* TODO: Replace # with official social media URLs */}
+            <div className="footer-social-section" style={{ marginBottom: '24px' }}>
+              <span className="logo-doctor-title" style={{ display: 'block', fontSize: '0.8rem', fontWeight: '700', color: '#cbd5e1', marginBottom: '8px' }}>Follow Us</span>
+              <div className="footer-social-links" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                <a href="https://www.facebook.com/people/The-Gene-Clinic/61567109703049/?rdid=oR2IBlj76KtjvPg9&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1KiE6odBpW%2F" target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem', backgroundColor: 'rgba(255,255,255,0.05)', color: '#cbd5e1', border: '1px solid rgba(255,255,255,0.1)' }}>Facebook</a>
+                <a href="https://youtube.com/playlist?list=PLygxKE35blKLAZKG-fplSl-DRl18aRF4Y&si=SAy9S898bUTJAvhV" target="_blank" rel="noopener noreferrer" aria-label="YouTube" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem', backgroundColor: 'rgba(255,255,255,0.05)', color: '#cbd5e1', border: '1px solid rgba(255,255,255,0.1)' }}>YouTube</a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem', backgroundColor: 'rgba(255,255,255,0.05)', color: '#cbd5e1', border: '1px solid rgba(255,255,255,0.1)' }}>Instagram</a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem', backgroundColor: 'rgba(255,255,255,0.05)', color: '#cbd5e1', border: '1px solid rgba(255,255,255,0.1)' }}>TikTok</a>
+                <a href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem', backgroundColor: 'rgba(255,255,255,0.05)', color: '#cbd5e1', border: '1px solid rgba(255,255,255,0.1)' }}>LinkedIn</a>
+              </div>
+            </div>
             <div className="footer-badges">
               <span className="footer-badge">Clinical Genetics</span>
               <span className="footer-badge">Genetic Counselling</span>
@@ -63,9 +74,8 @@ export default function Footer() {
               <li><Link to="/packages">Test Packages</Link></li>
               <li><Link to="/blueprint">Wellness Blueprint</Link></li>
               <li><Link to="/nipt">NIPT Prenatal</Link></li>
-              <li><Link to="/education">Education Hub</Link></li>
-              <li><Link to="/reviews">Client Reviews</Link></li>
-              <li><Link to="/faq">FAQ</Link></li>
+              <li><Link to="/patient-registration">Patient / Client Registration</Link></li>
+              <li><Link to="/faq">FAQ / Q & A</Link></li>
               <li><Link to="/contact">Contact</Link></li>
             </ul>
           </div>
@@ -129,7 +139,7 @@ export default function Footer() {
             <h4>Medical Disclaimer</h4>
           </div>
           <p>
-            The packages, reports, and informational contents described on this website are provided for screening, wellness coordination, and general educational guidance purposes only. They do not constitute formal diagnostic medical evaluations, clinical diagnoses of disease, or therapy guidelines, nor do they guarantee prevention, cures, or specific health outcomes. Genetic screenings, NIPT results, and wellness variant reports must be interpreted in clinical context by a qualified medical professional.
+            The information provided on this website is for educational and service guidance purposes only. It does not replace consultation, diagnosis, or treatment by a qualified healthcare professional. Genetic and wellness-related results should be interpreted with professional guidance.
           </p>
         </div>
 

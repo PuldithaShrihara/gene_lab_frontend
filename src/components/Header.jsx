@@ -24,10 +24,10 @@ export default function Header() {
       <div className="container header-container">
         {/* Logo */}
         <Link to="/" className="header-logo" onClick={closeMenu}>
-          <img src={logoImg} alt="The Gene Clinic Logo" className="logo-image" style={{ height: '72px', width: 'auto', objectFit: 'contain', margin: '-16px 0' }} />
+          <img src={logoImg} alt="The Gene Clinic Logo" className="logo-image" style={{ height: '110px', width: 'auto', objectFit: 'contain', margin: '-24px 0' }} />
           <div className="logo-text">
-            <span className="logo-name">The Gene Clinic</span>
-            <span className="logo-sub" style={{ fontSize: '0.68rem', textTransform: 'none', letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>GenSek Health Private Limited</span>
+            <span className="logo-name" style={{ fontSize: '1.5rem', lineHeight: '1.1' }}>The Gene Clinic</span>
+            <span className="logo-sub" style={{ fontSize: '0.8rem', textTransform: 'none', letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>GenSek Health Private Limited</span>
           </div>
         </Link>
 
@@ -174,7 +174,19 @@ export default function Header() {
             <li><Link to="/reviews" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Client Reviews</Link></li>
             <li><Link to="/contact" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Contact Clinic</Link></li>
 
-            <li className="mobile-drawer-cta" style={{ marginTop: '20px' }}>
+            <li className="mobile-nav-group-title">Follow Us</li>
+            <li style={{ paddingLeft: '16px', marginTop: '10px' }}>
+              <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                {/* TODO: Replace # with official social media URLs */}
+                <a href="https://www.facebook.com/people/The-Gene-Clinic/61567109703049/?rdid=oR2IBlj76KtjvPg9&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1KiE6odBpW%2F" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>Facebook</a>
+                <a href="#" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>YouTube</a>
+                <a href="#" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>Instagram</a>
+                <a href="#" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>TikTok</a>
+                <a href="#" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>LinkedIn</a>
+              </div>
+            </li>
+
+            <li className="mobile-drawer-cta" style={{ marginTop: '24px' }}>
               <Link to="/appointments" onClick={closeMenu} className="btn btn-primary w-full text-center">
                 Book Appointment
               </Link>

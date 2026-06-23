@@ -404,7 +404,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-2">
+          <div className="grid grid-4">
             <div className="video-card">
               <div className="video-embed-container">
                 <iframe

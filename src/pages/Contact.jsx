@@ -318,24 +318,52 @@ export default function Contact() {
               {/* Social Channels */}
               <div className="card" style={{ padding: '28px', background: 'var(--bg-secondary)' }}>
                 <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', fontWeight: 700 }}>Connect With Us</h3>
-                <div className="flex-row gap-3" style={{ display: 'flex', flexWrap: 'wrap' }}>
+                <div className="flex-col gap-2" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+                  {/* TODO: Replace # with official social media URLs */}
                   <a
-                    href={fbLink}
+                    href="https://www.facebook.com/people/The-Gene-Clinic/61567109703049/?rdid=oR2IBlj76KtjvPg9&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1KiE6odBpW%2F"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="btn btn-secondary flex-row-center gap-2"
-                    style={{ padding: '10px 16px', fontSize: '0.82rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
+                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
                   >
-                    <FacebookIcon size={16} /> Facebook Page
+                    Facebook
                   </a>
                   <a
-                    href="https://wa.me/94771234567"
+                    href="#"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="btn btn-secondary flex-row-center gap-2"
-                    style={{ padding: '10px 16px', fontSize: '0.82rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center' }}
+                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
                   >
-                    <WhatsappIcon size={16} /> WhatsApp Coordinator
+                    YouTube
+                  </a>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-secondary flex-row-center gap-2"
+                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    Instagram
+                  </a>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-secondary flex-row-center gap-2"
+                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    TikTok
+                  </a>
+                  <a
+                    href="#"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="btn btn-secondary flex-row-center gap-2"
+                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+                  >
+                    LinkedIn
                   </a>
                 </div>
               </div>
