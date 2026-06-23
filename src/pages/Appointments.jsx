@@ -305,13 +305,13 @@ export default function Appointments() {
             {/* Left Column */}
             <div className="flex-col" style={{ alignItems: 'flex-start' }}>
               <span className="badge badge-accent mb-4" style={{ fontSize: '0.8rem', padding: '6px 16px' }}>
-                GenSek Health Scheduling
+                The Gene Clinic
               </span>
               <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', lineHeight: '1.2', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em' }}>
-                Book an Appointment or Upload Reports
+                Book an Appointment with The Gene Clinic
               </h1>
               <p className="lead-text" style={{ fontSize: 'clamp(1rem, 3vw, 1.12rem)', color: 'var(--text-muted)', lineHeight: '1.7', maxWidth: '640px', marginBottom: '24px' }}>
-                Book an in-person consultation in Galle or request secure online genetic counselling and report interpretation.
+                Request a counselling appointment with The Gene Clinic by GenSek Health Private Limited, led by Dr. L. B. Lahiru Prabodha.
               </p>
               
               {/* Trust Badges */}

@@ -24,10 +24,10 @@ export default function Header() {
       <div className="container header-container">
         {/* Logo */}
         <Link to="/" className="header-logo" onClick={closeMenu}>
-          <img src={logoImg} alt="Dr. Lahiru Prabodha Logo" className="logo-image" style={{ height: '38px', width: 'auto', objectFit: 'contain' }} />
+          <img src={logoImg} alt="The Gene Clinic Logo" className="logo-image" style={{ height: '72px', width: 'auto', objectFit: 'contain', margin: '-16px 0' }} />
           <div className="logo-text">
-            <span className="logo-name">Dr. Lahiru Prabodha</span>
-            <span className="logo-sub">The Gene Clinic</span>
+            <span className="logo-name">The Gene Clinic</span>
+            <span className="logo-sub" style={{ fontSize: '0.68rem', textTransform: 'none', letterSpacing: '0.02em' }}>GenSek Health Private Limited</span>
           </div>
         </Link>
 

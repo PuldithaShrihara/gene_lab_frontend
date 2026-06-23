@@ -148,10 +148,10 @@ export default function Services() {
       {/* Page Header */}
       <section className="section bg-secondary border-bottom">
         <div className="container text-center">
-          <span className="badge badge-accent mb-4">GenSek Health Clinical Programs</span>
+          <span className="badge badge-accent mb-4">The Gene Clinic</span>
           <h1 className="text-gradient">Clinical Genetics & Wellness Genomics Services</h1>
-          <p className="lead-text mt-4" style={{ maxWidth: '800px', margin: '16px auto 0' }}>
-            We provide structured, medically responsible consultations. Select a service to read detailed profiles, expectations, and request details.
+          <p className="lead-text mt-4" style={{ maxWidth: '800px', margin: '16px auto 0', fontWeight: '500' }}>
+            The Gene Clinic by GenSek Health Private Limited provides genetic counselling, wellness counselling, precision medicine guidance, and personalized management support under the guidance of Dr. L. B. Lahiru Prabodha.
           </p>
         </div>
       </section>

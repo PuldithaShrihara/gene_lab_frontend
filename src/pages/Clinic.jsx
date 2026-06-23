@@ -26,11 +26,55 @@ export default function Clinic() {
       {/* Page Header */}
       <section className="section bg-secondary border-bottom">
         <div className="container text-center">
-          <span className="badge badge-accent mb-4">GenSek Health Pvt Ltd</span>
-          <h1 className="text-gradient">The Gene Clinic</h1>
-          <p className="lead-text mt-4" style={{ maxWidth: '800px', margin: '16px auto 0' }}>
-            A specialist clinical facility in Galle, Sri Lanka, offering professional DNA test planning, wellness blueprint interpretations, and genetic counseling under the direction of Dr. Lahiru Prabodha.
+          <span className="badge badge-accent mb-4">Led by Dr. L. B. Lahiru Prabodha</span>
+          <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 2.8rem)', lineHeight: '1.2' }}>
+            The Gene Clinic by GenSek Health Private Limited
+          </h1>
+          <p className="lead-text mt-4" style={{ maxWidth: '800px', margin: '16px auto 0', color: 'var(--text-muted)' }}>
+            A specialist clinical facility in Galle, Sri Lanka, offering professional DNA test planning, wellness blueprint interpretations, and genetic counseling under the direction of Dr. L. B. Lahiru Prabodha.
           </p>
+        </div>
+      </section>
+
+      {/* Our Identity Section */}
+      <section className="section" style={{ padding: '48px 0 24px' }}>
+        <div className="container" style={{ maxWidth: '1200px' }}>
+          <div className="text-center mb-10">
+            <span className="badge badge-accent mb-2">Credentials & Scope</span>
+            <h2>Our Identity</h2>
+            <p style={{ maxWidth: '600px', margin: '8px auto 0', color: 'var(--text-muted)' }}>
+              Core professional credentials, platform brand definition, and corporate representation.
+            </p>
+          </div>
+          
+          <div className="grid grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '24px' }}>
+            {/* Card 1: Doctor */}
+            <div className="card card-glass" style={{ padding: '28px', borderTop: '4px solid var(--accent)' }}>
+              <span className="badge badge-accent mb-3">Doctor</span>
+              <h4 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '8px' }}>Dr. L. B. Lahiru Prabodha</h4>
+              <p className="xsmall-text text-muted" style={{ lineHeight: '1.5', margin: 0 }}>
+                Clinical Geneticist and Genetic Counsellor
+              </p>
+            </div>
+
+            {/* Card 2: Brand */}
+            <div className="card card-glass" style={{ padding: '28px', borderTop: '4px solid var(--secondary)' }}>
+              <span className="badge badge-secondary mb-3">Brand</span>
+              <h4 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '8px' }}>The Gene Clinic</h4>
+              <p className="xsmall-text text-muted" style={{ lineHeight: '1.5', margin: 0 }}>
+                A genetics and wellness counselling service platform
+              </p>
+            </div>
+
+            {/* Card 3: Company */}
+            <div className="card card-glass" style={{ padding: '28px', borderTop: '4px solid var(--accent)' }}>
+              <span className="badge badge-accent mb-3">Company</span>
+              <h4 style={{ fontSize: '1.15rem', fontWeight: 700, marginBottom: '8px' }}>GenSek Health Private Limited</h4>
+              <p className="xsmall-text text-muted" style={{ lineHeight: '1.5', margin: 0 }}>
+                The company supporting The Gene Clinic services and operations
+              </p>
+            </div>
+          </div>
         </div>
       </section>
 

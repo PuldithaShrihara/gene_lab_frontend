@@ -34,12 +34,13 @@ export default function Footer() {
         <div className="footer-grid">
           {/* Column 1: Brand */}
           <div className="footer-col brand-col">
-            <div className="footer-logo">
-              <img src={logoImg} alt="The Gene Clinic Logo" className="footer-logo-image" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
+            <div className="footer-logo" style={{ alignItems: 'flex-start' }}>
+              <img src={logoImg} alt="The Gene Clinic Logo" className="footer-logo-image" style={{ height: '48px', width: 'auto', objectFit: 'contain', marginTop: '2px' }} />
               <div className="footer-logo-text">
                 <span className="logo-title">The Gene Clinic</span>
-                <span className="logo-doctor">Dr. Lahiru Prabodha</span>
-                <span className="logo-tagline">GenSek Health Pvt Ltd</span>
+                <span className="logo-tagline" style={{ textTransform: 'none', letterSpacing: 'normal', fontSize: '0.8rem', color: 'var(--accent-light)' }}>GenSek Health Private Limited</span>
+                <span className="logo-doctor" style={{ color: '#ffffff', fontWeight: '600', marginTop: '6px', fontSize: '0.88rem' }}>Dr. L. B. Lahiru Prabodha</span>
+                <span className="logo-doctor-title" style={{ fontSize: '0.75rem', color: '#94a3b8' }}>Clinical Geneticist and Genetic Counsellor</span>
               </div>
             </div>
             <p className="footer-desc">
@@ -138,7 +139,7 @@ export default function Footer() {
         {/* Footer Bottom Bar */}
         <div className="footer-bottom">
           <p className="copyright-text">
-            &copy; {currentYear} The Gene Clinic / GenSek Health Pvt Ltd. All rights reserved.
+            &copy; {currentYear} The Gene Clinic / GenSek Health Private Limited. All rights reserved.
           </p>
           <div className="bottom-links">
             <Link to="/privacy-policy">Privacy Policy</Link>

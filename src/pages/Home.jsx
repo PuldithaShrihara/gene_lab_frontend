@@ -47,11 +47,30 @@ export default function Home() {
       <section className="section hero-section animate-fade-in" style={{ position: 'relative', zIndex: 1, paddingBottom: '80px' }}>
         <div className="container hero-container">
           <div className="hero-content">
-            <span className="badge badge-accent mb-4">Clinical Genetics & Wellness Genomics</span>
-            <h1 className="text-gradient">Personalized Genetic Care for Better Health Decisions</h1>
-            <p className="hero-subheadline">
-              Specialist clinical genetics services at <strong>The Gene Clinic by GenSek Health Private Limited</strong>, led by <strong>Dr. L. B. Lahiru Prabodha</strong>. We provide expert clinical care, <strong>Genetic Counselling</strong>, <strong>Wellness Counselling</strong>, <strong>Precision Medicine</strong> guidance, and <strong>Personalized Management</strong> pathways.
+            <span className="badge badge-accent mb-4">The Gene Clinic</span>
+            <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 2.8rem)', lineHeight: '1.2', marginBottom: '16px' }}>
+              Genetic & Wellness Counselling by GenSek Health Private Limited
+            </h1>
+            <p className="font-bold text-accent mb-3" style={{ color: 'var(--accent)', fontWeight: 700, fontSize: '1.05rem' }}>
+              Led by Dr. L. B. Lahiru Prabodha, Clinical Geneticist and Genetic Counsellor
             </p>
+            <p className="hero-subheadline" style={{ marginBottom: '20px' }}>
+              The Gene Clinic by GenSek Health Private Limited supports individuals, families, and healthcare professionals with genetic counselling, wellness counselling, genetic test guidance, report interpretation, precision medicine insights, and personalized wellness planning.
+            </p>
+            
+            {/* Highlight Badges */}
+            <div className="flex-row gap-3 mb-6 flex-wrap" style={{ display: 'flex', gap: '10px', marginTop: '16px', marginBottom: '24px' }}>
+              <span className="badge badge-secondary" style={{ padding: '6px 14px', borderRadius: '50px', fontSize: '0.8rem', fontWeight: 700 }}>
+                👤 Dr. L. B. Lahiru Prabodha
+              </span>
+              <span className="badge badge-accent" style={{ padding: '6px 14px', borderRadius: '50px', fontSize: '0.8rem', fontWeight: 700 }}>
+                🧬 The Gene Clinic
+              </span>
+              <span className="badge badge-secondary" style={{ padding: '6px 14px', borderRadius: '50px', fontSize: '0.8rem', fontWeight: 700 }}>
+                🏢 GenSek Health Private Limited
+              </span>
+            </div>
+
             <div className="hero-actions">
               <Link to="/appointments" className="btn btn-primary">
                 Book Counselling <Calendar size={18} />
