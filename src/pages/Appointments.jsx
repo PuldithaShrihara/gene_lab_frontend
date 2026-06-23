@@ -41,6 +41,40 @@ export default function Appointments() {
   const [message, setMessage] = useState('');
   const [consent, setConsent] = useState(false);
 
+  const [formData, setFormData] = useState({
+    patientName: "",
+    phone: "",
+    email: "",
+    age: "",
+    appointmentType: "",
+    clinicLocation: "",
+    preferredMode: "",
+    preferredDate: "",
+    preferredTimeSlot: "",
+    reason: "",
+    message: "",
+    geneticReport: null,
+    medicalReport: null,
+    referralLetter: null,
+    consent: false
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value
+    }));
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: files?.[0] || null
+    }));
+  };
+
   // Status & states
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -123,9 +157,11 @@ export default function Appointments() {
 
   const validateForm = () => {
     const errors = {};
-    if (!name.trim()) errors.name = 'Patient Full Name is required';
-    if (!phone.trim()) errors.phone = 'Phone Number is required';
-    if (!email.trim()) errors.email = 'Email Address is required';
+    if (activeFormTab === 0 || activeFormTab === 1) {
+      if (!name.trim()) errors.name = 'Patient Full Name is required';
+      if (!phone.trim()) errors.phone = 'Phone Number is required';
+      if (!email.trim()) errors.email = 'Email Address is required';
+    }
 
     if (activeFormTab === 0) {
       if (!message.trim()) errors.message = 'Message content is required';
@@ -136,9 +172,16 @@ export default function Appointments() {
     }
 
     if (activeFormTab === 2) {
-      if (!age.trim()) errors.age = 'Patient Age is required';
-      if (!reason.trim()) errors.reason = 'Reason for Consultation is required';
-      if (!consent) errors.consent = 'You must consent to the medical privacy disclosure';
+      if (!formData.patientName.trim()) errors.patientName = 'Patient Full Name is required';
+      if (!formData.phone.trim()) errors.phone = 'Phone Number is required';
+      if (!formData.email.trim()) errors.email = 'Email Address is required';
+      if (!formData.appointmentType.trim()) errors.appointmentType = 'Appointment Type is required';
+      if (!formData.clinicLocation.trim()) errors.clinicLocation = 'Clinic Location is required';
+      if (!formData.preferredMode.trim()) errors.preferredMode = 'Preferred Mode is required';
+      if (!formData.preferredDate.trim()) errors.preferredDate = 'Preferred Date is required';
+      if (!formData.preferredTimeSlot.trim()) errors.preferredTimeSlot = 'Preferred Time Slot is required';
+      if (!formData.reason.trim()) errors.reason = 'Reason for Consultation is required';
+      if (!formData.consent) errors.consent = 'You must consent to the medical privacy disclosure';
     }
     
     setValidationErrors(errors);
@@ -185,29 +228,33 @@ export default function Appointments() {
       } else {
         endpoint = `${API_BASE_URL}/api/appointments`;
         // Prepare combined values for backend compatibility
-        const combinedReason = message.trim() 
-          ? `${reason}\n\nAdditional Notes: ${message}` 
-          : reason;
-
-        // Combine medical report and referral letter filenames if both are provided
-        const combinedMedicalReport = medicalReportName && referralReportName
-          ? `${medicalReportName}, ${referralReportName}`
-          : (medicalReportName || referralReportName || null);
+        const combinedReason = formData.message.trim() 
+          ? `${formData.reason}\n\nAdditional Notes: ${formData.message}` 
+          : formData.reason;
 
         payload = {
-          name,
-          phone,
-          email,
-          age,
-          appointmentType: apptType,
-          location: clinicLocation,
-          mode,
+          name: formData.patientName,
+          patientName: formData.patientName,
+          phone: formData.phone,
+          email: formData.email,
+          age: formData.age,
+          appointmentType: formData.appointmentType,
+          location: formData.clinicLocation,
+          clinicLocation: formData.clinicLocation,
+          mode: formData.preferredMode,
+          preferredMode: formData.preferredMode,
+          date: formData.preferredDate,
+          preferredDate: formData.preferredDate,
+          timeSlot: formData.preferredTimeSlot,
+          preferredTimeSlot: formData.preferredTimeSlot,
           reason: combinedReason,
-          date,
-          timeSlot,
-          geneticReport: geneticReportName || null,
-          medicalReport: combinedMedicalReport,
-          consent
+          message: formData.message,
+          geneticReportName: formData.geneticReport?.name || "",
+          medicalReportName: formData.medicalReport?.name || "",
+          referralLetterName: formData.referralLetter?.name || "",
+          consent: formData.consent,
+          paymentStatus: "Pending",
+          source: "Website Appointment Page"
         };
       }
 
@@ -222,18 +269,38 @@ export default function Appointments() {
       if (response.ok) {
         setSuccess(true);
         // Reset states
-        setName('');
-        setPhone('');
-        setEmail('');
-        setAge('');
-        setReason('');
-        setMessage('');
-        setDate('');
-        setGeneticReportName('');
-        setMedicalReportName('');
-        setReferralReportName('');
-        setConsent(false);
-        setReferralDetails('');
+        if (activeFormTab === 2) {
+          setFormData({
+            patientName: "",
+            phone: "",
+            email: "",
+            age: "",
+            appointmentType: "",
+            clinicLocation: "",
+            preferredMode: "",
+            preferredDate: "",
+            preferredTimeSlot: "",
+            reason: "",
+            message: "",
+            geneticReport: null,
+            medicalReport: null,
+            referralLetter: null,
+            consent: false
+          });
+        } else {
+          setName('');
+          setPhone('');
+          setEmail('');
+          setAge('');
+          setReason('');
+          setMessage('');
+          setDate('');
+          setGeneticReportName('');
+          setMedicalReportName('');
+          setReferralReportName('');
+          setConsent(false);
+          setReferralDetails('');
+        }
         setValidationErrors({});
       } else {
         const errData = await response.json();
@@ -430,7 +497,7 @@ export default function Appointments() {
               <span className="badge badge-accent mb-4" style={{ fontSize: '0.8rem', padding: '6px 16px' }}>
                 {activeFormTab === 0 ? 'Get In Touch' : activeFormTab === 1 ? 'Request Test' : 'The Gene Clinic'}
               </span>
-              <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', lineHeight: '1.2', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em' }}>
+              <h1 className="text-gradient" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)', lineHeight: '1.25', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em' }}>
                 {activeFormTab === 0 && 'Contact The Gene Clinic'}
                 {activeFormTab === 1 && 'Request a Genetic Test'}
                 {activeFormTab === 2 && 'Book an Appointment with The Gene Clinic'}
@@ -784,53 +851,61 @@ export default function Appointments() {
                         
                         <div className="grid grid-2" style={{ gap: '20px' }}>
                           <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Patient Full Name *</label>
+                            <label htmlFor="patientName" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Patient Full Name *</label>
                             <input
+                              id="patientName"
+                              name="patientName"
                               type="text"
-                              className={`premium-input ${validationErrors.name ? 'invalid' : ''}`}
-                              value={name}
-                              onChange={e => setName(e.target.value)}
+                              className={`premium-input ${validationErrors.patientName ? 'invalid' : ''}`}
+                              value={formData.patientName}
+                              onChange={handleChange}
                               placeholder="e.g. Dilhan Perera"
                             />
-                            {validationErrors.name && <span style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.name}</span>}
+                            {validationErrors.patientName && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.patientName}</span>}
                           </div>
                           
                           <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Phone Number *</label>
+                            <label htmlFor="phone" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Phone Number *</label>
                             <input
+                              id="phone"
+                              name="phone"
                               type="tel"
                               className={`premium-input ${validationErrors.phone ? 'invalid' : ''}`}
-                              value={phone}
-                              onChange={e => setPhone(e.target.value)}
+                              value={formData.phone}
+                              onChange={handleChange}
                               placeholder="e.g. +94 77 123 4567"
                             />
-                            {validationErrors.phone && <span style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.phone}</span>}
+                            {validationErrors.phone && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.phone}</span>}
                           </div>
                         </div>
 
                         <div className="grid grid-2 mt-4" style={{ gap: '20px' }}>
                           <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Email Address *</label>
+                            <label htmlFor="email" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Email Address *</label>
                             <input
+                              id="email"
+                              name="email"
                               type="email"
                               className={`premium-input ${validationErrors.email ? 'invalid' : ''}`}
-                              value={email}
-                              onChange={e => setEmail(e.target.value)}
+                              value={formData.email}
+                              onChange={handleChange}
                               placeholder="e.g. dilhan.perera@example.com"
                             />
-                            {validationErrors.email && <span style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.email}</span>}
+                            {validationErrors.email && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.email}</span>}
                           </div>
                           
                           <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Patient Age *</label>
+                            <label htmlFor="age" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Patient Age</label>
                             <input
+                              id="age"
+                              name="age"
                               type="number"
                               className={`premium-input ${validationErrors.age ? 'invalid' : ''}`}
-                              value={age}
-                              onChange={e => setAge(e.target.value)}
+                              value={formData.age}
+                              onChange={handleChange}
                               placeholder="e.g. 34"
                             />
-                            {validationErrors.age && <span style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.age}</span>}
+                            {validationErrors.age && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.age}</span>}
                           </div>
                         </div>
                       </div>
@@ -843,80 +918,100 @@ export default function Appointments() {
 
                         <div className="grid grid-3" style={{ gap: '20px' }}>
                           <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Appointment Type *</label>
+                            <label htmlFor="appointmentType" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Appointment Type *</label>
                             <select
-                              className="premium-input"
-                              value={apptType}
-                              onChange={e => setApptType(e.target.value)}
+                              id="appointmentType"
+                              name="appointmentType"
+                              className={`premium-input ${validationErrors.appointmentType ? 'invalid' : ''}`}
+                              value={formData.appointmentType}
+                              onChange={handleChange}
                               style={{ appearance: 'none', backgroundImage: 'url("data:image/svg+xml;utf8,<svg fill=\'%23475569\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/><path d=\'M0 0h24v24H0z\' fill=\'none\'/></svg>")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', backgroundSize: '18px' }}
                             >
-                              <option value="Clinical Genetics Consultation">Clinical Genetics Consultation</option>
+                              <option value="" disabled>Select Type</option>
                               <option value="Genetic Counselling">Genetic Counselling</option>
-                              <option value="Genetic Report Interpretation">Genetic Report Interpretation</option>
-                              <option value="Wellness Genomics Consultation">Wellness Genomics Consultation</option>
-                              <option value="NIPT / Prenatal Screening Guidance">NIPT / Prenatal Screening Guidance</option>
                               <option value="Wellness Counselling">Wellness Counselling</option>
-                              <option value="Precision Medicine Guidance">Precision Medicine Guidance</option>
-                              <option value="Personalized Management">Personalized Management</option>
-                              <option value="Nutrition & Wellness Guidance">Nutrition & Wellness Guidance</option>
-                              <option value="Cancer Prevention Awareness">Cancer Prevention Awareness</option>
-                              <option value="Non-Communicable Disease Prevention Awareness">Non-Communicable Disease Prevention Awareness</option>
+                              <option value="NIPT Counselling">NIPT Counselling</option>
+                              <option value="Genetic Report Interpretation">Genetic Report Interpretation</option>
+                              <option value="Precision Medicine Consultation">Precision Medicine Consultation</option>
+                              <option value="Personalized Management Planning">Personalized Management Planning</option>
+                              <option value="Nutrition & Wellness Consultation">Nutrition & Wellness Consultation</option>
+                              <option value="Cancer Risk / Prevention Awareness">Cancer Risk / Prevention Awareness</option>
+                              <option value="Non-Communicable Disease Prevention Guidance">Non-Communicable Disease Prevention Guidance</option>
                               <option value="Online Video Consultation">Online Video Consultation</option>
-                              <option value="Corporate / academic inquiry">Corporate / academic inquiry</option>
+                              <option value="Other">Other</option>
                             </select>
+                            {validationErrors.appointmentType && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.appointmentType}</span>}
                           </div>
 
                           <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Clinic Location *</label>
+                            <label htmlFor="clinicLocation" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Clinic Location *</label>
                             <select
-                              className="premium-input"
-                              value={clinicLocation}
-                              onChange={e => setClinicLocation(e.target.value)}
+                              id="clinicLocation"
+                              name="clinicLocation"
+                              className={`premium-input ${validationErrors.clinicLocation ? 'invalid' : ''}`}
+                              value={formData.clinicLocation}
+                              onChange={handleChange}
                               style={{ appearance: 'none', backgroundImage: 'url("data:image/svg+xml;utf8,<svg fill=\'%23475569\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/><path d=\'M0 0h24v24H0z\' fill=\'none\'/></svg>")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', backgroundSize: '18px' }}
                             >
+                              <option value="" disabled>Select Location</option>
                               <option value="Galle Clinic">Galle Clinic</option>
                               <option value="Online Consultation">Online Consultation</option>
                               <option value="Other / To be confirmed">Other / To be confirmed</option>
                             </select>
+                            {validationErrors.clinicLocation && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.clinicLocation}</span>}
                           </div>
 
                           <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Preferred Mode *</label>
+                            <label htmlFor="preferredMode" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Preferred Mode *</label>
                             <select
-                              className="premium-input"
-                              value={mode}
-                              onChange={e => setMode(e.target.value)}
+                              id="preferredMode"
+                              name="preferredMode"
+                              className={`premium-input ${validationErrors.preferredMode ? 'invalid' : ''}`}
+                              value={formData.preferredMode}
+                              onChange={handleChange}
                               style={{ appearance: 'none', backgroundImage: 'url("data:image/svg+xml;utf8,<svg fill=\'%23475569\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/><path d=\'M0 0h24v24H0z\' fill=\'none\'/></svg>")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', backgroundSize: '18px' }}
                             >
+                              <option value="" disabled>Select Mode</option>
                               <option value="In-person">In-person</option>
-                              <option value="Online">Online</option>
-                              <option value="Phone call">Phone call</option>
+                              <option value="Online Video Consultation">Online Video Consultation</option>
+                              <option value="Phone Call">Phone Call</option>
+                              <option value="To be confirmed">To be confirmed</option>
                             </select>
+                            {validationErrors.preferredMode && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.preferredMode}</span>}
                           </div>
                         </div>
 
                         <div className="grid grid-2 mt-4" style={{ gap: '20px' }}>
                           <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Preferred Date</label>
+                            <label htmlFor="preferredDate" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Preferred Date *</label>
                             <input
+                              id="preferredDate"
+                              name="preferredDate"
                               type="date"
-                              className="premium-input"
-                              value={date}
-                              onChange={e => setDate(e.target.value)}
+                              className={`premium-input ${validationErrors.preferredDate ? 'invalid' : ''}`}
+                              value={formData.preferredDate}
+                              onChange={handleChange}
                             />
+                            {validationErrors.preferredDate && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.preferredDate}</span>}
                           </div>
 
                           <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Preferred Time Slot</label>
+                            <label htmlFor="preferredTimeSlot" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Preferred Time Slot *</label>
                             <select
-                              className="premium-input"
-                              value={timeSlot}
-                              onChange={e => setTimeSlot(e.target.value)}
+                              id="preferredTimeSlot"
+                              name="preferredTimeSlot"
+                              className={`premium-input ${validationErrors.preferredTimeSlot ? 'invalid' : ''}`}
+                              value={formData.preferredTimeSlot}
+                              onChange={handleChange}
                               style={{ appearance: 'none', backgroundImage: 'url("data:image/svg+xml;utf8,<svg fill=\'%23475569\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/><path d=\'M0 0h24v24H0z\' fill=\'none\'/></svg>")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', backgroundSize: '18px' }}
                             >
-                              <option value="09:00 AM - 12:00 PM (Morning)">09:00 AM - 12:00 PM (Morning)</option>
-                              <option value="02:00 PM - 05:00 PM (Afternoon)">02:00 PM - 05:00 PM (Afternoon)</option>
+                              <option value="" disabled>Select Time</option>
+                              <option value="09:00 AM - 12:00 PM">09:00 AM - 12:00 PM</option>
+                              <option value="12:00 PM - 03:00 PM">12:00 PM - 03:00 PM</option>
+                              <option value="03:00 PM - 06:00 PM">03:00 PM - 06:00 PM</option>
+                              <option value="To be confirmed">To be confirmed</option>
                             </select>
+                            {validationErrors.preferredTimeSlot && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.preferredTimeSlot}</span>}
                           </div>
                         </div>
                       </div>
@@ -928,22 +1023,26 @@ export default function Appointments() {
                         </div>
 
                         <div className="form-group flex-col" style={{ gap: '6px' }}>
-                          <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Reason for Consultation *</label>
+                          <label htmlFor="reason" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Reason for Consultation *</label>
                           <textarea
+                            id="reason"
+                            name="reason"
                             className={`premium-textarea ${validationErrors.reason ? 'invalid' : ''}`}
-                            value={reason}
-                            onChange={e => setReason(e.target.value)}
+                            value={formData.reason}
+                            onChange={handleChange}
                             placeholder="Describe symptoms, family diagnosis details, or genetic concerns you wish to review..."
                           ></textarea>
-                          {validationErrors.reason && <span style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.reason}</span>}
+                          {validationErrors.reason && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.reason}</span>}
                         </div>
 
                         <div className="form-group flex-col mt-4" style={{ gap: '6px' }}>
-                          <label style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Message / Additional Notes (Optional)</label>
+                          <label htmlFor="message" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Message / Additional Notes (Optional)</label>
                           <textarea
+                            id="message"
+                            name="message"
                             className="premium-textarea"
-                            value={message}
-                            onChange={e => setMessage(e.target.value)}
+                            value={formData.message}
+                            onChange={handleChange}
                             placeholder="Provide any additional logistical request details or details on clinic coordinate needs..."
                           ></textarea>
                         </div>
@@ -959,30 +1058,51 @@ export default function Appointments() {
                           To optimize your session, please upload copies of relevant reports if available. Handled securely under clinical confidentiality guidelines.
                         </p>
 
-                        <div className="grid grid-3" style={{ gap: '20px' }}>
-                          <FileUploader 
-                            label="Genetic Report (Optional)"
-                            helper="PDF, JPG, PNG accepted"
-                            fileName={geneticReportName}
-                            setFileName={setGeneticReportName}
-                            themeColor="var(--secondary)"
-                          />
+                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
+                          <div className="form-group flex-col" style={{ gap: '6px' }}>
+                            <label htmlFor="geneticReport" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Genetic Report (Optional)</label>
+                            <input
+                              id="geneticReport"
+                              name="geneticReport"
+                              type="file"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              className="premium-input"
+                              onChange={handleFileChange}
+                              style={{ padding: '10px' }}
+                            />
+                            {formData.geneticReport && <span className="xsmall-text text-muted" style={{ fontWeight: 600 }}>Selected: {formData.geneticReport.name}</span>}
+                            <span className="xsmall-text text-light" style={{ fontSize: '0.75rem' }}>PDF, JPG, PNG accepted</span>
+                          </div>
                           
-                          <FileUploader 
-                            label="Medical Report (Optional)"
-                            helper="PDF, JPG, PNG accepted"
-                            fileName={medicalReportName}
-                            setFileName={setMedicalReportName}
-                            themeColor="var(--accent)"
-                          />
+                          <div className="form-group flex-col" style={{ gap: '6px' }}>
+                            <label htmlFor="medicalReport" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Medical Report (Optional)</label>
+                            <input
+                              id="medicalReport"
+                              name="medicalReport"
+                              type="file"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              className="premium-input"
+                              onChange={handleFileChange}
+                              style={{ padding: '10px' }}
+                            />
+                            {formData.medicalReport && <span className="xsmall-text text-muted" style={{ fontWeight: 600 }}>Selected: {formData.medicalReport.name}</span>}
+                            <span className="xsmall-text text-light" style={{ fontSize: '0.75rem' }}>PDF, JPG, PNG accepted</span>
+                          </div>
 
-                          <FileUploader 
-                            label="Referral Letter (Optional)"
-                            helper="Upload request sheets if available"
-                            fileName={referralReportName}
-                            setFileName={setReferralReportName}
-                            themeColor="var(--gold)"
-                          />
+                          <div className="form-group flex-col" style={{ gap: '6px' }}>
+                            <label htmlFor="referralLetter" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Referral Letter (Optional)</label>
+                            <input
+                              id="referralLetter"
+                              name="referralLetter"
+                              type="file"
+                              accept=".pdf,.jpg,.jpeg,.png"
+                              className="premium-input"
+                              onChange={handleFileChange}
+                              style={{ padding: '10px' }}
+                            />
+                            {formData.referralLetter && <span className="xsmall-text text-muted" style={{ fontWeight: 600 }}>Selected: {formData.referralLetter.name}</span>}
+                            <span className="xsmall-text text-light" style={{ fontSize: '0.75rem' }}>Upload request sheets if available</span>
+                          </div>
                         </div>
                       </div>
 
@@ -1011,15 +1131,16 @@ export default function Appointments() {
                             <input 
                               type="checkbox" 
                               id="consent-box"
-                              checked={consent}
-                              onChange={e => setConsent(e.target.checked)}
+                              name="consent"
+                              checked={formData.consent}
+                              onChange={handleChange}
                               style={{ marginTop: '4px', minWidth: '18px', width: '18px', height: '18px', cursor: 'pointer', accentColor: 'var(--secondary)', position: 'relative', zIndex: 10 }}
                             />
                             <label htmlFor="consent-box" className="xsmall-text text-muted" style={{ cursor: 'pointer', lineHeight: '1.5', userSelect: 'none' }}>
                               I confirm that the information provided is accurate and I consent to The Gene Clinic using these details and uploaded reports only for consultation preparation and communication. *
                             </label>
                           </div>
-                          {validationErrors.consent && <span style={{ fontSize: '0.75rem', color: '#dc2626', marginTop: '8px' }}>{validationErrors.consent}</span>}
+                          {validationErrors.consent && <span role="alert" style={{ fontSize: '0.75rem', color: '#dc2626', marginTop: '8px' }}>{validationErrors.consent}</span>}
                         </div>
 
                         <div className="flex-row" style={{ justifyContent: 'flex-end', width: '100%' }}>
