@@ -27,7 +27,7 @@ export default function Header() {
           <img src={logoImg} alt="The Gene Clinic Logo" className="logo-image" style={{ height: '72px', width: 'auto', objectFit: 'contain', margin: '-16px 0' }} />
           <div className="logo-text">
             <span className="logo-name">The Gene Clinic</span>
-            <span className="logo-sub" style={{ fontSize: '0.68rem', textTransform: 'none', letterSpacing: '0.02em' }}>GenSek Health Private Limited</span>
+            <span className="logo-sub" style={{ fontSize: '0.68rem', textTransform: 'none', letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>GenSek Health Private Limited</span>
           </div>
         </Link>
 

@@ -83,11 +83,11 @@ export default function App() {
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/admin" element={<AdminDashboard />} />
             <Route path="/research" element={<Research />} />
-            <Route path="/contact" element={<Contact />} />
+            <Route path="/contact" element={<Appointments />} />
             <Route path="/test-packages" element={<TestPackages onOpenCallbackModal={() => setIsCallbackOpen(true)} />} />
             <Route path="/wellness-blueprint" element={<WellnessBlueprint />} />
             <Route path="/articles" element={<Articles />} />
-            <Route path="/request-genetic-test" element={<RequestGeneticTest />} />
+            <Route path="/request-genetic-test" element={<Appointments />} />
             <Route path="/patient-registration" element={<PatientRegistration />} />
             <Route path="/education" element={<Education />} />
             <Route path="/partner-laboratories" element={<PartnerLaboratories />} />

@@ -533,6 +533,7 @@ h3 {
   text-decoration: none;
   color: var(--text-main);
   flex-shrink: 0;
+  min-width: 290px; /* Allocate and protect horizontal space for the brand logo */
 }
 .logo-icon {
   color: var(--secondary);
@@ -540,6 +541,8 @@ h3 {
 .logo-text {
   display: flex;
   flex-direction: column;
+  white-space: nowrap; /* Prevent brand name and subtitle wrapping */
+  flex-shrink: 0;
 }
 .logo-name {
   font-family: var(--font-heading);
@@ -562,12 +565,12 @@ h3 {
 .desktop-nav .nav-list {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 11px; /* Slightly reduced gap from 14px */
   list-style: none;
 }
 .nav-link {
   color: var(--text-muted);
-  font-size: 0.83rem;
+  font-size: 0.8rem; /* Slightly reduced font size from 0.83rem */
   font-weight: 600;
   white-space: nowrap; /* Prevent menu breaking into 2 lines */
   padding: 8px 0;
