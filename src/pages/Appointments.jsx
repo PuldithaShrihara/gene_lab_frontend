@@ -743,16 +743,16 @@ export default function Appointments() {
                       </div>
 
                       <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '20px' }}>
-                        <div className="card flex-col align-start" style={{ padding: '24px', background: 'rgba(2, 132, 199, 0.03)', borderColor: 'rgba(2, 132, 199, 0.12)', borderRadius: '18px', marginBottom: '24px' }}>
+                        <div className="flex-col align-start" style={{ padding: '24px', background: 'rgba(2, 132, 199, 0.03)', border: '1px solid rgba(2, 132, 199, 0.12)', borderRadius: '18px', marginBottom: '24px', transform: 'none', boxShadow: 'none' }}>
                           <div className="flex-row align-start gap-3 w-full" style={{ display: 'flex' }}>
                             <input 
                               type="checkbox" 
                               id="test-consent-box"
                               checked={consent}
                               onChange={e => setConsent(e.target.checked)}
-                              style={{ marginTop: '4px', width: '18px', height: '18px', cursor: 'pointer' }}
+                              style={{ marginTop: '4px', minWidth: '18px', width: '18px', height: '18px', cursor: 'pointer', accentColor: 'var(--secondary)', position: 'relative', zIndex: 10 }}
                             />
-                            <label htmlFor="test-consent-box" className="xsmall-text text-muted" style={{ cursor: 'pointer', lineHeight: '1.5' }}>
+                            <label htmlFor="test-consent-box" className="xsmall-text text-muted" style={{ cursor: 'pointer', lineHeight: '1.5', userSelect: 'none' }}>
                               I consent to The Gene Clinic using these details to evaluate assay suitability. I understand that a clinical coordinator will contact me to coordinate payment and sample routing. *
                             </label>
                           </div>
@@ -999,7 +999,7 @@ export default function Appointments() {
 
                       {/* Section 5: Consent & Submit */}
                       <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '24px' }}>
-                        <div className="card flex-col align-start" style={{ padding: '24px', background: 'rgba(2, 132, 199, 0.03)', borderColor: 'rgba(2, 132, 199, 0.12)', borderRadius: '18px', marginBottom: '24px' }}>
+                        <div className="flex-col align-start" style={{ padding: '24px', background: 'rgba(2, 132, 199, 0.03)', border: '1px solid rgba(2, 132, 199, 0.12)', borderRadius: '18px', marginBottom: '24px', transform: 'none', boxShadow: 'none' }}>
                           <div className="flex-row-center text-accent mb-3" style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(15, 118, 110, 0.08)' }}>
                             <Shield size={16} />
                           </div>
@@ -1013,9 +1013,9 @@ export default function Appointments() {
                               id="consent-box"
                               checked={consent}
                               onChange={e => setConsent(e.target.checked)}
-                              style={{ marginTop: '4px', width: '18px', height: '18px', cursor: 'pointer' }}
+                              style={{ marginTop: '4px', minWidth: '18px', width: '18px', height: '18px', cursor: 'pointer', accentColor: 'var(--secondary)', position: 'relative', zIndex: 10 }}
                             />
-                            <label htmlFor="consent-box" className="xsmall-text text-muted" style={{ cursor: 'pointer', lineHeight: '1.5' }}>
+                            <label htmlFor="consent-box" className="xsmall-text text-muted" style={{ cursor: 'pointer', lineHeight: '1.5', userSelect: 'none' }}>
                               I confirm that the information provided is accurate and I consent to The Gene Clinic using these details and uploaded reports only for consultation preparation and communication. *
                             </label>
                           </div>
