@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, MessageCircle, Info, Lock, FileUp, Calendar, Dna } from 'lucide-react';
+import { Phone, Mail, MapPin, MessageCircle, Info, Lock, FileUp, Calendar } from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -34,7 +35,7 @@ export default function Footer() {
           {/* Column 1: Brand */}
           <div className="footer-col brand-col">
             <div className="footer-logo">
-              <Dna className="footer-logo-icon" size={24} />
+              <img src={logoImg} alt="The Gene Clinic Logo" className="footer-logo-image" style={{ height: '36px', width: 'auto', objectFit: 'contain' }} />
               <div className="footer-logo-text">
                 <span className="logo-title">The Gene Clinic</span>
                 <span className="logo-doctor">Dr. Lahiru Prabodha</span>
@@ -58,11 +59,12 @@ export default function Footer() {
               <li><Link to="/">Home</Link></li>
               <li><Link to="/about">About Doctor</Link></li>
               <li><Link to="/clinic">The Gene Clinic</Link></li>
-              <li><Link to="/services">Services</Link></li>
               <li><Link to="/packages">Test Packages</Link></li>
               <li><Link to="/blueprint">Wellness Blueprint</Link></li>
-              <li><Link to="/nipt">NIPT</Link></li>
-              <li><Link to="/journey">Patient Journey</Link></li>
+              <li><Link to="/nipt">NIPT Prenatal</Link></li>
+              <li><Link to="/education">Education Hub</Link></li>
+              <li><Link to="/reviews">Client Reviews</Link></li>
+              <li><Link to="/faq">FAQ</Link></li>
               <li><Link to="/contact">Contact</Link></li>
             </ul>
           </div>
@@ -74,11 +76,11 @@ export default function Footer() {
               <li><Link to="/services">Clinical Genetics</Link></li>
               <li><Link to="/services">Genetic Counselling</Link></li>
               <li><Link to="/services">Report Interpretation</Link></li>
-              <li><Link to="/blueprint">Wellness Genomics</Link></li>
-              <li><Link to="/nipt">NIPT</Link></li>
-              <li><Link to="/services">Whole Exome Sequencing</Link></li>
-              <li><Link to="/services">Whole Genome Sequencing</Link></li>
-              <li><Link to="/services">Clinical Panels</Link></li>
+              <li><Link to="/services">Precision Medicine</Link></li>
+              <li><Link to="/services">Personalized Management</Link></li>
+              <li><Link to="/services">Nutrition & Wellness</Link></li>
+              <li><Link to="/services">Cancer & NCD Prevention</Link></li>
+              <li><Link to="/services">Online Video Consult</Link></li>
             </ul>
           </div>
 
@@ -110,7 +112,7 @@ export default function Footer() {
                 <MessageCircle size={16} /> WhatsApp Chat
               </a>
               <a href="https://www.facebook.com/people/The-Gene-Clinic/61567109703049/?rdid=oR2IBlj76KtjvPg9&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1KiE6odBpW%2F" target="_blank" rel="noopener noreferrer" className="btn btn-facebook">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="lucide lucide-facebook"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook Page
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg> Facebook Page
               </a>
               <Link to="/appointments" className="btn btn-book-appt">
                 <Calendar size={16} /> Book Appointment
@@ -126,7 +128,7 @@ export default function Footer() {
             <h4>Medical Disclaimer</h4>
           </div>
           <p>
-            The information on this website is for educational and appointment information purposes only. It does not replace consultation with a qualified medical professional. Genetic testing, wellness genomics, and prenatal screening results should be interpreted by a qualified healthcare professional.
+            The packages, reports, and informational contents described on this website are provided for screening, wellness coordination, and general educational guidance purposes only. They do not constitute formal diagnostic medical evaluations, clinical diagnoses of disease, or therapy guidelines, nor do they guarantee prevention, cures, or specific health outcomes. Genetic screenings, NIPT results, and wellness variant reports must be interpreted in clinical context by a qualified medical professional.
           </p>
         </div>
 

@@ -127,6 +127,27 @@ export default function Clinic() {
         </div>
       </section>
 
+      {/* Connecting Testing, Counselling & Clinical Management */}
+      <section className="section bg-secondary border-top border-bottom" style={{ position: 'relative', zIndex: 1 }}>
+        <div className="container" style={{ maxWidth: '1000px' }}>
+          <div className="card card-glass" style={{ padding: '40px', position: 'relative' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '5px', background: 'linear-gradient(90deg, var(--secondary), var(--accent))', borderTopLeftRadius: '24px', borderTopRightRadius: '24px' }}></div>
+            
+            <span className="badge badge-accent mb-4">Integrated Care Model</span>
+            <h2 className="mb-4">Connecting Laboratory Testing, Counselling & Clinical Management</h2>
+            <p className="lead-text text-muted" style={{ lineHeight: '1.7', marginBottom: '20px' }}>
+              At The Gene Clinic, we bridge the gap between raw laboratory molecular testing and active clinical management. We believe that genetic testing is only one component of a larger clinical journey. 
+            </p>
+            <p className="small-text text-muted" style={{ lineHeight: '1.7', marginBottom: '20px' }}>
+              Our structured approach ensures that testing is preceded by <strong>pre-test counselling</strong> to clarify screening parameters and expectations. Following sample collection and processing in accredited molecular diagnostic laboratories, we perform a detailed <strong>clinical interpretation</strong> of the variants detected, correlating findings directly with the patient's phenotype and pedigree history.
+            </p>
+            <p className="small-text text-muted" style={{ lineHeight: '1.7', margin: 0 }}>
+              The final and most crucial step is translating these insights into a <strong>personalized management plan</strong>. We collaborate with primary care doctors and specialists to outline precise medical surveillance, lifestyle adjustments, and family screening recommendations—guiding you safely through every step of your health journey.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Galle Clinic CTA */}
       <section className="section text-center">
         <div className="container" style={{ maxWidth: '640px' }}>

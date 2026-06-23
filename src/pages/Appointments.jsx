@@ -26,7 +26,7 @@ export default function Appointments() {
   const [age, setAge] = useState('');
   
   // Consultation details state
-  const [apptType, setApptType] = useState('Clinical genetics consultation');
+  const [apptType, setApptType] = useState('Clinical Genetics Consultation');
   const [clinicLocation, setClinicLocation] = useState('Galle Clinic');
   const [mode, setMode] = useState('In-person');
   const [date, setDate] = useState('');
@@ -465,14 +465,18 @@ export default function Appointments() {
                           onChange={e => setApptType(e.target.value)}
                           style={{ appearance: 'none', backgroundImage: 'url("data:image/svg+xml;utf8,<svg fill=\'%23475569\' height=\'24\' viewBox=\'0 0 24 24\' width=\'24\' xmlns=\'http://www.w3.org/2000/svg\'><path d=\'M7 10l5 5 5-5z\'/><path d=\'M0 0h24v24H0z\' fill=\'none\'/></svg>")', backgroundRepeat: 'no-repeat', backgroundPosition: 'right 12px center', backgroundSize: '18px' }}
                         >
-                          <option value="Clinical genetics consultation">Clinical genetics consultation</option>
-                          <option value="Genetic counselling">Genetic counselling</option>
-                          <option value="Genetic report interpretation">Genetic report interpretation</option>
-                          <option value="Wellness genomics consultation">Wellness genomics consultation</option>
-                          <option value="NIPT consultation">NIPT consultation</option>
-                          <option value="Reproductive genetics consultation">Reproductive genetics consultation</option>
-                          <option value="Family risk assessment">Family risk assessment</option>
-                          <option value="Sequencing / clinical panel consultation">Sequencing / clinical panel consultation</option>
+                          <option value="Clinical Genetics Consultation">Clinical Genetics Consultation</option>
+                          <option value="Genetic Counselling">Genetic Counselling</option>
+                          <option value="Genetic Report Interpretation">Genetic Report Interpretation</option>
+                          <option value="Wellness Genomics Consultation">Wellness Genomics Consultation</option>
+                          <option value="NIPT / Prenatal Screening Guidance">NIPT / Prenatal Screening Guidance</option>
+                          <option value="Wellness Counselling">Wellness Counselling</option>
+                          <option value="Precision Medicine Guidance">Precision Medicine Guidance</option>
+                          <option value="Personalized Management">Personalized Management</option>
+                          <option value="Nutrition & Wellness Guidance">Nutrition & Wellness Guidance</option>
+                          <option value="Cancer Prevention Awareness">Cancer Prevention Awareness</option>
+                          <option value="Non-Communicable Disease Prevention Awareness">Non-Communicable Disease Prevention Awareness</option>
+                          <option value="Online Video Consultation">Online Video Consultation</option>
                           <option value="Corporate / academic inquiry">Corporate / academic inquiry</option>
                         </select>
                       </div>
@@ -595,6 +599,22 @@ export default function Appointments() {
                         themeColor="var(--gold)"
                       />
                     </div>
+                  </div>
+
+                  {/* Online Payment Integration Placeholder Banner */}
+                  <div className="card flex-col align-start" style={{ padding: '24px', background: 'rgba(245, 158, 11, 0.03)', borderColor: 'rgba(245, 158, 11, 0.15)', borderRadius: '18px', marginBottom: '24px' }}>
+                    <div className="flex-row align-center gap-2 mb-2 text-gold" style={{ display: 'flex', alignItems: 'center', color: '#d97706' }}>
+                      <Info size={18} />
+                      <strong style={{ fontSize: '0.9rem', fontWeight: 700 }}>Online Payment Gateway Integration</strong>
+                    </div>
+                    <p className="xsmall-text text-muted" style={{ lineHeight: '1.6', margin: 0 }}>
+                      Secure online credit card and mobile payment processing is currently in setup mode. Once your appointment slot is clinically confirmed by our Galle coordinator, you will receive a secure payment link via SMS or Email to complete booking validation.
+                    </p>
+                    {/* 
+                      TODO: Integrate Payment Gateway SDK (e.g. PayHere / Stripe)
+                      The payment processing flow will verify session details, capture a secure transaction token, 
+                      and update the appointment payment status from "Pending" to "Paid" via backend webhook.
+                    */}
                   </div>
 
                   {/* Section 5: Consent & Submit */}

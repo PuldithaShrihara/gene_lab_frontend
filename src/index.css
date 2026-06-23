@@ -396,9 +396,13 @@ p {
 
 /* Top bar override */
 .top-bar {
-  background-color: var(--primary);
+  background-color: #0f172a;
   padding: 8px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+[data-theme="dark"] .top-bar {
+  background-color: #090d16;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
 .top-bar-container {
   display: flex;
