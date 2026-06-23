@@ -13,7 +13,8 @@ import {
   ChevronRight,
   Clock,
   MapPin,
-  Laptop
+  Laptop,
+  Users
 } from 'lucide-react';
 
 export default function Appointments() {
