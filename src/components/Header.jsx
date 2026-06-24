@@ -68,20 +68,8 @@ export default function Header() {
             </li>
 
             <li>
-              <Link to="/packages" className={`nav-link ${location.pathname === '/packages' ? 'active' : ''}`}>
-                Test Packages
-              </Link>
-            </li>
-
-            <li>
               <Link to="/blueprint" className={`nav-link ${location.pathname === '/blueprint' ? 'active' : ''}`}>
                 Wellness Blueprint
-              </Link>
-            </li>
-
-            <li>
-              <Link to="/nipt" className={`nav-link ${location.pathname === '/nipt' ? 'active' : ''}`}>
-                NIPT
               </Link>
             </li>
 
@@ -99,6 +87,11 @@ export default function Header() {
               </div>
             </li>
 
+            <li>
+              <Link to="/nipt" className={`nav-link ${location.pathname === '/nipt' ? 'active' : ''}`}>
+                NIPT
+              </Link>
+            </li>
             {/* More Dropdown */}
             <li className="nav-item-dropdown">
               <span className={`nav-link ${['/request-genetic-test', '/patient-registration', '/partner-laboratories', '/reviews', '/contact'].includes(location.pathname) ? 'active' : ''}`} style={{ cursor: 'default' }}>
@@ -153,7 +146,6 @@ export default function Header() {
             <li className="mobile-nav-group-title">About</li>
             <li><Link to="/about" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>About Doctor</Link></li>
             <li><Link to="/clinic" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>The Gene Clinic</Link></li>
-
             <li className="mobile-nav-group-title">Services & Panels</li>
             <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>All Services</Link></li>
             <li><Link to="/packages" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Test Packages</Link></li>
@@ -185,7 +177,6 @@ export default function Header() {
                 <a href="#" target="_blank" rel="noopener noreferrer" className="btn btn-secondary btn-sm" style={{ padding: '6px 12px', fontSize: '0.75rem' }}>LinkedIn</a>
               </div>
             </li>
-
             <li className="mobile-drawer-cta" style={{ marginTop: '24px' }}>
               <Link to="/appointments" onClick={closeMenu} className="btn btn-primary w-full text-center">
                 Book Appointment
