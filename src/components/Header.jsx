@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react';
 import logoImg from '../assets/logo.png';
+import LoginButton from './LoginButton';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -111,6 +112,10 @@ export default function Header() {
             {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </button>
           
+          <div className="hide-tablet" style={{ display: 'flex', alignItems: 'center' }}>
+            <LoginButton />
+          </div>
+
           <Link to="/appointments" className="btn btn-primary btn-sm hide-tablet">
             Book Appointment
           </Link>
@@ -173,6 +178,9 @@ export default function Header() {
               </div>
             </li>
             <li className="mobile-drawer-cta" style={{ marginTop: '24px' }}>
+              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '12px' }}>
+                <LoginButton />
+              </div>
               <Link to="/appointments" onClick={closeMenu} className="btn btn-primary w-full text-center">
                 Book Appointment
               </Link>

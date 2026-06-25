@@ -30,6 +30,7 @@ import PatientRegistration from './pages/PatientRegistration';
 import PartnerLaboratories from './pages/PartnerLaboratories';
 import Reviews from './pages/Reviews';
 import Contact from './pages/Contact';
+import Profile from './pages/Profile';
 
 // Simple Legal Subpages to resolve footer links
 function PrivacyPolicy() {
@@ -94,6 +95,7 @@ export default function App() {
             <Route path="/reviews" element={<Reviews />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-conditions" element={<TermsConditions />} />
+            <Route path="/profile" element={<Profile />} />
           </Routes>
         </main>
 
