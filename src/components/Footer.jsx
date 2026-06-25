@@ -84,14 +84,14 @@ export default function Footer() {
           <div className="footer-col">
             <h3>Services</h3>
             <ul className="footer-links">
-              <li><Link to="/services">Clinical Genetics</Link></li>
               <li><Link to="/services">Genetic Counselling</Link></li>
-              <li><Link to="/services">Report Interpretation</Link></li>
+              <li><Link to="/services">Wellness Counselling</Link></li>
               <li><Link to="/services">Precision Medicine</Link></li>
               <li><Link to="/services">Personalized Management</Link></li>
-              <li><Link to="/services">Nutrition & Wellness</Link></li>
-              <li><Link to="/services">Cancer & NCD Prevention</Link></li>
-              <li><Link to="/services">Online Video Consult</Link></li>
+              <li><Link to="/blueprint">Wellness & Nutrition</Link></li>
+              <li><Link to="/services">Cancer Prevention Awareness</Link></li>
+              <li><Link to="/services">NCD Prevention Awareness</Link></li>
+              <li><Link to="/appointments">Online Video Consultation</Link></li>
             </ul>
           </div>
 
@@ -145,6 +145,10 @@ export default function Footer() {
 
         {/* Divider */}
         <hr className="footer-divider" />
+
+        <div className="text-center xsmall-text text-muted" style={{ margin: '16px 0' }}>
+          Online payment gateway will be introduced in a future phase.
+        </div>
 
         {/* Footer Bottom Bar */}
         <div className="footer-bottom">

@@ -41,12 +41,9 @@ export default function WellnessBlueprint() {
           <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '40px', alignItems: 'start' }}>
             
             <div>
-              <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '20px' }}>What is the Wellness Blueprint?</h2>
-              <p className="small-text text-muted" style={{ lineHeight: '1.7', marginBottom: '20px' }}>
-                The <strong>Me360 Wellness Blueprint</strong> combines molecular genomics sequencing datasets with your physiological lifestyle history to generate a comprehensive guidance document. Rather than diagnosing conditions, this profile serves as an educational guide to support nutritional choices and fitness targets.
-              </p>
+              <h2 style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '20px' }}>Wellness, Nutrition & Personalized Guidance</h2>
               <p className="small-text text-muted" style={{ lineHeight: '1.7', marginBottom: '24px' }}>
-                By identifying minor variations in metabolic, detoxification, and lipid pathways, we assist you and your nutritionist in tailoring dietary intakes, selecting optimal physical training regimens, and planning proactive health strategies.
+                The Me360 Wellness Blueprint supports personalized wellness guidance by reviewing selected genetic markers related to nutrition, micronutrient needs, macronutrient response, food sensitivity, weight management, fitness response, detox profile, health predisposition awareness, and dementia-related awareness.
               </p>
               
               {/* Mandatory Medical Disclaimer */}
@@ -56,7 +53,7 @@ export default function WellnessBlueprint() {
                   <strong style={{ fontSize: '0.9rem', fontWeight: 700 }}>Medical Liability Disclaimer</strong>
                 </div>
                 <p className="xsmall-text text-muted" style={{ lineHeight: '1.6', margin: 0 }}>
-                  The Me360 Wellness Blueprint genomics screening and lifestyle reports are provided solely for educational guidance and wellness awareness. They are not diagnostic tests, do not represent clinical diagnoses of disease, and do not guarantee prevention or clinical treatment outcomes. All genetic variants should be reviewed alongside clinical examinations in consultation with a qualified medical professional.
+                  The Me360 Wellness Blueprint is not a diagnostic report. It is intended for wellness guidance and should be interpreted with support from qualified healthcare professionals.
                 </p>
               </div>
             </div>
@@ -140,8 +137,8 @@ export default function WellnessBlueprint() {
             Ready to explore your metabolic and nutritional guidelines? Book a pre-test consultation to discuss Me360 sequencing options with our genetics coordinators.
           </p>
           <div className="flex-row-center justify-center gap-4 flex-wrap" style={{ display: 'flex', justifyContent: 'center', gap: '16px' }}>
-            <Link to="/appointments?type=Wellness%20genomics%20consultation" className="btn btn-primary" style={{ padding: '12px 28px' }}>
-              Book Wellness Session
+            <Link to="/appointments" className="btn btn-primary" style={{ padding: '12px 28px' }}>
+              Book Wellness Counselling
             </Link>
             <Link to="/packages?category=Wellness%20%26%20Lifestyle%20Packages" className="btn btn-secondary" style={{ padding: '12px 28px' }}>
               View Wellness Packages

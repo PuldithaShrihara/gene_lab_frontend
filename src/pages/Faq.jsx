@@ -19,6 +19,38 @@ export default function Faq() {
       a: "Wellness counselling supports personalized lifestyle, nutrition, fitness, and prevention-focused planning based on health goals, genetic information, and professional guidance."
     },
     {
+      q: "How can I book a counselling appointment?",
+      a: "You can use the Book Appointment page to submit your preferred consultation type, date, time, and contact details. Our team will contact you to confirm the appointment."
+    },
+    {
+      q: "What is precision medicine?",
+      a: "Precision medicine uses genetic insights, clinical background, family history, lifestyle, and health information to support more personalized healthcare decisions."
+    },
+    {
+      q: "What is personalized management?",
+      a: "Personalized management provides individualized support for follow-up planning, lifestyle guidance, risk awareness, monitoring, referral pathways, and long-term health planning."
+    },
+    {
+      q: "Can I get nutrition and wellness guidance?",
+      a: "Yes. Nutrition and wellness guidance helps clients understand nutrient needs, food sensitivity, weight management, fitness response, detox profile, and prevention-focused lifestyle planning."
+    },
+    {
+      q: "Do you provide cancer prevention awareness?",
+      a: "Yes. Cancer prevention awareness focuses on family history, genetic risk understanding, lifestyle risk factors, screening awareness, and appropriate referral guidance."
+    },
+    {
+      q: "Do you provide NCD prevention awareness?",
+      a: "Yes. NCD prevention awareness provides education and counselling support for diabetes, cardiovascular disease, obesity-related risks, hypertension, metabolic health, and healthy aging."
+    },
+    {
+      q: "Are online video consultations available?",
+      a: "Yes. Online video consultations are available for selected counselling and report interpretation services."
+    },
+    {
+      q: "Is online payment available?",
+      a: "Online payment gateway integration is planned for a future phase. At present, our team will contact you with confirmation and payment instructions after appointment submission."
+    },
+    {
       q: "What is genetic testing?",
       a: "Genetic testing is a medical test that identifies changes in chromosomes, genes, or proteins. It can help confirm or rule out certain conditions, identify carrier status, or support risk understanding."
     },
@@ -45,18 +77,6 @@ export default function Faq() {
     {
       q: "Can I upload previous reports?",
       a: "Yes. You can upload previous genetic reports, medical reports, referral letters, or prescriptions during appointment booking."
-    },
-    {
-      q: "Are online consultations available?",
-      a: "Yes. Online video consultations are available for selected counselling and report interpretation services."
-    },
-    {
-      q: "How can I book an appointment?",
-      a: "You can use the Book Appointment page to submit your preferred consultation type, date, time, and contact details. Our team will contact you to confirm the appointment."
-    },
-    {
-      q: "Is online payment available?",
-      a: "Online payment gateway integration is planned for a future phase. At present, our team will contact you with confirmation and payment instructions after appointment submission."
     },
     {
       q: "Is my information confidential?",

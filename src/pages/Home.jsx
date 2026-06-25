@@ -19,12 +19,12 @@ export default function Home() {
   }, []);
 
   const serviceCategories = [
-    { title: 'Clinical Genetics', desc: 'Expert clinical diagnostics and phenotype mapping for rare or inherited syndromes.', icon: Activity, path: '/services' },
-    { title: 'Genetic Counselling', desc: 'Pre- and post-test ethical support clarifying inheritance patterns and family risks.', icon: HeartHandshake, path: '/services', highlighted: true }, // Highlighted card
-    { title: 'Wellness Genomics', desc: 'Personalized wellness profiles matching food, weight, and fitness responses in your DNA.', icon: Sparkles, path: '/blueprint' },
-    { title: 'NIPT / Prenatal Screening', desc: 'Safe maternal cfDNA screening for major fetal trisomies (21, 18, 13) after 10 weeks.', icon: ClipboardList, path: '/nipt' },
-    { title: 'Genetic Report Interpretation', desc: 'Professional re-evaluation of third-party clinical DNA panel or exome reports.', icon: BookOpen, path: '/services' },
-    { title: 'Sequencing & Panels', desc: 'Coordination of Exomes, Whole Genomes, and targeted clinical gene panels.', icon: Microscope, path: '/services' }
+    { title: 'Genetic Counselling', desc: 'Professional guidance to understand genetic risks, family history, test options, and genetic report results.', icon: HeartHandshake, path: '/services', cta: 'Book Genetic Counselling' },
+    { title: 'Wellness Counselling', desc: 'Personalized wellness guidance focused on nutrition, lifestyle, healthy aging, prevention awareness, and long-term wellbeing.', icon: Sparkles, path: '/services', cta: 'Book Wellness Counselling' },
+    { title: 'Precision Medicine', desc: 'Using genetic insights, family history, clinical background, and lifestyle factors to support more personalized healthcare decisions.', icon: Activity, path: '/services', cta: 'Learn More' },
+    { title: 'Personalized Management', desc: 'Individualized planning support for prevention awareness, follow-up guidance, lifestyle planning, monitoring, and referral pathways.', icon: ClipboardList, path: '/services', cta: 'Explore Personalized Management' },
+    { title: 'Wellness & Nutrition', desc: 'Guidance for nutrition, lifestyle, weight management, fitness response, nutrient needs, and long-term wellness planning.', icon: Activity, path: '/blueprint', cta: 'Explore Wellness Blueprint' },
+    { title: 'Cancer & NCD Prevention Awareness', desc: 'Education and counselling support for cancer risk awareness, diabetes, cardiovascular disease, metabolic health, hypertension, and prevention-focused lifestyle planning.', icon: ShieldCheck, path: '/services', cta: 'Book Prevention Guidance' }
   ];
 
   const benefits = [
@@ -49,13 +49,13 @@ export default function Home() {
           <div className="hero-content">
             <span className="badge badge-accent mb-4">The Gene Clinic</span>
             <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 2.8rem)', lineHeight: '1.2', marginBottom: '16px' }}>
-              Genetic & Wellness Counselling by GenSek Health Private Limited
+              Genetic & Wellness Counselling for Personalized Health Decisions
             </h1>
             <p className="font-bold text-accent mb-3" style={{ color: 'var(--accent)', fontWeight: 700, fontSize: '1.05rem' }}>
-              Led by Dr. L. B. Lahiru Prabodha, Clinical Geneticist and Genetic Counsellor
+              Led by Dr. L. B. Lahiru Prabodha, Clinical Geneticist and Genetic Counsellor.
             </p>
             <p className="hero-subheadline" style={{ marginBottom: '20px' }}>
-              The Gene Clinic by GenSek Health Private Limited supports individuals, families, and healthcare professionals with genetic counselling, wellness counselling, genetic test guidance, report interpretation, precision medicine insights, and personalized wellness planning.
+              The Gene Clinic by GenSek Health Private Limited supports patients, families, and healthcare professionals with genetic counselling, wellness counselling, precision medicine insights, personalized management guidance, nutrition and wellness support, cancer prevention awareness, NCD prevention awareness, and appointment booking for counselling sessions.
             </p>
             
             {/* Highlight Badges */}
@@ -71,12 +71,15 @@ export default function Home() {
               </span>
             </div>
 
-            <div className="hero-actions">
+            <div className="hero-actions" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
               <Link to="/appointments" className="btn btn-primary">
-                Book Counselling <Calendar size={18} />
+                Book Counselling Appointment <Calendar size={18} />
               </Link>
               <Link to="/request-genetic-test" className="btn btn-secondary">
                 Request Genetic Test
+              </Link>
+              <Link to="/appointments" className="btn btn-secondary" style={{ backgroundColor: 'transparent', borderColor: 'var(--primary)' }}>
+                Online Video Consultation
               </Link>
             </div>
           </div>
@@ -282,10 +285,9 @@ export default function Home() {
               return (
                 <div 
                   key={idx} 
-                  className={`card flex-col-card hover-scale ${service.highlighted ? 'card-highlighted' : ''}`}
+                  className={`card flex-col-card hover-scale`}
                   style={{ overflow: 'hidden' }}
                 >
-                  {/* Styled Header block */}
                   <div className="service-card-header">
                     <div className="service-card-icon-overlap">
                       <Icon size={24} className="text-secondary" style={{ color: 'var(--secondary)' }} />
@@ -296,7 +298,7 @@ export default function Home() {
                   <p className="mt-3 small-text">{service.desc}</p>
                   
                   <Link to={service.path} className="btn-link mt-auto pt-6 inline-flex align-center gap-1">
-                    Learn More <ChevronRight size={14} />
+                    {service.cta} <ChevronRight size={14} />
                   </Link>
                 </div>
               );
@@ -476,49 +478,16 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Test Packages Preview */}
-      <section className="section" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="container">
-          <div className="text-center mb-12">
-            <span className="badge badge-accent">Diagnostics Packages</span>
-            <h2>Genetic Test Packages</h2>
-            <p style={{ maxWidth: '600px', margin: '8px auto 0' }}>
-              A selection of our popular clinical and lifestyle panels.
-            </p>
-          </div>
-
-          <div className="grid grid-3">
-            <div className="card flex-col-card package-card">
-              <h3>Wellness & Lifestyle</h3>
-              <p className="small-text mt-2">Custom nutritional responses, metabolics, and tolerances.</p>
-              <div className="mt-4 border-top pt-4 xsmall-text">
-                <span className="badge mb-2">Saliva</span>
-                <div>Turnaround: 3 - 4 weeks</div>
-              </div>
-              <Link to="/packages" className="btn btn-secondary btn-sm mt-6 w-full text-center">Request Details</Link>
-            </div>
-            <div className="card flex-col-card card-gold package-card">
-              <h3>Me360 Complete</h3>
-              <p className="small-text mt-2">Our premier program linking weight, vitamins, fitness, and lipid tendencies.</p>
-              <div className="mt-4 border-top pt-4 xsmall-text">
-                <span className="badge mb-2">Saliva</span>
-                <div>Turnaround: 4 - 5 weeks</div>
-              </div>
-              <Link to="/packages" className="btn btn-secondary btn-sm mt-6 w-full text-center">Request Details</Link>
-            </div>
-            <div className="card flex-col-card package-card">
-              <h3>NIPT Prenatal</h3>
-              <p className="small-text mt-2">A safe screening choice for fetal chromosomal aneuploidies from 10 weeks.</p>
-              <div className="mt-4 border-top pt-4 xsmall-text">
-                <span className="badge mb-2">Whole Blood (Streck)</span>
-                <div>Turnaround: 10 - 14 days</div>
-              </div>
-              <Link to="/packages" className="btn btn-secondary btn-sm mt-6 w-full text-center">Request Details</Link>
-            </div>
-          </div>
-          <div className="text-center mt-8">
-            <Link to="/packages" className="btn-link">View All Test Packages &rarr;</Link>
-          </div>
+      {/* Strong Appointment Section */}
+      <section className="section section-light" style={{ position: 'relative', zIndex: 1, backgroundColor: 'rgba(2, 132, 199, 0.03)' }}>
+        <div className="container text-center">
+          <h2>Book an Appointment for Counselling</h2>
+          <p className="lead-text mt-4 mb-6" style={{ maxWidth: '800px', margin: '16px auto 32px' }}>
+            Schedule a counselling session for genetic counselling, wellness counselling, precision medicine consultation, personalized management planning, nutrition guidance, cancer risk awareness, NCD prevention awareness, report interpretation, or online video consultation.
+          </p>
+          <Link to="/appointments" className="btn btn-primary" style={{ padding: '16px 40px', fontSize: '1.1rem' }}>
+            Book Appointment
+          </Link>
         </div>
       </section>
 

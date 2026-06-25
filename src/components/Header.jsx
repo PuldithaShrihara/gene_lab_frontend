@@ -57,52 +57,45 @@ export default function Header() {
                 Services <ChevronDown size={14} />
               </span>
               <div className="dropdown-menu" style={{ minWidth: '240px' }}>
-                <Link to="/services" className="dropdown-item">Clinical Genetics</Link>
+                <Link to="/services" className="dropdown-item">Genetic Counselling</Link>
                 <Link to="/services" className="dropdown-item">Wellness Counselling</Link>
-                <Link to="/services" className="dropdown-item">Precision Medicine Guidance</Link>
+                <Link to="/services" className="dropdown-item">Precision Medicine</Link>
                 <Link to="/services" className="dropdown-item">Personalized Management</Link>
-                <Link to="/services" className="dropdown-item">Nutrition & Wellness Guidance</Link>
+                <Link to="/blueprint" className="dropdown-item">Wellness & Nutrition</Link>
                 <Link to="/services" className="dropdown-item">Cancer & NCD Prevention</Link>
-                <Link to="/services" className="dropdown-item">Online Video Consultation</Link>
+                <Link to="/appointments" className="dropdown-item">Online Video Consultation</Link>
               </div>
             </li>
 
             <li>
-              <Link to="/blueprint" className={`nav-link ${location.pathname === '/blueprint' ? 'active' : ''}`}>
-                Wellness Blueprint
+              <Link to="/request-genetic-test" className={`nav-link ${location.pathname === '/request-genetic-test' ? 'active' : ''}`}>
+                Request Genetic Test
               </Link>
             </li>
 
             {/* Resources Dropdown */}
             <li className="nav-item-dropdown">
-              <span className={`nav-link ${['/education', '/journey', '/research', '/articles', '/faq'].includes(location.pathname) ? 'active' : ''}`} style={{ cursor: 'default' }}>
+              <span className={`nav-link ${['/education', '/articles', '/faq', '/journey'].includes(location.pathname) ? 'active' : ''}`} style={{ cursor: 'default' }}>
                 Resources <ChevronDown size={14} />
               </span>
               <div className="dropdown-menu">
-                <Link to="/education" className="dropdown-item">Education Hub</Link>
-                <Link to="/journey" className="dropdown-item">Patient Journey</Link>
-                <Link to="/research" className="dropdown-item">Research</Link>
+                <Link to="/education" className="dropdown-item">Education</Link>
                 <Link to="/articles" className="dropdown-item">Articles</Link>
-                <Link to="/faq" className="dropdown-item">FAQ</Link>
+                <Link to="/faq" className="dropdown-item">FAQ / Q & A</Link>
+                <Link to="/journey" className="dropdown-item">Patient Journey</Link>
               </div>
             </li>
 
-            <li>
-              <Link to="/nipt" className={`nav-link ${location.pathname === '/nipt' ? 'active' : ''}`}>
-                NIPT
-              </Link>
-            </li>
             {/* More Dropdown */}
             <li className="nav-item-dropdown">
-              <span className={`nav-link ${['/request-genetic-test', '/patient-registration', '/partner-laboratories', '/reviews', '/contact'].includes(location.pathname) ? 'active' : ''}`} style={{ cursor: 'default' }}>
+              <span className={`nav-link ${['/patient-registration', '/partner-laboratories', '/reviews', '/contact'].includes(location.pathname) ? 'active' : ''}`} style={{ cursor: 'default' }}>
                 More <ChevronDown size={14} />
               </span>
               <div className="dropdown-menu" style={{ minWidth: '220px' }}>
-                <Link to="/request-genetic-test" className="dropdown-item">Request Genetic Test</Link>
                 <Link to="/patient-registration" className="dropdown-item">Patient Registration</Link>
                 <Link to="/partner-laboratories" className="dropdown-item">Partner Laboratories</Link>
-                <Link to="/reviews" className="dropdown-item">Client Reviews</Link>
-                <Link to="/contact" className="dropdown-item">Contact Clinic</Link>
+                <Link to="/reviews" className="dropdown-item">Customer Reviews</Link>
+                <Link to="/contact" className="dropdown-item">Contact / Location</Link>
               </div>
             </li>
           </ul>
@@ -146,25 +139,27 @@ export default function Header() {
             <li className="mobile-nav-group-title">About</li>
             <li><Link to="/about" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>About Doctor</Link></li>
             <li><Link to="/clinic" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>The Gene Clinic</Link></li>
-            <li className="mobile-nav-group-title">Services & Panels</li>
-            <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>All Services</Link></li>
-            <li><Link to="/packages" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Test Packages</Link></li>
-            <li><Link to="/blueprint" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Wellness Blueprint</Link></li>
-            <li><Link to="/nipt" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>NIPT Prenatal Guidance</Link></li>
+            <li className="mobile-nav-group-title">Services</li>
+            <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Genetic Counselling</Link></li>
+            <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Wellness Counselling</Link></li>
+            <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Precision Medicine</Link></li>
+            <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Personalized Management</Link></li>
+            <li><Link to="/blueprint" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Wellness & Nutrition</Link></li>
+            <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Cancer & NCD Prevention</Link></li>
+            <li><Link to="/appointments" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Online Video Consultation</Link></li>
+            <li><Link to="/request-genetic-test" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Request Genetic Test</Link></li>
 
             <li className="mobile-nav-group-title">Resources</li>
-            <li><Link to="/education" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Education Hub</Link></li>
-            <li><Link to="/journey" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Patient Journey</Link></li>
-            <li><Link to="/research" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Research</Link></li>
+            <li><Link to="/education" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Education</Link></li>
             <li><Link to="/articles" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Articles</Link></li>
-            <li><Link to="/faq" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>FAQ Accordion</Link></li>
+            <li><Link to="/faq" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>FAQ / Q & A</Link></li>
+            <li><Link to="/journey" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Patient Journey</Link></li>
 
-            <li className="mobile-nav-group-title">Patient Portal & Connect</li>
-            <li><Link to="/request-genetic-test" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Request Genetic Test</Link></li>
+            <li className="mobile-nav-group-title">More</li>
             <li><Link to="/patient-registration" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Patient Registration</Link></li>
             <li><Link to="/partner-laboratories" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Partner Laboratories</Link></li>
-            <li><Link to="/reviews" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Client Reviews</Link></li>
-            <li><Link to="/contact" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Contact Clinic</Link></li>
+            <li><Link to="/reviews" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Customer Reviews</Link></li>
+            <li><Link to="/contact" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Contact / Location</Link></li>
 
             <li className="mobile-nav-group-title">Follow Us</li>
             <li style={{ paddingLeft: '16px', marginTop: '10px' }}>

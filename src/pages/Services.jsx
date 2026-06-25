@@ -9,137 +9,71 @@ import {
 export default function Services() {
   const servicesList = [
     {
-      title: 'Clinical Genetics Consultation',
-      icon: Activity,
-      desc: 'Comprehensive clinical evaluation and diagnostic guidance for individuals and families with suspected or confirmed inherited conditions.',
-      who: 'Patients presenting with unexplained metabolic, neurological, or physical features suggesting a rare genetic syndrome.',
-      expect: 'Detailed review of clinical records, medical history, construction of a three-generation pedigree chart, and candidate gene identification.'
-    },
-    {
       title: 'Genetic Counselling',
       icon: HeartHandshake,
-      desc: 'Compassionate, ethical support to help patients and families understand genetic inheritance, testing choices, result meanings, and psychological implications.',
+      desc: 'Genetic counselling helps individuals and families understand genetic risks, inherited conditions, family history, test options, possible results, and next steps with professional guidance.',
       who: 'Couples planning family, individuals with positive test results, or families managing hereditary disorders.',
-      expect: 'Structured sessions discussing risk probabilities, ethical choices, testing expectations, and family communication support.'
-    },
-    {
-      title: 'Genetic Testing Guidance',
-      icon: FileText,
-      desc: 'Expert support in selecting the most cost-effective, high-diagnostic-yield DNA tests and navigating sequencing alternatives.',
-      who: 'Patients advised to undergo testing but unsure about laboratory methods, diagnostic panels, or cost structures.',
-      expect: 'Case analysis matching your features with targeted gene panels or genomic sequencing options to prevent unnecessary costs.'
-    },
-    {
-      title: 'Genetic Report Interpretation',
-      icon: CheckCircle2,
-      desc: 'Detailed clinical explanation of third-party or direct-to-consumer genetic test reports, including VUS classifications.',
-      who: 'Individuals with reports containing ambiguous genetic variant statements (Variants of Uncertain Significance).',
-      expect: 'Variant database check, correlation with current clinical literature, symptom review, and detailed explanation of variant relevance.'
-    },
-    {
-      title: 'Wellness Genomics',
-      icon: Sparkles,
-      desc: 'Personalized genomic profiling related to nutrition, fitness, metabolic responses, detoxification, and long-term wellness planning.',
-      who: 'Healthy individuals wishing to customize lifestyle choices based on genetic predispositions.',
-      expect: 'Actionable wellness blueprint outlining metabolic rates, food tolerances, fitness responses, and lifestyle guidance checklists.'
-    },
-    {
-      title: 'Reproductive Genetics',
-      icon: Users,
-      desc: 'Conception and pre-conception mapping, carrier screening, and risk counseling for couples planning families.',
-      who: 'Couples with family histories of Thalassemia, recurrent losses, or consanguineous marriages.',
-      expect: 'Pedigree risk evaluation, carrier screen recommendations, and pre-conception path guidance.'
-    },
-    {
-      title: 'NIPT / Prenatal Screening',
-      icon: ClipboardList,
-      desc: 'Clinical screening for major chromosomal aneuploidies (trisomies 21, 18, 13) from cell-free DNA in maternal blood.',
-      who: 'Expectant mothers from 10 weeks of pregnancy wishing to screen fetal chromosomal risks non-invasively.',
-      expect: 'Streck sample collection instructions, prenatal screening risk assessment, and counseling on screening vs. diagnosis.'
-    },
-    {
-      title: 'Clinical Panels',
-      icon: ShieldAlert,
-      desc: 'Targeted Next-Generation Sequencing (NGS) panels focusing on specific disease areas (e.g. cardiac, cancer, neurological).',
-      who: 'Individuals with strong clinical features or family histories of early-onset cardiac disorders or cancers.',
-      expect: 'Selection of specific gene panels (BRCA1/2, cardiomyopathy panels) and coordination of sample testing.'
-    },
-    {
-      title: 'Whole Exome Sequencing',
-      icon: Dna,
-      desc: 'High-depth sequencing of all protein-coding regions (~22,000 genes) to diagnose complex, unsolved clinical cases.',
-      who: 'Patients with developmental delays, rare pediatric syndromes, or complex unexplained clinical signs.',
-      expect: 'Informed consent checklist, sequencing coordination, variant bioinformatics check, and clinical report signed by specialist.'
-    },
-    {
-      title: 'Whole Genome Sequencing',
-      icon: Microscope,
-      desc: 'Comprehensive analysis of the entire coding and non-coding sequence of DNA, available on request for complex indications.',
-      who: 'Cases where exome sequencing or specific panels are inconclusive and require deep structural variant mapping.',
-      expect: 'Complete genomic library curation, deep variant diagnostics, and detailed consultation reviews.'
-    },
-    {
-      title: 'Liquid Biopsy / Somatic Testing',
-      icon: Layers,
-      desc: 'Cancer-related somatic tumor profiling and cell-free circulating tumor DNA analysis, available on request.',
-      who: 'Oncology patients seeking genetic markers in tumor tissue or blood for targeted treatment options.',
-      expect: 'Referral review, coordination with specialized oncology testing labs, and somatic variant report reviews.'
-    },
-    {
-      title: 'Microbiome and Epigenetics',
-      icon: HelpCircle,
-      desc: 'Advanced testing pathways mapping gut microflora composition, skin microbiomes, and epigenetic biological age markers, available on request.',
-      who: 'Proactive wellness clients managing gut health, metabolism issues, or interested in epigenetic health indices.',
-      expect: 'Stool/swab sample coordination, bacterial diversity indexes mapping, and dietary adjustments recommendations.'
+      expect: 'Structured sessions discussing risk probabilities, ethical choices, testing expectations, and family communication support.',
+      cta1: { text: 'Book Appointment', link: '/appointments' },
+      cta2: { text: 'Request Genetic Test', link: '/request-genetic-test' }
     },
     {
       title: 'Wellness Counselling',
-      icon: HeartHandshake,
-      desc: 'Medically guided lifestyle and preventive wellness counselling addressing genetic predisposition markers to optimize health outcomes.',
+      icon: Sparkles,
+      desc: 'Wellness counselling supports personalized lifestyle, nutrition, fitness, healthy aging, prevention awareness, and long-term wellbeing planning.',
       who: 'Individuals seeking personalized guidance based on family health history and genetic screening indicators.',
-      expect: 'Review of lifestyle predispositions, detailed analysis of risk factors, and development of personalized wellness goals.'
+      expect: 'Review of lifestyle predispositions, detailed analysis of risk factors, and development of personalized wellness goals.',
+      cta1: { text: 'Book Appointment', link: '/appointments' }
     },
     {
-      title: 'Precision Medicine Guidance',
-      icon: Dna,
-      desc: 'Expert guidance on aligning therapeutic interventions and diagnostic strategies with individual genomic variations.',
+      title: 'Precision Medicine',
+      icon: Activity,
+      desc: 'Precision medicine uses genetic insights, clinical background, family history, lifestyle, and health information to support more personalized healthcare decisions.',
       who: 'Patients looking to tailor their healthcare path in collaboration with their primary physicians and genetics advisors.',
-      expect: 'Comprehensive variant review, clinical data alignment, and suggestions for individualized precision care pathways.'
+      expect: 'Comprehensive variant review, clinical data alignment, and suggestions for individualized precision care pathways.',
+      cta1: { text: 'Book Appointment', link: '/appointments' }
     },
     {
       title: 'Personalized Management',
       icon: CheckCircle2,
-      desc: 'Clinical coordination and planning support for genetic conditions, prioritizing safe, custom-tailored management strategies.',
+      desc: 'Personalized management provides individualized support for follow-up planning, lifestyle guidance, risk awareness, monitoring, referral pathways, and long-term health planning.',
       who: 'Individuals diagnosed with hereditary conditions or genetic predispositions requiring ongoing clinical supervision.',
-      expect: 'Development of clinical tracking checklists, coordination with medical specialists, and regular follow-up consultations.'
+      expect: 'Development of clinical tracking checklists, coordination with medical specialists, and regular follow-up consultations.',
+      cta1: { text: 'Book Appointment', link: '/appointments' }
     },
     {
-      title: 'Nutrition & Wellness Guidance',
-      icon: Sparkles,
-      desc: 'DNA-informed dietary guidance and wellness support to optimize metabolic health, nutrient absorption, and fitness levels.',
+      title: 'Wellness & Nutrition',
+      icon: Layers,
+      desc: 'Nutrition and wellness guidance helps clients understand nutrient needs, food sensitivity, weight management, fitness response, detox profile, and prevention-focused lifestyle planning.',
       who: 'Wellness clients wanting to optimize nutrition based on genetic variations in nutrient absorption and food sensitivities.',
-      expect: 'Analysis of dietary gene variants, custom nutrient guidelines, and structured lifestyle recommendations.'
+      expect: 'Analysis of dietary gene variants, custom nutrient guidelines, and structured lifestyle recommendations.',
+      cta1: { text: 'Book Appointment', link: '/appointments' },
+      cta2: { text: 'Request Genetic Test', link: '/request-genetic-test' }
     },
     {
       title: 'Cancer Prevention Awareness',
       icon: ShieldAlert,
-      desc: 'Hereditary cancer risk counselling and early screening coordination, focused on raising clinical awareness and promoting proactive checks.',
+      desc: 'Cancer prevention awareness focuses on family history, genetic risk understanding, lifestyle risk factors, screening awareness, and appropriate referral guidance.',
       who: 'Individuals with a strong family history of early-onset oncological conditions or known hereditary cancer gene variants.',
-      expect: 'Detailed pedigree mapping, hereditary risk evaluations, coordinate testing suggestions, and structured surveillance schedules.'
+      expect: 'Detailed pedigree mapping, hereditary risk evaluations, coordinate testing suggestions, and structured surveillance schedules.',
+      cta1: { text: 'Book Appointment', link: '/appointments' },
+      cta2: { text: 'Request Genetic Test', link: '/request-genetic-test' }
     },
     {
       title: 'Non-Communicable Disease Prevention Awareness',
       icon: Activity,
-      desc: 'Preventive counselling and risk awareness support targeting chronic conditions like cardiovascular disease, diabetes, and metabolic syndromes.',
+      desc: 'NCD prevention awareness provides education and counselling support for diabetes, cardiovascular disease, obesity-related risks, hypertension, metabolic health, and healthy aging.',
       who: 'Individuals wanting to proactively manage chronic disease risks based on hereditary risk profiles and clinical family histories.',
-      expect: 'Inherited cardiac/metabolic risk reviews, lifestyle risk factor identification, and structured prevention guidelines.'
+      expect: 'Inherited cardiac/metabolic risk reviews, lifestyle risk factor identification, and structured prevention guidelines.',
+      cta1: { text: 'Book Appointment', link: '/appointments' }
     },
     {
       title: 'Online Video Consultation',
       icon: Video,
-      desc: 'Remote clinical counselling and report interpretation sessions, bringing specialist genetics support directly to your home.',
+      desc: 'Online consultations are available for genetic counselling, wellness counselling, NIPT counselling, genetic report interpretation, precision medicine consultation, and personalized health guidance.',
       who: 'Patients requiring pre-test or post-test consultations who are unable to travel to our Galle clinic center.',
-      expect: 'Secure, confidential video consultation covering family history, test coordination, or variant report explanations.'
+      expect: 'Secure, confidential video consultation covering family history, test coordination, or variant report explanations.',
+      cta1: { text: 'Book Appointment', link: '/appointments' }
     }
   ];
 
@@ -184,12 +118,24 @@ export default function Services() {
                     </div>
                   </div>
 
-                  <Link 
-                    to={`/appointments?type=${encodeURIComponent(service.title)}`} 
-                    className="btn btn-primary w-full mt-4"
-                  >
-                    Book Consultation
-                  </Link>
+                  <div className="flex-col gap-2 mt-4">
+                    {service.cta1 && (
+                      <Link 
+                        to={service.cta1.link} 
+                        className="btn btn-primary w-full text-center"
+                      >
+                        {service.cta1.text}
+                      </Link>
+                    )}
+                    {service.cta2 && (
+                      <Link 
+                        to={service.cta2.link} 
+                        className="btn btn-secondary w-full text-center"
+                      >
+                        {service.cta2.text}
+                      </Link>
+                    )}
+                  </div>
                 </div>
               );
             })}

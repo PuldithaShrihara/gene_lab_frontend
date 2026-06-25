@@ -231,30 +231,25 @@ export default function PatientRegistration() {
             grid-template-columns: 1fr !important;
           }
         }
+
+        .registration-hero {
+          padding: 48px 0 40px;
+        }
+        @media (max-width: 768px) {
+          .registration-hero {
+            padding: 32px 0 28px;
+          }
+        }
       `}</style>
 
       {/* Hero Header */}
-      <section className="section bg-secondary border-bottom" style={{ padding: '60px 0 40px' }}>
+      <section className="section bg-secondary border-bottom registration-hero">
         <div className="container" style={{ maxWidth: '1200px' }}>
-          <div className="hero-container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '40px', alignItems: 'center' }}>
-            <div>
-              <span className="badge badge-accent mb-4">Patient Portal</span>
-              <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em' }}>
+          <div className="hero-container" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+              <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800, margin: '0', letterSpacing: '-0.02em', textAlign: 'center' }}>
                 Patient / Client Registration
               </h1>
-              <p className="lead-text" style={{ color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '24px' }}>
-                Register your details to support a smoother consultation, genetic testing, report interpretation, and follow-up experience.
-              </p>
-            </div>
-            
-            <div className="card card-glass" style={{ padding: '28px' }}>
-              <div className="flex-row align-center gap-3 mb-4" style={{ display: 'flex', alignItems: 'center' }}>
-                <Shield size={24} className="text-secondary" />
-                <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Data Confidentiality</h4>
-              </div>
-              <p className="xsmall-text text-muted" style={{ lineHeight: '1.6', margin: 0 }}>
-                Patient files are accessed strictly by clinical staff and genetics specialists. All details are kept secure under clinical privacy policies.
-              </p>
             </div>
           </div>
         </div>
