@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Building2, CheckCircle2, AlertCircle, Shield, Mail, Phone, MapPin } from 'lucide-react';
 import { API_BASE_URL } from '../config';
+import { useAuth } from '../context/AuthContext';
+import LoginRequiredCard from '../components/LoginRequiredCard';
 
 export default function PartnerLaboratories() {
   const [labName, setLabName] = useState('');
@@ -15,6 +17,7 @@ export default function PartnerLaboratories() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
+  const { user } = useAuth();
 
   const validateForm = () => {
     const errors = {};
@@ -50,7 +53,13 @@ export default function PartnerLaboratories() {
           email,
           location,
           services,
-          message
+          message,
+          userId: user?.uid || '',
+          userName: user?.displayName || '',
+          userEmail: user?.email || '',
+          userPhoto: user?.photoURL || '',
+          authProvider: 'google',
+          submittedBySignedInUser: !!user
         }),
       });
 
@@ -128,6 +137,7 @@ export default function PartnerLaboratories() {
                   </button>
                 </div>
               ) : (
+                <LoginRequiredCard title="Sign in to Submit Inquiry" message="Please sign in with Google to securely submit your laboratory partnership inquiry.">
                 <form onSubmit={handleSubmit} className="flex-col gap-8">
                   <div>
                     <h2 style={{ fontSize: '1.6rem', fontWeight: 700, margin: '0 0 6px' }}>Partnership Inquiry</h2>
@@ -247,6 +257,7 @@ export default function PartnerLaboratories() {
                     </button>
                   </div>
                 </form>
+                </LoginRequiredCard>
               )}
             </div>
 

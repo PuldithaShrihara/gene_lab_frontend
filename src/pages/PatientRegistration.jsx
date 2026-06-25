@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ClipboardCheck, CheckCircle2, AlertCircle, Shield, Upload, Phone, Mail } from 'lucide-react';
 import { API_BASE_URL } from '../config';
+import { useAuth } from '../context/AuthContext';
+import LoginRequiredCard from '../components/LoginRequiredCard';
 
 export default function PatientRegistration() {
   // Form fields state
@@ -25,6 +27,7 @@ export default function PatientRegistration() {
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
+  const { user } = useAuth();
 
   const validateForm = () => {
     const errors = {};
@@ -68,7 +71,13 @@ export default function PatientRegistration() {
           medicalCondition,
           currentMedications,
           uploadedReports: uploadedReportName ? [uploadedReportName] : [],
-          consent
+          consent,
+          userId: user?.uid || '',
+          userName: user?.displayName || '',
+          userEmail: user?.email || '',
+          userPhoto: user?.photoURL || '',
+          authProvider: 'google',
+          submittedBySignedInUser: !!user
         }),
       });
 
@@ -279,6 +288,7 @@ export default function PatientRegistration() {
                 </div>
               ) : (
                 /* Form Block */
+                <LoginRequiredCard title="Sign in to Register" message="Please sign in with Google to submit your registration details securely.">
                 <form onSubmit={handleSubmit} className="flex-col gap-8">
                   <div>
                     <h2 style={{ fontSize: '1.6rem', fontWeight: 700, margin: '0 0 6px' }}>Registration Intake</h2>
@@ -509,11 +519,12 @@ export default function PatientRegistration() {
                         className="btn btn-primary"
                         style={{ height: '52px', minWidth: '280px', width: '100%', maxWidth: '340px' }}
                       >
-                        {loading ? 'Registering Profile...' : 'Register'}
+                        {loading ? 'Submitting Registration...' : 'Submit Patient Registration'}
                       </button>
                     </div>
                   </div>
                 </form>
+                </LoginRequiredCard>
               )}
             </div>
 

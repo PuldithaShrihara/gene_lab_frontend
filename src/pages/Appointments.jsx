@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
+import { useAuth } from '../context/AuthContext';
+import LoginRequiredCard from '../components/LoginRequiredCard';
 import { 
   Calendar, 
   CheckCircle2, 
@@ -31,6 +33,7 @@ export default function Appointments() {
   };
 
   const [activeFormTab, setActiveFormTab] = useState(getTabFromPath(queryLocation.pathname));
+  const { user } = useAuth();
 
   // Shared form inputs
   const [name, setName] = useState('');
@@ -210,7 +213,13 @@ export default function Appointments() {
           email,
           phone,
           subject: contactSubject,
-          message
+          message,
+          userId: user?.uid || '',
+          userName: user?.displayName || '',
+          userEmail: user?.email || '',
+          userPhoto: user?.photoURL || '',
+          authProvider: 'google',
+          submittedBySignedInUser: !!user
         };
       } else if (activeFormTab === 1) {
         endpoint = `${API_BASE_URL}/api/genetic-test-requests`;
@@ -223,7 +232,13 @@ export default function Appointments() {
           reason: reason || 'Test requested',
           referralDetails,
           preferredContactMethod: preferredContact,
-          consent
+          consent,
+          userId: user?.uid || '',
+          userName: user?.displayName || '',
+          userEmail: user?.email || '',
+          userPhoto: user?.photoURL || '',
+          authProvider: 'google',
+          submittedBySignedInUser: !!user
         };
       } else {
         endpoint = `${API_BASE_URL}/api/appointments`;
@@ -255,7 +270,13 @@ export default function Appointments() {
           consent: formData.consent,
           // TODO: Integrate payment gateway in a future phase after confirming the payment provider.
           paymentStatus: "Pending",
-          source: "Website Appointment Page"
+          source: "Website Appointment Page",
+          userId: user?.uid || '',
+          userName: user?.displayName || '',
+          userEmail: user?.email || '',
+          userPhoto: user?.photoURL || '',
+          authProvider: 'google',
+          submittedBySignedInUser: !!user
         };
       }
 
@@ -549,6 +570,7 @@ export default function Appointments() {
                 </div>
               ) : (
                 /* Main Tab Forms Form */
+                <LoginRequiredCard title="Sign in to Continue" message="Please sign in with Google to securely submit your appointment or inquiry.">
                 <form onSubmit={handleSubmit} className="flex-col gap-8">
                   
                   {error && (
@@ -1093,6 +1115,7 @@ export default function Appointments() {
                   )}
 
                 </form>
+                </LoginRequiredCard>
               )}
 
             </div>

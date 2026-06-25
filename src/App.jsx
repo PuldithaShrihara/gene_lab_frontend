@@ -21,6 +21,7 @@ import Journey from './pages/Journey';
 import Articles from './pages/Articles';
 import Appointments from './pages/Appointments';
 import AdminDashboard from './pages/AdminDashboard';
+import AdminLogin from './pages/AdminLogin';
 import Research from './pages/Research';
 // New Pages
 import RequestGeneticTest from './pages/RequestGeneticTest';
@@ -82,6 +83,7 @@ export default function App() {
             <Route path="/journey" element={<Journey />} />
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/admin" element={<AdminDashboard />} />
+            <Route path="/admin/login" element={<AdminLogin />} />
             <Route path="/research" element={<Research />} />
             <Route path="/test-packages" element={<TestPackages onOpenCallbackModal={() => setIsCallbackOpen(true)} />} />
             <Route path="/wellness-blueprint" element={<WellnessBlueprint />} />

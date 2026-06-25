@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { API_BASE_URL } from '../config';
+import { useNavigate } from 'react-router-dom';
 import { 
   Users, Calendar, Clock, Activity, ShieldCheck, Check, 
-  X, Search, Filter, AlertCircle, RefreshCw, Eye, Sparkles, FileText, ToggleLeft, ToggleRight
+  X, Search, Filter, AlertCircle, RefreshCw, Eye, Sparkles, FileText, ToggleLeft, ToggleRight, LogOut
 } from 'lucide-react';
 
 export default function AdminDashboard() {
@@ -28,15 +29,43 @@ export default function AdminDashboard() {
 
   const [error, setError] = useState('');
 
+  const navigate = useNavigate();
+  const token = localStorage.getItem('adminToken');
+
+  useEffect(() => {
+    if (!token) {
+      navigate('/admin/login');
+    }
+  }, [token, navigate]);
+
+  const authHeaders = {
+    'Authorization': `Bearer ${token}`
+  };
+
+  const authHeadersWithJson = {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('adminToken');
+    navigate('/admin/login');
+  };
+
   const fetchData = async () => {
     setLoading(true);
     setError('');
     try {
-      const statsRes = await fetch(`${API_BASE_URL}/api/stats`);
-      const apptsRes = await fetch(`${API_BASE_URL}/api/appointments`);
-      const pkgsRes = await fetch(`${API_BASE_URL}/api/packages`);
-      const configRes = await fetch(`${API_BASE_URL}/api/config`);
+      const statsRes = await fetch(`${API_BASE_URL}/api/stats`, { headers: authHeaders });
+      const apptsRes = await fetch(`${API_BASE_URL}/api/appointments`, { headers: authHeaders });
+      const pkgsRes = await fetch(`${API_BASE_URL}/api/packages`, { headers: authHeaders });
+      const configRes = await fetch(`${API_BASE_URL}/api/config`, { headers: authHeaders });
       
+      if (statsRes.status === 401 || statsRes.status === 403) {
+        handleLogout();
+        return;
+      }
+
       if (statsRes.ok && apptsRes.ok && pkgsRes.ok && configRes.ok) {
         const statsData = await statsRes.json();
         const apptsData = await apptsRes.json();
@@ -67,13 +96,11 @@ export default function AdminDashboard() {
     try {
       await fetch(`${API_BASE_URL}/api/config`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeadersWithJson,
         body: JSON.stringify({ showPricing: nextVal }),
       });
       // Re-fetch packages to reflect masked vs. visible prices
-      const pkgsRes = await fetch(`${API_BASE_URL}/api/packages`);
+      const pkgsRes = await fetch(`${API_BASE_URL}/api/packages`, { headers: authHeaders });
       if (pkgsRes.ok) {
         const pkgsData = await pkgsRes.json();
         setPackages(pkgsData);
@@ -88,17 +115,20 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`${API_BASE_URL}/api/appointments/${id}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeadersWithJson,
         body: JSON.stringify({ status: newStatus }),
       });
+
+      if (res.status === 401 || res.status === 403) {
+        handleLogout();
+        return;
+      }
 
       if (res.ok) {
         const updated = await res.json();
         setAppointments(appointments.map(a => a.id === id ? updated : a));
         // Refresh stats
-        const statsRes = await fetch(`${API_BASE_URL}/api/stats`);
+        const statsRes = await fetch(`${API_BASE_URL}/api/stats`, { headers: authHeaders });
         if (statsRes.ok) {
           const statsData = await statsRes.json();
           setStats(statsData);
@@ -126,15 +156,18 @@ export default function AdminDashboard() {
     try {
       const res = await fetch(`${API_BASE_URL}/api/packages/${selectedPkg.id}`, {
         method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: authHeadersWithJson,
         body: JSON.stringify({
           price: editPrice,
           status: editStatus,
           remarks: editRemarks
         }),
       });
+
+      if (res.status === 401 || res.status === 403) {
+        handleLogout();
+        return;
+      }
 
       if (res.ok) {
         const updated = await res.json();
@@ -174,6 +207,9 @@ export default function AdminDashboard() {
           <div className="flex-row-center gap-3">
             <button onClick={fetchData} className="btn btn-secondary flex-row-center gap-2">
               <RefreshCw size={16} /> Sync
+            </button>
+            <button onClick={handleLogout} className="btn btn-secondary flex-row-center gap-2" style={{ background: '#fef2f2', color: '#dc2626', borderColor: '#fee2e2' }}>
+              <LogOut size={16} /> Logout
             </button>
           </div>
         </div>

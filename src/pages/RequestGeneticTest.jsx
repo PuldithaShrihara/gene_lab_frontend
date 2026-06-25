@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { ClipboardList, CheckCircle2, AlertCircle, Phone, MessageSquare, Shield, HelpCircle, Upload, ArrowRight } from 'lucide-react';
 import { API_BASE_URL } from '../config';
+import { useAuth } from '../context/AuthContext';
+import LoginRequiredCard from '../components/LoginRequiredCard';
 
 export default function RequestGeneticTest() {
   const [formData, setFormData] = useState({
@@ -19,6 +21,7 @@ export default function RequestGeneticTest() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState('');
   const [error, setError] = useState('');
+  const { user } = useAuth();
 
   const testCategories = [
     'Wellness Genomics',
@@ -95,7 +98,13 @@ export default function RequestGeneticTest() {
       reportFileName: formData.reportFile?.name || "",
       consent: formData.consent,
       status: "New",
-      source: "Website Request Genetic Test Page"
+      source: "Website Request Genetic Test Page",
+      userId: user?.uid || '',
+      userName: user?.displayName || '',
+      userEmail: user?.email || '',
+      userPhoto: user?.photoURL || '',
+      authProvider: 'google',
+      submittedBySignedInUser: !!user
     };
 
     try {
@@ -451,6 +460,7 @@ export default function RequestGeneticTest() {
                   </button>
                 </div>
               ) : (
+                <LoginRequiredCard title="Sign in to Request a Test" message="Please sign in with Google to submit your genetic test request securely.">
                 <form onSubmit={handleSubmit} className="flex-col gap-8" style={{ position: 'relative', zIndex: 2 }}>
                   <div>
                     <h2 style={{ fontSize: '1.8rem', fontWeight: 800, margin: '0 0 8px', color: 'var(--text-main)' }}>Request Details</h2>
@@ -642,6 +652,7 @@ export default function RequestGeneticTest() {
                     </button>
                   </div>
                 </form>
+                </LoginRequiredCard>
               )}
             </div>
 

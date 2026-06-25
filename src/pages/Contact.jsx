@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, MessageSquare, Clock, CheckCircle2, AlertCircle, Shield } from 'lucide-react';
 import { API_BASE_URL } from '../config';
-
+import { useAuth } from '../context/AuthContext';
+import LoginRequiredCard from '../components/LoginRequiredCard';
 const FacebookIcon = ({ size = 20, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -42,6 +43,7 @@ export default function Contact() {
   const [phone, setPhone] = useState('');
   const [subject, setSubject] = useState('General Inquiry');
   const [message, setMessage] = useState('');
+  const { user } = useAuth();
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -88,7 +90,13 @@ export default function Contact() {
           email,
           phone,
           subject,
-          message
+          message,
+          userId: user?.uid || '',
+          userName: user?.displayName || '',
+          userEmail: user?.email || '',
+          userPhoto: user?.photoURL || '',
+          authProvider: 'google',
+          submittedBySignedInUser: !!user
         }),
       });
 
@@ -166,6 +174,7 @@ export default function Contact() {
                   </button>
                 </div>
               ) : (
+                <LoginRequiredCard title="Sign in to Contact Us" message="Please sign in with Google to send your message securely.">
                 <form onSubmit={handleSubmit} className="flex-col gap-6">
                   <div>
                     <h2 style={{ fontSize: '1.6rem', fontWeight: 700, margin: '0 0 6px' }}>Send Us A Message</h2>
@@ -257,6 +266,7 @@ export default function Contact() {
                     {loading ? 'Sending Message...' : 'Submit Message'}
                   </button>
                 </form>
+                </LoginRequiredCard>
               )}
             </div>
 

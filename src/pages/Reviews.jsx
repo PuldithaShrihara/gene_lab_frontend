@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Star, CheckCircle2, AlertCircle, Shield, MessageSquare } from 'lucide-react';
 import { API_BASE_URL } from '../config';
+import { useAuth } from '../context/AuthContext';
+import LoginRequiredCard from '../components/LoginRequiredCard';
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);
@@ -14,6 +16,7 @@ export default function Reviews() {
   const [submitSuccess, setSubmitSuccess] = useState(false);
   const [error, setError] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
+  const { user } = useAuth();
 
   const serviceCategories = [
     'Wellness Genomics',
@@ -72,7 +75,13 @@ export default function Reviews() {
           serviceType,
           rating: Number(rating),
           reviewText,
-          consent
+          consent,
+          userId: user?.uid || '',
+          userName: user?.displayName || '',
+          userEmail: user?.email || '',
+          userPhoto: user?.photoURL || '',
+          authProvider: 'google',
+          submittedBySignedInUser: !!user
         }),
       });
 
@@ -210,6 +219,7 @@ export default function Reviews() {
                   </button>
                 </div>
               ) : (
+                <LoginRequiredCard title="Sign in to Post Review" message="Please sign in with Google to securely share your experience.">
                 <form onSubmit={handleSubmit} className="flex-col gap-6">
                   <div>
                     <h3 style={{ fontSize: '1.3rem', fontWeight: 700, margin: '0 0 6px' }}>Share Your Experience</h3>
@@ -303,6 +313,7 @@ export default function Reviews() {
                     {loading ? 'Submitting...' : 'Submit Feedback'}
                   </button>
                 </form>
+                </LoginRequiredCard>
               )}
             </div>
 
