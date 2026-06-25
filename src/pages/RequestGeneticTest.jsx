@@ -256,7 +256,8 @@ export default function RequestGeneticTest() {
         }
 
         .hero-section {
-          padding: 70px 0;
+          padding: 56px 0 48px;
+          background: linear-gradient(135deg, var(--bg-secondary) 0%, rgba(2, 132, 199, 0.04) 100%);
         }
 
         .hero-grid {
@@ -264,6 +265,67 @@ export default function RequestGeneticTest() {
           grid-template-columns: 1.2fr 0.8fr;
           gap: 40px;
           align-items: center;
+        }
+
+        .hero-title {
+          font-size: clamp(42px, 5vw, 64px);
+          font-weight: 800;
+          margin: 12px 0 16px;
+          letter-spacing: -0.02em;
+          line-height: 1.2;
+        }
+
+        .hero-subtitle {
+          color: var(--text-muted);
+          line-height: 1.6;
+          margin: 0;
+          font-size: 20px;
+          max-width: 760px;
+        }
+
+        .hero-badge {
+          padding: 8px 18px;
+          font-size: 13px;
+          border-radius: 999px;
+          text-transform: uppercase;
+          font-weight: 700;
+          display: inline-block;
+          margin-bottom: 16px;
+        }
+
+        .responsible-card {
+          max-width: 480px;
+          padding: 28px;
+          border-radius: 24px;
+          box-shadow: 0 8px 30px rgba(0, 0, 0, 0.04);
+          border: 1px solid rgba(2, 132, 199, 0.1);
+          background: #ffffff;
+          margin-left: auto;
+        }
+
+        .responsible-icon-circle {
+          width: 56px;
+          height: 56px;
+          background: rgba(2, 132, 199, 0.1);
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-shrink: 0;
+        }
+
+        .responsible-title {
+          margin: 0;
+          font-size: 24px;
+          font-weight: 800;
+          color: var(--text-main);
+        }
+
+        .responsible-body {
+          line-height: 1.6;
+          margin: 0;
+          font-size: 16px;
+          color: var(--text-muted);
         }
 
         .main-grid {
@@ -313,9 +375,20 @@ export default function RequestGeneticTest() {
           overflow: hidden;
         }
 
+        .form-section-container {
+          padding: 40px 0 80px;
+        }
+
         @media (max-width: 992px) {
+          .hero-section {
+            padding: 44px 0 40px;
+          }
           .hero-grid {
             grid-template-columns: 1fr;
+            gap: 32px;
+          }
+          .responsible-card {
+            margin-left: 0;
           }
           .main-grid {
             grid-template-columns: 1fr;
@@ -327,7 +400,16 @@ export default function RequestGeneticTest() {
 
         @media (max-width: 768px) {
           .hero-section {
-            padding: 40px 0;
+            padding: 32px 0 28px;
+          }
+          .hero-title {
+            font-size: 34px;
+          }
+          .hero-subtitle {
+            font-size: 16px;
+          }
+          .form-section-container {
+            padding: 28px 0 60px;
           }
           .grid-2 {
             grid-template-columns: 1fr !important;
@@ -336,36 +418,18 @@ export default function RequestGeneticTest() {
       `}</style>
 
       {/* Hero Header */}
-      <section className="section bg-secondary border-bottom hero-section">
+      <section className="section border-bottom hero-section">
         <div className="container" style={{ maxWidth: '1200px' }}>
-          <div className="hero-grid">
-            <div className="flex-col align-start">
-              <span className="badge badge-accent mb-4" style={{ textTransform: 'uppercase', fontWeight: 700 }}>Diagnostics Coordination</span>
-              <h1 className="text-gradient" style={{ fontSize: 'clamp(2.2rem, 5vw, 3.5rem)', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
-                Request a Genetic Test
-              </h1>
-              <p className="lead-text" style={{ color: 'var(--text-muted)', lineHeight: '1.7', margin: 0, fontSize: '1.1rem' }}>
-                Submit a request for genetic wellness blueprinting, NIPT screening, clinical panels, or exome sequencing. Our clinical team will coordinate sample logistics, laboratory partnerships, and professional pre-test counselling.
-              </p>
-            </div>
-            
-            <div className="support-card" style={{ padding: '32px' }}>
-              <div className="flex-row align-center gap-3 mb-4">
-                <div style={{ background: 'rgba(2, 132, 199, 0.1)', padding: '12px', borderRadius: '50%' }}>
-                  <Shield size={28} className="text-secondary" />
-                </div>
-                <h3 style={{ margin: 0, fontSize: '1.3rem', fontWeight: 800, color: 'var(--text-main)' }}>Responsible Testing</h3>
-              </div>
-              <p className="xsmall-text text-muted" style={{ lineHeight: '1.7', margin: 0, fontSize: '0.95rem' }}>
-                We coordinate test processing with accredited national and international partner laboratories. All clinical test requests require professional interpretation and guidance to support your medical decisions.
-              </p>
-            </div>
+          <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+            <h1 className="text-gradient hero-title" style={{ margin: '0', textAlign: 'center' }}>
+              Request a Genetic Test
+            </h1>
           </div>
         </div>
       </section>
 
       {/* Request Form Area */}
-      <section className="section section-light" style={{ padding: '60px 0 80px' }}>
+      <section className="section section-light form-section-container">
         <div className="container" style={{ maxWidth: '1200px' }}>
           <div className="main-grid">
             

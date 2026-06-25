@@ -495,30 +495,12 @@ export default function Appointments() {
             
             {/* Left Column (Now centered) */}
             <div className="flex-col" style={{ alignItems: 'center' }}>
-              <span className="badge badge-accent mb-4" style={{ fontSize: '0.8rem', padding: '6px 16px' }}>
-                {activeFormTab === 0 ? 'Get In Touch' : activeFormTab === 1 ? 'Request Test' : 'The Gene Clinic'}
-              </span>
-              <h1 className="text-gradient" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)', lineHeight: '1.25', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em', textAlign: 'center' }}>
+              <h1 className="text-gradient" style={{ fontSize: 'clamp(1.5rem, 3.5vw, 2.2rem)', lineHeight: '1.25', fontWeight: 800, margin: '0', letterSpacing: '-0.02em', textAlign: 'center' }}>
                 {activeFormTab === 0 && 'Contact The Gene Clinic'}
                 {activeFormTab === 1 && 'Request a Genetic Test'}
                 {activeFormTab === 2 && 'Book an Appointment for Counselling'}
               </h1>
-              <p className="lead-text" style={{ fontSize: 'clamp(1rem, 3vw, 1.12rem)', color: 'var(--text-muted)', lineHeight: '1.7', maxWidth: '640px', marginBottom: '24px', textAlign: 'center' }}>
-                {activeFormTab === 0 && 'Have questions about our testing packages, counselling services, or report timelines? Reach out to our coordinators today.'}
-                {activeFormTab === 1 && 'Select from our genomic wellness profiles, prenatal screening, or clinical diagnostics panels.'}
-                {activeFormTab === 2 && 'Book a counselling session with The Gene Clinic by GenSek Health Private Limited for genetic counselling, wellness counselling, precision medicine consultation, personalized management planning, nutrition guidance, cancer/NCD prevention awareness, report interpretation, or online video consultation.'}
-              </p>
-              
-              {/* Trust Badges */}
-              <div className="flex-row gap-x-6 gap-y-2 flex-wrap text-muted justify-center" style={{ display: 'flex', justifyContent: 'center' }}>
-                <span className="xsmall-text flex-row align-center gap-1 font-bold">🛡️ Secure report processing</span>
-                <span className="xsmall-text flex-row align-center gap-1 font-bold">💻 Online or in-person</span>
-                <span className="xsmall-text flex-row align-center gap-1 font-bold">🩺 Specialist counselling</span>
-              </div>
             </div>
-
-
-            
           </div>
         </div>
       </section>
