@@ -526,30 +526,6 @@ export default function Appointments() {
               {/* Top Accent bar */}
               <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '5px', background: 'linear-gradient(90deg, var(--secondary), var(--accent))', borderTopLeftRadius: '24px', borderTopRightRadius: '24px' }}></div>
               
-              {/* Portal Form Navigation Tabs */}
-              <div className="flex-row gap-2 mb-8" style={{ display: 'flex', borderBottom: '1px solid var(--border-color)', paddingBottom: '20px', flexWrap: 'wrap' }}>
-                <button
-                  type="button"
-                  onClick={() => handleTabChange(0)}
-                  className={`portal-tab-btn ${activeFormTab === 0 ? 'active' : ''}`}
-                >
-                  <MessageSquare size={16} /> General inquiries
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleTabChange(1)}
-                  className={`portal-tab-btn ${activeFormTab === 1 ? 'active' : ''}`}
-                >
-                  <Dna size={16} /> Request Genetic test
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleTabChange(2)}
-                  className={`portal-tab-btn ${activeFormTab === 2 ? 'active' : ''}`}
-                >
-                  <Calendar size={16} /> Book appointment for Genetic counseling
-                </button>
-              </div>
 
               {success ? (
                 /* Success State Card */
@@ -1074,17 +1050,6 @@ export default function Appointments() {
                             <span className="xsmall-text text-light" style={{ fontSize: '0.75rem' }}>Upload request sheets if available</span>
                           </div>
                         </div>
-                      </div>
-
-                      {/* Online Payment Integration Placeholder Banner */}
-                      <div className="card flex-col align-start" style={{ padding: '24px', background: 'rgba(245, 158, 11, 0.03)', borderColor: 'rgba(245, 158, 11, 0.15)', borderRadius: '18px', marginBottom: '24px' }}>
-                        <div className="flex-row align-center gap-2 mb-2 text-gold" style={{ display: 'flex', alignItems: 'center', color: '#d97706' }}>
-                          <Info size={18} />
-                          <strong style={{ fontSize: '0.9rem', fontWeight: 700 }}>Online Payment Gateway Integration</strong>
-                        </div>
-                        <p className="xsmall-text text-muted" style={{ lineHeight: '1.6', margin: 0 }}>
-                          Secure online credit card and mobile payment processing is currently in setup mode. Once your appointment slot is clinically confirmed by our Galle coordinator, you will receive a secure payment link via SMS or Email to complete booking validation.
-                        </p>
                       </div>
 
                       {/* Section 5: Consent & Submit */}
