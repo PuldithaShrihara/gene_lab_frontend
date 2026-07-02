@@ -1,126 +1,233 @@
 import React, { useState } from 'react';
-import { HelpCircle, ChevronDown, ChevronUp, ShieldAlert } from 'lucide-react';
+import { HelpCircle, ChevronDown, ChevronUp, ShieldAlert, Phone, Mail, MessageCircle, MapPin, Calendar, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function Faq() {
-  const [activeIndex, setActiveIndex] = useState(null);
+  const [openIndex, setOpenIndex] = useState(null);
+  const [activeTopic, setActiveTopic] = useState('All');
 
   const toggleAccordion = (index) => {
-    setActiveIndex(activeIndex === index ? null : index);
+    setOpenIndex(openIndex === index ? null : index);
   };
 
-  const faqItems = [
+
+
+  const topics = [
+    'All',
+    'Genetic Counselling',
+    'Wellness Counselling',
+    'Genetic Testing',
+    'Appointments',
+    'NIPT',
+    'Reports & Uploads'
+  ];
+
+  const faqs = [
     {
+      topic: 'Genetic Counselling',
       q: "What is genetic counselling?",
       a: "Genetic counselling is professional guidance that helps individuals and families understand genetic risks, test options, possible results, and next steps."
     },
     {
-      q: "What is wellness counselling?",
-      a: "Wellness counselling supports personalized lifestyle, nutrition, fitness, and prevention-focused planning based on health goals, genetic information, and professional guidance."
+      topic: 'Genetic Counselling',
+      question: "Who should consider genetic counselling?",
+      answer: "Individuals or families with a history of hereditary conditions, recurrent miscarriages, those considering genetic testing, or individuals seeking precision wellness guidance."
     },
     {
-      q: "How can I book a counselling appointment?",
-      a: "You can use the Book Appointment page to submit your preferred consultation type, date, time, and contact details. Our team will contact you to confirm the appointment."
+      topic: 'Genetic Counselling',
+      question: "Do I need counselling before a genetic test?",
+      answer: "Pre-test genetic counselling is highly recommended to understand the benefits, limitations, and potential outcomes of the testing panel you are choosing."
     },
     {
-      q: "What is precision medicine?",
-      a: "Precision medicine uses genetic insights, clinical background, family history, lifestyle, and health information to support more personalized healthcare decisions."
+      topic: 'Genetic Counselling',
+      question: "What happens after I receive a genetic test report?",
+      answer: "Post-test counselling helps interpret the results, explain clinical implications, and formulate a personalized follow-up or management plan."
     },
     {
-      q: "What is personalized management?",
-      a: "Personalized management provides individualized support for follow-up planning, lifestyle guidance, risk awareness, monitoring, referral pathways, and long-term health planning."
+      topic: 'Wellness Counselling',
+      question: "What is wellness counselling?",
+      answer: "Wellness counselling supports personalized lifestyle, nutrition, fitness, and prevention-focused planning based on health goals, genetic information, and professional guidance."
     },
     {
-      q: "Can I get nutrition and wellness guidance?",
-      a: "Yes. Nutrition and wellness guidance helps clients understand nutrient needs, food sensitivity, weight management, fitness response, detox profile, and prevention-focused lifestyle planning."
+      topic: 'Wellness Counselling',
+      question: "How does wellness counselling support nutrition and lifestyle?",
+      answer: "It translates DNA sequence traits into actionable nutrition paths, highlighting nutrient needs, food sensitivities, and effective weight management strategies."
     },
     {
-      q: "Do you provide cancer prevention awareness?",
-      a: "Yes. Cancer prevention awareness focuses on family history, genetic risk understanding, lifestyle risk factors, screening awareness, and appropriate referral guidance."
+      topic: 'Wellness Counselling',
+      question: "Is wellness counselling a medical diagnosis?",
+      answer: "No. Wellness counselling focuses on prevention awareness and long-term health planning. It is not a clinical diagnosis."
     },
     {
-      q: "Do you provide NCD prevention awareness?",
-      a: "Yes. NCD prevention awareness provides education and counselling support for diabetes, cardiovascular disease, obesity-related risks, hypertension, metabolic health, and healthy aging."
+      topic: 'Genetic Testing',
+      question: "How can I request a genetic test?",
+      answer: "You can request a genetic test via our 'Request Genetic Test' page. Our team will contact you to coordinate sample collection and processing."
     },
     {
-      q: "Are online video consultations available?",
-      a: "Yes. Online video consultations are available for selected counselling and report interpretation services."
+      topic: 'Genetic Testing',
+      question: "What types of genetic tests are available?",
+      answer: "We coordinate NIPT prenatal screening, Wellness Genomics (Me360), clinical diagnostic panels, cancer genetics, whole exome, and whole genome sequencing."
     },
     {
-      q: "Is online payment available?",
-      a: "Online payment gateway integration is planned for a future phase. At present, our team will contact you with confirmation and payment instructions after appointment submission."
+      topic: 'Genetic Testing',
+      question: "How long does a genetic test take?",
+      answer: "Turnaround times generally average around 3–6 weeks depending on the complexity of the selected testing panel."
     },
     {
-      q: "What is genetic testing?",
-      a: "Genetic testing is a medical test that identifies changes in chromosomes, genes, or proteins. It can help confirm or rule out certain conditions, identify carrier status, or support risk understanding."
+      topic: 'Genetic Testing',
+      question: "Do I need to upload previous reports?",
+      answer: "Uploading previous genetic or medical reports is highly beneficial for our clinical team to select the most appropriate testing pathway for you."
     },
     {
-      q: "What is Me360 Wellness Blueprint?",
-      a: "The Me360 Wellness Blueprint is a DNA-based wellness profile that supports guidance on nutrition, fitness, weight management, detox, food sensitivity, health predisposition, and dementia-related awareness."
+      topic: 'Appointments',
+      question: "How can I book an appointment?",
+      answer: "You can book an appointment directly through our 'Book Appointment' page by selecting your preferred consultation type and submitting your details."
     },
     {
-      q: "Is Me360 a diagnostic report?",
-      a: "No. Me360 is not a diagnostic report. It is intended for wellness guidance and should be interpreted by qualified professionals."
+      topic: 'Appointments',
+      question: "Can I choose online or in-person consultation?",
+      answer: "Yes. We offer both online video consultations and in-person sessions. You can specify your preference when booking."
     },
     {
-      q: "What is NIPT?",
-      a: "NIPT is a non-invasive prenatal screening test that uses maternal blood to assess the risk of selected chromosomal conditions during pregnancy."
+      topic: 'Appointments',
+      question: "What information should I provide before appointment confirmation?",
+      answer: "Please provide your contact details, reason for consultation, patient registration details, and any previous medical/genetic reports."
     },
     {
-      q: "Is NIPT diagnostic?",
-      a: "No. NIPT is a screening test, not a diagnostic test. High-risk or unclear results may require further diagnostic confirmation."
+      topic: 'NIPT',
+      question: "What is NIPT?",
+      answer: "NIPT (Non-Invasive Prenatal Testing) is a screening test that uses maternal blood to assess the risk of selected chromosomal conditions during pregnancy."
     },
     {
-      q: "From when can NIPT be performed?",
-      a: "NIPT may be considered from at least 10 weeks of pregnancy, subject to clinical suitability and professional guidance."
+      topic: 'NIPT',
+      question: "Is NIPT diagnostic?",
+      answer: "No. NIPT is a screening test, not a diagnostic test. High-risk or unclear results may require further diagnostic confirmation."
     },
     {
-      q: "Can I upload previous reports?",
-      a: "Yes. You can upload previous genetic reports, medical reports, referral letters, or prescriptions during appointment booking."
+      topic: 'NIPT',
+      question: "From when can NIPT be performed?",
+      answer: "NIPT may be considered from at least 10 weeks of pregnancy, subject to clinical suitability and professional guidance."
     },
     {
-      q: "Is my information confidential?",
-      a: "Patient and client information should be handled confidentially and used only for appointment coordination, counselling, testing support, and follow-up communication."
+      topic: 'Reports & Uploads',
+      question: "Can I upload a previous genetic report?",
+      answer: "Yes. You can upload previous genetic reports, medical records, or prescriptions securely during the appointment booking process."
+    },
+    {
+      topic: 'Reports & Uploads',
+      question: "What file types are accepted?",
+      answer: "We currently accept PDF, JPG, and PNG formats for report and prescription uploads."
+    },
+    {
+      topic: 'Reports & Uploads',
+      question: "How are uploaded reports used?",
+      answer: "Uploaded reports are reviewed by our clinical geneticist to prepare for your consultation and provide precise, personalized medical guidance."
+    },
+    {
+      topic: 'Online Consultation',
+      question: "Are online video consultations available?",
+      answer: "Yes. Online video consultations are available for selected counselling and report interpretation services."
+    },
+    {
+      topic: 'Online Consultation',
+      question: "Can I discuss my genetic report online?",
+      answer: "Yes, our online video consultations are ideal for post-test counselling and detailed interpretation of genetic reports."
+    },
+    {
+      topic: 'Online Consultation',
+      question: "How will the clinic contact me?",
+      answer: "Our team will reach out via Phone Call, WhatsApp, or Email (based on your preference) with scheduling and meeting link details."
+    },
+    {
+      topic: 'Privacy & Payment',
+      question: "Is my information confidential?",
+      answer: "Patient and client information is used for appointment coordination, counselling, testing support, and follow-up communication."
+    },
+    {
+      topic: 'Privacy & Payment',
+      question: "Is online payment available?",
+      answer: "Online payment gateway integration is planned for a future phase. At present, our team will contact you with confirmation and payment instructions."
+    },
+    {
+      topic: 'Privacy & Payment',
+      question: "When will payment gateway be added?",
+      answer: "Online payment gateway integration is planned for a future phase. At present, our team will contact you with confirmation and payment instructions."
     }
   ];
+
+  const filteredFaqs = activeTopic === 'All' 
+    ? faqs 
+    : faqs.filter(faq => faq.topic === activeTopic);
 
   return (
     <div className="faq-page animate-fade-in bg-wave-lines" style={{ position: 'relative' }}>
       
       {/* Hero Header */}
-      <section className="section bg-secondary border-bottom" style={{ padding: '60px 0 40px' }}>
+      <section className="section bg-secondary border-bottom" style={{ padding: '30px 0' }}>
         <div className="container" style={{ maxWidth: '1200px' }}>
-          <div className="hero-container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '40px', alignItems: 'center' }}>
-            <div>
-              <span className="badge badge-accent mb-4">Support & FAQ</span>
-              <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em' }}>
-                Frequently Asked Questions
-              </h1>
-              <p className="lead-text" style={{ color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '24px' }}>
-                Answers to common questions about genetic counselling, wellness counselling, genetic testing, NIPT, appointments, report uploads, and online consultations.
-              </p>
-            </div>
-            
-            <div className="card card-glass" style={{ padding: '28px' }}>
-              <div className="flex-row align-center gap-3 mb-4" style={{ display: 'flex', alignItems: 'center' }}>
-                <ShieldAlert size={24} className="text-secondary" />
-                <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Medical Notice</h4>
-              </div>
-              <p className="xsmall-text text-muted" style={{ lineHeight: '1.6', margin: 0 }}>
-                FAQ answers are for general awareness and screening coordination guidance. They do not replace formal clinical consultations or professional medical diagnosis.
-              </p>
-            </div>
+          <div className="hero-container text-center" style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxWidth: '800px', margin: '0 auto' }}>
+            <h1 className="text-gradient" style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: 800, margin: '0', letterSpacing: '-0.02em', lineHeight: '1.2' }}>
+              Contact Us
+            </h1>
           </div>
         </div>
       </section>
 
-      {/* Accordion List */}
-      <section className="section section-light" style={{ padding: '60px 0 80px' }}>
-        <div className="container" style={{ maxWidth: '800px' }}>
+      {/* Main FAQ Content Area */}
+      <section className="section section-light" style={{ padding: '40px 0 80px' }}>
+        <div className="container" style={{ maxWidth: '900px' }}>
           
+          {/* Topics Header */}
+          <div style={{ marginBottom: '32px' }}>
+            <h2 style={{ fontSize: '1.5rem', fontWeight: 800, marginBottom: '20px' }}>Browse by Topic</h2>
+            
+            {/* Scrollable Chips for Mobile */}
+            <div style={{ display: 'flex', gap: '12px', overflowX: 'auto', paddingBottom: '12px', msOverflowStyle: 'none', scrollbarWidth: 'none', position: 'relative', zIndex: 2, pointerEvents: 'auto' }} className="hide-scrollbar">
+              {topics.map(topic => (
+                <button
+                  type="button"
+                  key={topic}
+                  onClick={() => {
+                    setActiveTopic(topic);
+                    setOpenIndex(null);
+                  }}
+                  className={activeTopic === topic ? "active-topic-class" : "normal-topic-class"}
+                  aria-pressed={activeTopic === topic}
+                  style={{
+                    padding: '8px 16px',
+                    borderRadius: '50px',
+                    border: `1px solid ${activeTopic === topic ? 'var(--primary)' : 'var(--border-color)'}`,
+                    background: activeTopic === topic ? 'rgba(2, 132, 199, 0.08)' : 'var(--bg-secondary)',
+                    color: activeTopic === topic ? 'var(--primary)' : 'var(--text-main)',
+                    fontWeight: activeTopic === topic ? 700 : 500,
+                    fontSize: '0.9rem',
+                    cursor: 'pointer',
+                    whiteSpace: 'nowrap',
+                    userSelect: 'none',
+                    position: 'relative',
+                    zIndex: 2,
+                    pointerEvents: 'auto',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  {topic}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Medical Disclaimer */}
+          <div style={{ padding: '16px 20px', background: 'rgba(239, 68, 68, 0.05)', border: '1px solid rgba(239, 68, 68, 0.15)', borderRadius: '12px', display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '40px' }}>
+            <ShieldAlert size={20} style={{ color: '#ef4444', flexShrink: 0 }} />
+            <p className="xsmall-text" style={{ margin: 0, color: 'var(--text-muted)', lineHeight: '1.5' }}>
+              FAQ answers are for general awareness and service guidance only. They do not replace consultation, diagnosis, or treatment by a qualified healthcare professional.
+            </p>
+          </div>
+
+          {/* Accordion List */}
           <div className="flex-col gap-3">
-            {faqItems.map((faq, index) => {
-              const isOpen = activeIndex === index;
+            {filteredFaqs.map((faq, index) => {
+              const isOpen = openIndex === index;
 
               return (
                 <div
@@ -137,48 +244,107 @@ export default function Faq() {
                   onClick={() => toggleAccordion(index)}
                 >
                   <div className="flex-row justify-between align-center" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '12px' }}>
-                    <h4 style={{ margin: 0, fontSize: '1rem', fontWeight: 700, lineHeight: '1.4', display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <HelpCircle size={18} className="text-secondary" style={{ flexShrink: 0 }} />
-                      {faq.q}
+                    <h4 style={{ margin: 0, fontSize: '1.05rem', fontWeight: 700, lineHeight: '1.4', display: 'flex', alignItems: 'flex-start', gap: '12px', color: 'var(--text-main)' }}>
+                      <HelpCircle size={20} className="text-secondary" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      {faq.question}
                     </h4>
                     <div className="text-muted" style={{ display: 'flex', flexShrink: 0 }}>
-                      {isOpen ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                      {isOpen ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
                     </div>
                   </div>
 
                   {isOpen && (
-                    <div style={{ marginTop: '14px', borderTop: '1px solid var(--border-color)', paddingTop: '14px' }}>
-                      <p className="small-text text-muted" style={{ margin: 0, lineHeight: '1.6' }}>
-                        {faq.a}
+                    <div style={{ marginTop: '16px', borderTop: '1px solid var(--border-color)', paddingTop: '16px', paddingLeft: '32px' }}>
+                      <p className="small-text" style={{ margin: 0, lineHeight: '1.6', color: 'var(--text-muted)' }}>
+                        {faq.answer}
                       </p>
                     </div>
                   )}
                 </div>
               );
             })}
+            
+            {filteredFaqs.length === 0 && (
+              <p className="text-center text-muted" style={{ padding: '40px 0' }}>No FAQs available for this topic yet.</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Us Support Section */}
+      <section className="section bg-secondary" style={{ padding: '60px 0', borderTop: '1px solid var(--border-color)' }}>
+        <div className="container" style={{ maxWidth: '1000px' }}>
+          <div className="text-center" style={{ marginBottom: '40px' }}>
+            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '16px' }}>Still have questions?</h2>
+            <p className="lead-text text-muted" style={{ maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
+              If you cannot find the answer you need, contact The Gene Clinic team for assistance with appointments, genetic test requests, report interpretation, or patient services.
+            </p>
           </div>
 
-          {/* Still Have Questions CTA */}
-          <div className="card text-center" style={{ padding: '40px', marginTop: '60px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '24px' }}>
-            <h3 style={{ fontSize: '1.4rem', fontWeight: 700, marginBottom: '12px' }}>Ready to Get Started?</h3>
-            <p className="small-text text-muted" style={{ maxWidth: '500px', margin: '0 auto 24px', lineHeight: '1.6' }}>
-              Select an option below to book your consultation, request genetic tests, or contact our support team.
-            </p>
-            <div className="flex-row justify-center gap-4" style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-              <Link to="/appointments" className="btn btn-primary" style={{ padding: '12px 28px' }}>
-                Book Appointment
-              </Link>
-              <Link to="/request-genetic-test" className="btn btn-secondary" style={{ padding: '12px 28px' }}>
-                Request Genetic Test
-              </Link>
-              <Link to="/contact" className="btn btn-secondary" style={{ padding: '12px 28px' }}>
-                Contact Us
-              </Link>
+          {/* Contact Details Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '40px' }}>
+            <a href="tel:+94701917000" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', textDecoration: 'none', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(2, 132, 199, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--secondary)', flexShrink: 0 }}>
+                <Phone size={24} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>Call Now</div>
+                <div style={{ fontSize: '1.1rem', color: 'var(--text-main)', fontWeight: 700 }}>+94 70 191 7000</div>
+              </div>
+            </a>
+            
+            <a href="https://wa.me/94701917000" target="_blank" rel="noopener noreferrer" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', textDecoration: 'none', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#dcfce3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16a34a', flexShrink: 0 }}>
+                <MessageCircle size={24} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>WhatsApp Chat</div>
+                <div style={{ fontSize: '1.1rem', color: 'var(--text-main)', fontWeight: 700 }}>+94 70 191 7000</div>
+              </div>
+            </a>
+
+            <a href="mailto:thegeneclinic@gmail.com" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', textDecoration: 'none', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(15, 118, 110, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', flexShrink: 0 }}>
+                <Mail size={24} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>Email Us</div>
+                <div style={{ fontSize: '1.05rem', color: 'var(--text-main)', fontWeight: 700 }}>thegeneclinic@gmail.com</div>
+              </div>
+            </a>
+
+            <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(2, 132, 199, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', flexShrink: 0 }}>
+                <MapPin size={24} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>Location</div>
+                <div style={{ fontSize: '1.05rem', color: 'var(--text-main)', fontWeight: 700 }}>Galle, Sri Lanka</div>
+              </div>
             </div>
           </div>
 
+          {/* Action Buttons */}
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link to="/contact" className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '1.05rem' }}>
+              General Inquiry Form
+            </Link>
+            <Link to="/appointments" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Calendar size={18} /> Book Appointment
+            </Link>
+            <Link to="/request-genetic-test" className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-secondary)', borderColor: 'var(--primary)', color: 'var(--primary)' }}>
+              <FileText size={18} /> Request Genetic Test
+            </Link>
+          </div>
         </div>
       </section>
+
+      {/* Global Style overrides for hide-scrollbar */}
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+      `}</style>
 
     </div>
   );

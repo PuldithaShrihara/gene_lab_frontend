@@ -3,6 +3,8 @@ import { Mail, Phone, MapPin, MessageSquare, Clock, CheckCircle2, AlertCircle, S
 import { API_BASE_URL } from '../config';
 import { useAuth } from '../context/AuthContext';
 import LoginRequiredCard from '../components/LoginRequiredCard';
+import QuickAccessLinks from '../components/QuickAccessLinks';
+
 const FacebookIcon = ({ size = 20, ...props }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -127,26 +129,14 @@ export default function Contact() {
       {/* Hero Header */}
       <section className="section bg-secondary border-bottom" style={{ padding: '60px 0 40px' }}>
         <div className="container" style={{ maxWidth: '1200px' }}>
-          <div className="hero-container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '40px', alignItems: 'center' }}>
-            <div>
-              <span className="badge badge-accent mb-4">Get In Touch</span>
-              <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em' }}>
-                Contact The Gene Clinic
-              </h1>
-              <p className="lead-text" style={{ color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '24px' }}>
-                Have questions about our testing packages, counselling services, or report timelines? Reach out to our coordinators today.
-              </p>
-            </div>
-            
-            <div className="card card-glass" style={{ padding: '28px' }}>
-              <div className="flex-row align-center gap-3 mb-4" style={{ display: 'flex' }}>
-                <Shield size={24} className="text-secondary" />
-                <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Intake Coordination</h4>
-              </div>
-              <p className="xsmall-text text-muted" style={{ lineHeight: '1.6', margin: 0 }}>
-                Our intake coordinator will evaluate details submitted here. Personal clinical data is handled under strict security guidelines.
-              </p>
-            </div>
+          <div style={{ maxWidth: '800px', textAlign: 'left' }}>
+            <span className="badge badge-accent mb-4">Get In Touch</span>
+            <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em' }}>
+              Contact The Gene Clinic
+            </h1>
+            <p className="lead-text" style={{ color: 'var(--text-muted)', lineHeight: '1.7', margin: 0 }}>
+              Have questions about our testing packages, counselling services, or report timelines? Reach out to our coordinators today.
+            </p>
           </div>
         </div>
       </section>
@@ -325,57 +315,10 @@ export default function Contact() {
                 </div>
               </div>
 
-              {/* Social Channels */}
-              <div className="card" style={{ padding: '28px', background: 'var(--bg-secondary)' }}>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', fontWeight: 700 }}>Connect With Us</h3>
-                <div className="flex-col gap-2" style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-                  {/* TODO: Replace # with official social media URLs */}
-                  <a
-                    href="https://www.facebook.com/people/The-Gene-Clinic/61567109703049/?rdid=oR2IBlj76KtjvPg9&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1KiE6odBpW%2F"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-secondary flex-row-center gap-2"
-                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
-                  >
-                    Facebook
-                  </a>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-secondary flex-row-center gap-2"
-                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
-                  >
-                    YouTube
-                  </a>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-secondary flex-row-center gap-2"
-                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
-                  >
-                    Instagram
-                  </a>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-secondary flex-row-center gap-2"
-                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
-                  >
-                    TikTok
-                  </a>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-secondary flex-row-center gap-2"
-                    style={{ padding: '10px 16px', fontSize: '0.85rem', textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
-                  >
-                    LinkedIn
-                  </a>
-                </div>
+              {/* Quick Access Card */}
+              <div className="card" style={{ padding: '28px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
+                <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', fontWeight: 700 }}>Quick Access</h3>
+                <QuickAccessLinks variant="labeled" theme="light" />
               </div>
 
             </div>

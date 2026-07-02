@@ -1,560 +1,520 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { API_BASE_URL } from '../config';
 import { 
-  ShieldCheck, Dna, ClipboardList, BookOpen, 
-  ChevronRight, Calendar, User, Microscope, 
-  MapPin, CheckCircle, Activity, HeartHandshake, ArrowRight, FileUp, Sparkles, Award, Phone, Check, MessageCircle
+  ShieldCheck, Dna, FileText, Heart, Microscope, Video, 
+  MapPin, Activity, HeartHandshake, GraduationCap, CheckCircle2, AlertCircle
 } from 'lucide-react';
 
 export default function Home() {
-  const [articles, setArticles] = useState([]);
-  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phone: '',
+    location: 'Colombo',
+    date: '',
+    message: ''
+  });
+  const [formLoading, setFormLoading] = useState(false);
+  const [formSuccess, setFormSuccess] = useState(false);
+  const [formError, setFormError] = useState('');
 
-  useEffect(() => {
-    fetch(`${API_BASE_URL}/api/articles`)
-      .then(res => res.json())
-      .then(data => setArticles(data.slice(0, 3)))
-      .catch(err => console.log('Failed to fetch articles:', err));
-  }, []);
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setFormLoading(true);
+    setFormError('');
 
-  const serviceCategories = [
-    { title: 'Genetic Counselling', desc: 'Professional guidance to understand genetic risks, family history, test options, and genetic report results.', icon: HeartHandshake, path: '/services', cta: 'Book Genetic Counselling' },
-    { title: 'Wellness Counselling', desc: 'Personalized wellness guidance focused on nutrition, lifestyle, healthy aging, prevention awareness, and long-term wellbeing.', icon: Sparkles, path: '/services', cta: 'Book Wellness Counselling' },
-    { title: 'Precision Medicine', desc: 'Using genetic insights, family history, clinical background, and lifestyle factors to support more personalized healthcare decisions.', icon: Activity, path: '/services', cta: 'Learn More' },
-    { title: 'Personalized Management', desc: 'Individualized planning support for prevention awareness, follow-up guidance, lifestyle planning, monitoring, and referral pathways.', icon: ClipboardList, path: '/services', cta: 'Explore Personalized Management' },
-    { title: 'Wellness & Nutrition', desc: 'Guidance for nutrition, lifestyle, weight management, fitness response, nutrient needs, and long-term wellness planning.', icon: Activity, path: '/blueprint', cta: 'Explore Wellness Blueprint' },
-    { title: 'Cancer & NCD Prevention Awareness', desc: 'Education and counselling support for cancer risk awareness, diabetes, cardiovascular disease, metabolic health, hypertension, and prevention-focused lifestyle planning.', icon: ShieldCheck, path: '/services', cta: 'Book Prevention Guidance' }
-  ];
+    try {
+      const response = await fetch(`${API_BASE_URL}/api/appointments`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          appointmentType: 'Genetic Counselling',
+          location: formData.location,
+          mode: formData.location === 'Online Video Consultation' ? 'Online' : 'In-person',
+          reason: 'Initial Consultation Request',
+          message: formData.message,
+          date: formData.date,
+          consent: true
+        }),
+      });
 
-  const benefits = [
-    { title: 'Clinical Geneticist-led care', desc: 'Evaluations directed by a qualified clinical genetics physician.' },
-    { title: 'Genetic counselling support', desc: 'Continuous compassionate support mapping hereditary concerns.' },
-    { title: 'Secure report review', desc: 'Confidential line-by-line review of DNA and exome panels.' },
-    { title: 'Personalized wellness insights', desc: 'Translating DNA sequence traits into actionable nutrition paths.' },
-    { title: 'NIPT and prenatal guidance', desc: 'Responsible screening prenatal options protecting parent decision routes.' },
-    { title: 'Academic & laboratory background', desc: 'Evidence-based decisions led by Ruhuna Faculty lab head.' }
-  ];
+      if (response.ok) {
+        setFormSuccess(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          location: 'Colombo',
+          date: '',
+          message: ''
+        });
+      } else {
+        const errData = await response.json();
+        setFormError(errData.error || 'Failed to submit appointment request.');
+      }
+    } catch (err) {
+      setFormError('Connection error: could not connect to server. Please try again later.');
+    } finally {
+      setFormLoading(false);
+    }
+  };
 
   return (
-    <div className="home-page">
-      {/* Background Ornaments */}
-      <div className="bg-wave-lines"></div>
-      <div className="ornament-circle" style={{ width: '450px', height: '450px', top: '-150px', right: '-150px' }}></div>
-      <div className="ornament-circle" style={{ width: '300px', height: '300px', bottom: '25%', left: '-120px' }}></div>
-
+    <div className="home-page animate-fade-in">
       {/* Hero Section */}
-      <section className="section hero-section animate-fade-in" style={{ position: 'relative', zIndex: 1, paddingBottom: '80px' }}>
-        <div className="container hero-container">
-          <div className="hero-content">
-            <span className="badge badge-accent mb-4">The Gene Clinic</span>
-            <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 2.8rem)', lineHeight: '1.2', marginBottom: '16px' }}>
-              Genetic & Wellness Counselling for Personalized Health Decisions
-            </h1>
-            <p className="font-bold text-accent mb-3" style={{ color: 'var(--accent)', fontWeight: 700, fontSize: '1.05rem' }}>
-              Led by Dr. L. B. Lahiru Prabodha, Clinical Geneticist and Genetic Counsellor.
-            </p>
-            <p className="hero-subheadline" style={{ marginBottom: '20px' }}>
-              The Gene Clinic by GenSek Health Private Limited supports patients, families, and healthcare professionals with genetic counselling, wellness counselling, precision medicine insights, personalized management guidance, nutrition and wellness support, cancer prevention awareness, NCD prevention awareness, and appointment booking for counselling sessions.
-            </p>
+      <section className="section hero-section" style={{ padding: '80px 0 60px', position: 'relative', overflow: 'hidden' }}>
+        <div className="container">
+          <div className="hero-container" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '48px', alignItems: 'center' }}>
             
-            {/* Highlight Badges */}
-            <div className="flex-row gap-3 mb-6 flex-wrap" style={{ display: 'flex', gap: '10px', marginTop: '16px', marginBottom: '24px' }}>
-              <span className="badge badge-secondary" style={{ padding: '6px 14px', borderRadius: '50px', fontSize: '0.8rem', fontWeight: 700 }}>
-                👤 Dr. L. B. Lahiru Prabodha
+            {/* Hero Left Content */}
+            <div className="hero-content" style={{ textAlign: 'left' }}>
+              <span className="badge badge-accent mb-4" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)', fontWeight: 700 }}>
+                🧬 Clinical Genetics & Counselling
               </span>
-              <span className="badge badge-accent" style={{ padding: '6px 14px', borderRadius: '50px', fontSize: '0.8rem', fontWeight: 700 }}>
-                🧬 The Gene Clinic
-              </span>
-              <span className="badge badge-secondary" style={{ padding: '6px 14px', borderRadius: '50px', fontSize: '0.8rem', fontWeight: 700 }}>
-                🏢 GenSek Health Private Limited
-              </span>
+              <h1 style={{ fontSize: 'clamp(2.4rem, 5vw, 3.4rem)', lineHeight: '1.15', marginBottom: '24px', fontWeight: 800 }}>
+                Expert genetic care, <span className="font-decoded">decoded</span> for you.
+              </h1>
+              <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', lineHeight: '1.65', marginBottom: '32px' }}>
+                Dr. Lahiru Prabodha provides specialist clinical genetics services—from genetic testing interpretation to individualized counseling and preventative condition management across Colombo & Galle.
+              </p>
+              <div className="hero-actions" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
+                <a href="#book-consultation" className="btn" style={{ backgroundColor: 'var(--accent)', color: 'white', padding: '14px 32px' }}>
+                  Book a Consultation
+                </a>
+                <Link to="/about" className="btn btn-secondary" style={{ padding: '14px 32px' }}>
+                  Learn More
+                </Link>
+              </div>
             </div>
 
-            <div className="hero-actions" style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-              <Link to="/appointments" className="btn btn-primary">
-                Book Counselling Appointment <Calendar size={18} />
-              </Link>
-              <Link to="/request-genetic-test" className="btn btn-secondary">
-                Request Genetic Test
-              </Link>
-              <Link to="/appointments" className="btn btn-secondary" style={{ backgroundColor: 'transparent', borderColor: 'var(--primary)' }}>
-                Online Video Consultation
-              </Link>
-            </div>
-          </div>
-
-          {/* Right Visual Area: Premium Doctor Credentials Card */}
-          <div className="hero-visual">
-            <div className="hero-visual-wrapper">
-              {/* Soft blue background shape glow */}
-              <div className="hero-bg-glow"></div>
-              
-              {/* Doctor Card */}
-              <div className="hero-doctor-card">
-                <div className="doctor-card-badge">CLINICAL GENETICIST</div>
-                <div className="doctor-avatar-placeholder">
-                  <Dna size={40} className="logo-icon animate-pulse" />
-                </div>
-                <div className="doctor-info">
-                  <h3>Dr. L. B. Lahiru Prabodha</h3>
-                  <div className="doctor-degrees">MBBS, MPhil, MSc Clinical Genetics</div>
-                  <div className="doctor-title">Clinical Geneticist & Genetic Counsellor</div>
-                  <div className="doctor-meta">
-                    <span>Senior Lecturer</span>
-                    <span className="meta-separator">|</span>
-                    <span>Molecular Genetics Laboratory Lead</span>
+            {/* Hero Right: Doctor Card */}
+            <div className="hero-visual" style={{ position: 'relative' }}>
+              <div className="card" style={{ padding: '32px 28px', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-lg)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '20px', marginBottom: '20px' }}>
+                  <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.25rem' }}>
+                    LP
                   </div>
-                </div>
-              </div>
-              
-              {/* 4 Aligned Floating Cards */}
-              <div className="floating-card fc-1">
-                <HeartHandshake size={16} />
-                <span>Genetic Counselling</span>
-              </div>
-              <div className="floating-card fc-2">
-                <ClipboardList size={16} />
-                <span>NIPT Guidance</span>
-              </div>
-              <div className="floating-card fc-3">
-                <Activity size={16} />
-                <span>Wellness Genomics</span>
-              </div>
-              <div className="floating-card fc-4">
-                <BookOpen size={16} />
-                <span>Report Interpretation</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Trust Strip below Hero */}
-      <section className="trust-strip-section">
-        <div className="container">
-          <div className="trust-strip-wrapper">
-            <div className="trust-item">
-              <ShieldCheck size={18} />
-              <span>Clinical Geneticist-led Care</span>
-            </div>
-            <div className="trust-item">
-              <HeartHandshake size={18} />
-              <span>Genetic Counselling Support</span>
-            </div>
-            <div className="trust-item">
-              <ClipboardList size={18} />
-              <span>NIPT & Prenatal Guidance</span>
-            </div>
-            <div className="trust-item">
-              <Activity size={18} />
-              <span>Wellness Genomics</span>
-            </div>
-            <div className="trust-item">
-              <Award size={18} />
-              <span>Academic & Laboratory Expertise</span>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Quick Access Cards Section */}
-      <section className="section section-light bg-wave-lines" style={{ padding: '60px 0', position: 'relative', zIndex: 1 }}>
-        <div className="container" style={{ maxWidth: '1200px' }}>
-          <div className="text-center mb-10">
-            <span className="badge badge-accent mb-2">Quick Services Access</span>
-            <h2>How Can We Assist You Today?</h2>
-            <p style={{ maxWidth: '600px', margin: '8px auto 0', color: 'var(--text-muted)' }}>
-              Select a quick pathway to book counselling, request testing panels, register demographics, or access genomics education.
-            </p>
-          </div>
-          
-          <div className="grid grid-3" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '24px' }}>
-            <div className="card hover-scale flex-col-card" style={{ padding: '24px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
-              <div className="flex-row align-center gap-3 mb-3" style={{ display: 'flex' }}>
-                <div className="flex-row-center text-secondary" style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(2, 132, 199, 0.08)', display: 'flex' }}>
-                  <MessageCircle size={20} />
-                </div>
-                <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>General Inquiries</h4>
-              </div>
-              <p className="xsmall-text text-muted" style={{ flexGrow: 1, marginBottom: '20px', lineHeight: '1.5' }}>
-                Send a general inquiry to our clinical team regarding appointments, location maps, or coordination details.
-              </p>
-              <Link to="/contact" className="btn btn-secondary btn-sm text-center" style={{ width: '100%' }}>Contact Clinic</Link>
-            </div>
-
-            <div className="card hover-scale flex-col-card" style={{ padding: '24px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
-              <div className="flex-row align-center gap-3 mb-3" style={{ display: 'flex' }}>
-                <div className="flex-row-center text-accent" style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(15, 118, 110, 0.08)', display: 'flex' }}>
-                  <Dna size={20} />
-                </div>
-                <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Request Genetic Test</h4>
-              </div>
-              <p className="xsmall-text text-muted" style={{ flexGrow: 1, marginBottom: '20px', lineHeight: '1.5' }}>
-                Submit a request for wellness genomics, prenatal screening, or clinical diagnostics coordination.
-              </p>
-              <Link to="/request-genetic-test" className="btn btn-primary btn-sm text-center" style={{ width: '100%' }}>Request Test</Link>
-            </div>
-
-            <div className="card hover-scale flex-col-card" style={{ padding: '24px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
-              <div className="flex-row align-center gap-3 mb-3" style={{ display: 'flex' }}>
-                <div className="flex-row-center text-secondary" style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(2, 132, 199, 0.08)', display: 'flex' }}>
-                  <Calendar size={20} />
-                </div>
-                <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Book Appointment</h4>
-              </div>
-              <p className="xsmall-text text-muted" style={{ flexGrow: 1, marginBottom: '20px', lineHeight: '1.5' }}>
-                Schedule a session for pre-test or post-test genetic counselling and report review.
-              </p>
-              <Link to="/appointments" className="btn btn-secondary btn-sm text-center" style={{ width: '100%' }}>Book Counselling</Link>
-            </div>
-
-            <div className="card hover-scale flex-col-card" style={{ padding: '24px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
-              <div className="flex-row align-center gap-3 mb-3" style={{ display: 'flex' }}>
-                <div className="flex-row-center text-secondary" style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(2, 132, 199, 0.08)', display: 'flex' }}>
-                  <ClipboardList size={20} />
-                </div>
-                <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Patient Registration</h4>
-              </div>
-              <p className="xsmall-text text-muted" style={{ flexGrow: 1, marginBottom: '20px', lineHeight: '1.5' }}>
-                Submit patient intake details, emergency contact, and clinical history prior to testing or counselling.
-              </p>
-              <Link to="/patient-registration" className="btn btn-secondary btn-sm text-center" style={{ width: '100%' }}>Register Profile</Link>
-            </div>
-
-            <div className="card hover-scale flex-col-card" style={{ padding: '24px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
-              <div className="flex-row align-center gap-3 mb-3" style={{ display: 'flex' }}>
-                <div className="flex-row-center text-secondary" style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(2, 132, 199, 0.08)', display: 'flex' }}>
-                  <Phone size={20} />
-                </div>
-                <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Online Video Consultation</h4>
-              </div>
-              <p className="xsmall-text text-muted" style={{ flexGrow: 1, marginBottom: '20px', lineHeight: '1.5' }}>
-                Consult remotely with our clinical team. Available for pre-screening and report interpretation sessions.
-              </p>
-              <Link to="/appointments?type=Online%20Video%20Consultation" className="btn btn-secondary btn-sm text-center" style={{ width: '100%' }}>Book Video Call</Link>
-            </div>
-
-            <div className="card hover-scale flex-col-card" style={{ padding: '24px', border: '1px solid var(--border-color)', background: 'var(--bg-secondary)' }}>
-              <div className="flex-row align-center gap-3 mb-3" style={{ display: 'flex' }}>
-                <div className="flex-row-center text-accent" style={{ width: '40px', height: '40px', borderRadius: '10px', background: 'rgba(15, 118, 110, 0.08)', display: 'flex' }}>
-                  <BookOpen size={20} />
-                </div>
-                <h4 style={{ margin: 0, fontSize: '1.1rem', fontWeight: 700 }}>Genomics Education</h4>
-              </div>
-              <p className="xsmall-text text-muted" style={{ flexGrow: 1, marginBottom: '20px', lineHeight: '1.5' }}>
-                Explore community and clinical information resources explaining variants, screening, and precision medicine.
-              </p>
-              <Link to="/education" className="btn btn-secondary btn-sm text-center" style={{ width: '100%' }}>Browse Hub</Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Genetics Ticker Tape Banner */}
-      <section className="ticker-tape-container">
-        <div className="ticker-tape-scroll">
-          <span>🧬 Clinical Genetics &bull; Galle</span>
-          <span>🧬 Genetic Counselling &bull; GenSek</span>
-          <span>🧬 Wellness Genomics &bull; Me360</span>
-          <span>🧬 NIPT Prenatal Screening &bull; NIFTY</span>
-          <span>🧬 Whole Exome Sequencing &bull; WES</span>
-          <span>🧬 Genetic Report Interpretation</span>
-          {/* Repeating for loop length */}
-          <span>🧬 Clinical Genetics &bull; Galle</span>
-          <span>🧬 Genetic Counselling &bull; GenSek</span>
-          <span>🧬 Wellness Genomics &bull; Me360</span>
-          <span>🧬 NIPT Prenatal Screening &bull; NIFTY</span>
-        </div>
-      </section>
-
-      {/* Services Section (Redesigned with top banners & overlapping icons) */}
-      <section className="section section-light" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="container">
-          <div className="text-center mb-12">
-            <span className="badge badge-accent mb-2">Our Services</span>
-            <h2>Our Genetic & Wellness Services</h2>
-            <p style={{ maxWidth: '600px', margin: '8px auto 0' }}>
-              Specialist guidance for individuals, families, couples, and patients seeking clear genetic health decisions.
-            </p>
-          </div>
-
-          <div className="grid grid-3">
-            {serviceCategories.map((service, idx) => {
-              const Icon = service.icon;
-              return (
-                <div 
-                  key={idx} 
-                  className={`card flex-col-card hover-scale`}
-                  style={{ overflow: 'hidden' }}
-                >
-                  <div className="service-card-header">
-                    <div className="service-card-icon-overlap">
-                      <Icon size={24} className="text-secondary" style={{ color: 'var(--secondary)' }} />
+                  <div style={{ textAlign: 'left' }}>
+                    <h3 style={{ fontSize: '1.3rem', margin: 0, fontWeight: 800 }}>Dr. Lahiru Prabodha</h3>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', margin: '2px 0 6px' }}>Clinical Geneticist</span>
+                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
+                      <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', background: 'var(--bg-tertiary)', borderRadius: '4px', border: '1px solid var(--border-color)' }}>MBBS</span>
+                      <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', background: 'var(--bg-tertiary)', borderRadius: '4px', border: '1px solid var(--border-color)' }}>MPhil (Human Genetics)</span>
+                      <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', background: 'var(--bg-tertiary)', borderRadius: '4px', border: '1px solid var(--border-color)' }}>MSc</span>
                     </div>
                   </div>
-
-                  <h3 className="mt-2" style={{ fontSize: '1.35rem' }}>{service.title}</h3>
-                  <p className="mt-3 small-text">{service.desc}</p>
-                  
-                  <Link to={service.path} className="btn-link mt-auto pt-6 inline-flex align-center gap-1">
-                    {service.cta} <ChevronRight size={14} />
-                  </Link>
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
 
-      {/* Why Choose Section (Redesigned with overlapping image blocks) */}
-      <section className="section" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="container grid grid-2 align-center" style={{ gap: '48px' }}>
-          
-          {/* Left Side: Overlapping visual blocks */}
-          <div className="why-choose-visual">
-            <div className="why-choose-overlap-wrapper">
-              <div className="wc-card-2"></div>
-              <div className="wc-card-1">
-                <Microscope size={40} className="text-secondary mb-3 text-center-icon" />
-                <h4>Evidence-Based Genomics</h4>
-                <p className="xsmall-text text-muted mt-2">
-                  All tests are performed by accredited molecular facilities and interpreted in strict alignment with ACMG guidelines.
-                </p>
-              </div>
-              <div className="wc-card-3">
-                <Check size={24} />
-              </div>
-            </div>
-          </div>
-
-          {/* Right Side: content */}
-          <div>
-            <span className="badge badge-gold mb-4">Why Choose The Gene Clinic</span>
-            <h2>Trusted Clinical Genetics</h2>
-            <p className="lead-text mt-4 mb-6">
-              Specialist genetic consultation, academic expertise, responsible interpretation, and personalized guidance in one trusted clinical pathway.
-            </p>
-            
-            <div className="flex-col gap-3">
-              {benefits.map((benefit, idx) => (
-                <div key={idx} className="flex-row gap-3 align-start">
-                  <CheckCircle size={18} className="text-secondary flex-shrink-0" style={{ marginTop: '3px' }} />
-                  <div>
-                    <strong style={{ fontSize: '0.95rem' }}>{benefit.title}</strong>
-                    <p className="xsmall-text text-muted mt-0.5">{benefit.desc}</p>
+                {/* 4 Credentials Boxes in 2x2 grid */}
+                <div className="credentials-grid">
+                  <div className="credential-box">
+                    <span className="credential-tag">Clinical Practice</span>
+                    <span className="credential-text">Clinical Genetics & Counselling</span>
+                  </div>
+                  <div className="credential-box">
+                    <span className="credential-tag">Academics</span>
+                    <span className="credential-text">Senior Lecturer, Ruhuna Uni</span>
+                  </div>
+                  <div className="credential-box">
+                    <span className="credential-tag">Lab Leadership</span>
+                    <span className="credential-text">Head, Molecular Genetics Lab</span>
+                  </div>
+                  <div className="credential-box">
+                    <span className="credential-tag">Expertise</span>
+                    <span className="credential-text">Specialist: Prenatal, Cancer, Wellness</span>
                   </div>
                 </div>
-              ))}
+              </div>
             </div>
+          </div>
+
+          {/* Trust Items Container below Hero */}
+          <div className="trust-items-container">
+            <div className="trust-item-new">
+              <HeartHandshake size={20} />
+              <span>Patient-centric care</span>
+            </div>
+            <div className="trust-item-new">
+              <GraduationCap size={20} />
+              <span>Certified & research-led</span>
+            </div>
+            <div className="trust-item-new">
+              <Activity size={20} />
+              <span>Expert accuracy</span>
+            </div>
+            <div className="trust-item-new">
+              <ShieldCheck size={20} />
+              <span>Privacy guaranteed</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Services Section */}
+      <section className="section section-light" style={{ padding: '80px 0' }}>
+        <div className="container">
+          <div className="text-center mb-12">
+            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>What We Offer</span>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800 }}>Comprehensive genetic services under one roof</h2>
+            <p style={{ maxWidth: '640px', margin: '12px auto 0', fontSize: '1.05rem', color: 'var(--text-muted)' }}>
+              Every consultation is personally led by Dr. Prabodha, ensuring clinical accuracy and compassionate guidance at every step.
+            </p>
+          </div>
+
+          <div className="grid grid-3" style={{ marginTop: '48px' }}>
+            {/* Card 1 */}
+            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <FileText size={22} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Genetic Report Interpretation</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Comprehensive post-test report analysis to help you understand variants, risk factors, and recommended next steps.
+              </p>
+            </div>
+
+            {/* Card 2 */}
+            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <Heart size={22} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Prenatal Risk Assessment</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Specialized pre-test and post-test counselling for NIPT, diagnostic testing, and familial inheritance risk planning.
+              </p>
+            </div>
+
+            {/* Card 3 */}
+            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <Dna size={22} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Organogenetics & Genomics</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Proactive wellness screening analysis, helping you align lifestyle options with your genetic blueprint.
+              </p>
+            </div>
+
+            {/* Card 4 */}
+            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <Microscope size={22} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Genetic Testing Guidance</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Helping select the right genomic panels to avoid unnecessary costs and maximize diagnostic yield.
+              </p>
+            </div>
+
+            {/* Card 5 */}
+            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <ShieldCheck size={22} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Inherited Conditions Management</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Long-term monitoring guidelines, prevention pathways, and coordinate care with specialists.
+              </p>
+            </div>
+
+            {/* Card 6 */}
+            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <Video size={22} />
+              </div>
+              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Online Video Resource</h3>
+              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Remote sessions for international patients and follow-up reviews.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* About Doctor Section */}
+      <section className="section" style={{ padding: '80px 0' }}>
+        <div className="container grid grid-2 align-center" style={{ gap: '60px' }}>
+          
+          {/* Left Graphic */}
+          <div className="dna-graphic-container">
+            <Dna size={80} className="animate-pulse" style={{ color: 'var(--accent)', opacity: 0.8 }} />
+          </div>
+
+          {/* Right Text */}
+          <div style={{ textAlign: 'left' }}>
+            <span className="badge badge-accent mb-4" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>About the Doctor</span>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '20px' }}>Dr. Lahiru Prabodha</h2>
+            <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '16px' }}>
+              Dr. Prabodha is a leading clinical geneticist with over 10 years of experience in genomic medicine, molecular biology research, and genetic counselling across the Western and Southern provinces.
+            </p>
+            <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '24px' }}>
+              He completed his postgraduate training in clinical genetics and genomics and has worked in closely integrated teams at leading hospitals in Colombo and Galle to provide cancer-risk assessments and support families.
+            </p>
             
-            <Link to="/about" className="btn btn-primary mt-8">
-              Learn More
-            </Link>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+                <CheckCircle2 size={18} style={{ color: 'var(--accent)' }} />
+                <span>Member—University of Colombo</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+                <CheckCircle2 size={18} style={{ color: 'var(--accent)' }} />
+                <span>MD in Clinical Genetics</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+                <CheckCircle2 size={18} style={{ color: 'var(--accent)' }} />
+                <span>Board Certified Specialist</span>
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>
+                <CheckCircle2 size={18} style={{ color: 'var(--accent)' }} />
+                <span>Member, International Society of Neurogenetics</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* Patient Journey (Visual cards layout) */}
-      <section className="section section-light" style={{ position: 'relative', zIndex: 1 }}>
+      {/* Locations Section */}
+      <section className="section section-light" style={{ padding: '80px 0' }}>
         <div className="container">
           <div className="text-center mb-12">
-            <h2>Our Guided Clinical Pathway</h2>
-            <p style={{ maxWidth: '600px', margin: '8px auto 0' }}>
-              A visually mapped 5-step journey designed to provide guidance and clarity.
+            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>Where to find us</span>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800 }}>Clinics in Colombo, Galle & Matara</h2>
+            <p style={{ maxWidth: '640px', margin: '12px auto 0', fontSize: '1.05rem', color: 'var(--text-muted)' }}>
+              Three convenient branch locations across Sri Lanka, with online appointments available for patients nationwide and internationally.
             </p>
           </div>
 
-          <div className="grid grid-5-cols journey-steps-preview">
-            <div className="step-preview-item card" style={{ padding: '24px 16px' }}>
-              <div className="step-num">1</div>
-              <h4>Initial Inquiry</h4>
-              <p>Inquire online or call Galle clinical center.</p>
+          <div className="grid grid-3" style={{ marginTop: '48px', gap: '32px' }}>
+            {/* Colombo Clinic */}
+            <div className="card" style={{ padding: '32px', background: 'var(--bg-secondary)', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                <MapPin size={22} />
+              </div>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '12px' }}>Colombo Clinic</h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px', flexGrow: 1 }}>
+                Consultations at our partner hospital in Colombo—convenient for patients seeking post-test clinical planning.
+              </p>
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: 'var(--accent)', fontWeight: 700, textDecoration: 'underline' }}>
+                View Location / Directions
+              </a>
             </div>
-            <div className="step-preview-item card" style={{ padding: '24px 16px' }}>
-              <div className="step-num">2</div>
-              <h4>Consultation</h4>
-              <p>Pedigree analysis & history evaluations.</p>
+
+            {/* Galle Clinic */}
+            <div className="card" style={{ padding: '32px', background: 'var(--bg-secondary)', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                <MapPin size={22} />
+              </div>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '12px' }}>Galle Clinic</h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px', flexGrow: 1 }}>
+                Dr. Prabodha conducts consultations at our Galle clinic, serving patients in the Southern Province with testing guidance.
+              </p>
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: 'var(--accent)', fontWeight: 700, textDecoration: 'underline' }}>
+                View Location / Directions
+              </a>
             </div>
-            <div className="step-preview-item card" style={{ padding: '24px 16px' }}>
-              <div className="step-num">3</div>
-              <h4>Test Selection</h4>
-              <p>Align candidate genes with tests.</p>
+
+            {/* Matara Clinic */}
+            <div className="card" style={{ padding: '32px', background: 'var(--bg-secondary)', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+                <MapPin size={22} />
+              </div>
+              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '12px' }}>Matara Clinic</h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px', flexGrow: 1 }}>
+                Specialist clinical genetics consultations and local patient intake/coordination services for Matara and surrounding areas.
+              </p>
+              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: 'var(--accent)', fontWeight: 700, textDecoration: 'underline' }}>
+                View Location / Directions
+              </a>
             </div>
-            <div className="step-preview-item card" style={{ padding: '24px 16px' }}>
-              <div className="step-num">4</div>
-              <h4>Sample & Test</h4>
-              <p>Blood, saliva, or tissue collection logs.</p>
+          </div>
+
+          {/* Map Embed Card */}
+          <div className="card mt-8" style={{ padding: '16px', background: 'var(--bg-secondary)', borderRadius: '20px', overflow: 'hidden', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d1016832.2223846666!2d80.2000000!3d6.4000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sColombo%2C%20Galle%2C%20Matara%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1719659000000!5m2!1sen!2slk"
+              width="100%"
+              height="380"
+              style={{ border: 0, borderRadius: '16px' }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              title="Colombo, Galle & Matara Clinic Branches Map"
+            ></iframe>
+          </div>
+
+          {/* Collaborative Network Sub-Section */}
+          <div className="text-center" style={{ marginTop: '64px', marginBottom: '32px' }}>
+            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>Collaborative Network</span>
+            <h3 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Mini Collaborative Centres</h3>
+            <p style={{ maxWidth: '640px', margin: '8px auto 0', fontSize: '0.95rem', color: 'var(--text-muted)' }}>
+              The following partner clinics and labs collect and forward genetic test samples directly to The Gene Clinic for coordination and analysis.
+            </p>
+          </div>
+
+          <div className="grid grid-3" style={{ gap: '24px' }}>
+            {/* Center 1 */}
+            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Ruhuna Hospital Diagnostics</h4>
+              <p className="xsmall-text text-muted" style={{ margin: '0 0 12px', lineHeight: '1.4' }}>
+                Main sample intake and molecular preparation partnership point in the Southern Province.
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--accent)', fontWeight: 700 }}>
+                <MapPin size={12} /> Galle, Sri Lanka
+              </div>
             </div>
-            <div className="step-preview-item card" style={{ padding: '24px 16px' }}>
-              <div className="step-num">5</div>
-              <h4>Interpretation</h4>
-              <p>Post-test counselling & referrals pathway.</p>
+
+            {/* Center 2 */}
+            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Matara Nursing Home Laboratory</h4>
+              <p className="xsmall-text text-muted" style={{ margin: '0 0 12px', lineHeight: '1.4' }}>
+                Specialized prenatal cfDNA and NIPT sample extraction/collection partner.
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--accent)', fontWeight: 700 }}>
+                <MapPin size={12} /> Matara, Sri Lanka
+              </div>
+            </div>
+
+            {/* Center 3 */}
+            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left' }}>
+              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Western Province Collection Centre</h4>
+              <p className="xsmall-text text-muted" style={{ margin: '0 0 12px', lineHeight: '1.4' }}>
+                Authorized wellness genomics and DNA panel prep lab for Colombo inquiries.
+              </p>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--accent)', fontWeight: 700 }}>
+                <MapPin size={12} /> Colombo, Sri Lanka
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Educational Video Series Section */}
-      <section className="section section-light" style={{ position: 'relative', zIndex: 1 }}>
+      {/* Form Section */}
+      <section id="book-consultation" className="section" style={{ padding: '80px 0' }}>
+        <div className="container" style={{ maxWidth: '800px' }}>
+          <div className="text-center mb-10">
+            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>Get In Touch</span>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800 }}>Book a consultation</h2>
+            <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginTop: '8px' }}>
+              Fill in the form below and our team will confirm your appointment within 24 hours.
+            </p>
+          </div>
+
+          {/* Form Card */}
+          <div className="card" style={{ padding: '40px', borderRadius: '24px' }}>
+            {formSuccess ? (
+              <div className="text-center py-8">
+                <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
+                  <CheckCircle2 size={36} />
+                </div>
+                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '8px' }}>Appointment Request Sent</h3>
+                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '400px', margin: '0 auto 24px' }}>
+                  Thank you for requesting an appointment. Our coordinator will contact you shortly to confirm the date and time.
+                </p>
+                <button onClick={() => setFormSuccess(false)} className="btn" style={{ backgroundColor: 'var(--accent)', color: 'white' }}>
+                  Send Another Request
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleFormSubmit} className="consultation-form flex-col gap-6">
+                {formError && (
+                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', padding: '12px 16px', backgroundColor: '#fef2f2', border: '1px solid #fee2e2', borderRadius: '8px', color: '#dc2626', fontSize: '0.9rem' }}>
+                    <AlertCircle size={18} />
+                    <span>{formError}</span>
+                  </div>
+                )}
+
+                <div className="grid grid-2" style={{ gap: '20px' }}>
+                  <div className="form-group flex-col" style={{ gap: '6px' }}>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Full Name</label>
+                    <input 
+                      type="text" 
+                      required
+                      value={formData.name}
+                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                      placeholder="Your full name" 
+                    />
+                  </div>
+                  <div className="form-group flex-col" style={{ gap: '6px' }}>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Email Address</label>
+                    <input 
+                      type="email" 
+                      required
+                      value={formData.email}
+                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                      placeholder="Your email address" 
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-2" style={{ gap: '20px' }}>
+                  <div className="form-group flex-col" style={{ gap: '6px' }}>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Phone Number</label>
+                    <input 
+                      type="tel" 
+                      required
+                      value={formData.phone}
+                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                      placeholder="Your phone number" 
+                    />
+                  </div>
+                  <div className="form-group flex-col" style={{ gap: '6px' }}>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Preferred Location</label>
+                    <select 
+                      value={formData.location}
+                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                    >
+                      <option value="Colombo">Colombo Clinic</option>
+                      <option value="Galle">Galle Clinic</option>
+                      <option value="Online Video Consultation">Online Video Consultation</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-group flex-col" style={{ gap: '6px' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Preferred Date</label>
+                  <input 
+                    type="date" 
+                    required
+                    value={formData.date}
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                  />
+                </div>
+
+                <div className="form-group flex-col" style={{ gap: '6px' }}>
+                  <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Message / Inquiry</label>
+                  <textarea 
+                    value={formData.message}
+                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    placeholder="Tell us about your medical history or questions you have..." 
+                    style={{ minHeight: '120px', resize: 'none' }}
+                  />
+                </div>
+
+                <button type="submit" disabled={formLoading} className="btn w-full" style={{ backgroundColor: 'var(--accent)', color: 'white', height: '50px', fontWeight: 700 }}>
+                  {formLoading ? 'Submitting...' : 'Send Appointment Request →'}
+                </button>
+              </form>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* Bottom CTA Banner */}
+      <section className="section" style={{ padding: '60px 0' }}>
         <div className="container">
-          <div className="text-center mb-12">
-            <span className="badge badge-accent mb-2">Educational Media</span>
-            <h2>Gene Clinic Video Series</h2>
-            <p style={{ maxWidth: '600px', margin: '8px auto 0' }}>
-              Watch informative discussions on clinical genetics, family health history, and DNA tests led by Dr. Lahiru Prabodha.
-            </p>
-          </div>
-
-          <div className="grid grid-4">
-            <div className="video-card">
-              <div className="video-embed-container">
-                <iframe
-                  src="https://www.youtube.com/embed/bJzx6cO_CZw"
-                  title="Gene Clinic Programme Episode 01"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="video-card-info">
-                <h4>Episode 01: Genetics & Human Behavior</h4>
-                <p>
-                  මිනිස්සු සිතන පතන හැමදෙයක්ම තීරණය කරන්නේ ජාන මගින් ද? An in-depth discussion on how genes impact human thoughts, actions, and behavioral genetics.
-                </p>
-              </div>
-            </div>
-
-            <div className="video-card">
-              <div className="video-embed-container">
-                <iframe
-                  src="https://www.youtube.com/embed/aFFD9iSamjw"
-                  title="Gene Clinic Programme Episode 02"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="video-card-info">
-                <h4>Episode 02: Introduction to Genetic Counselling</h4>
-                <p>
-                  ජාන උපදේශනය සහ එහි වැදගත්කම. Understanding clinical genetics, pedigree evaluations, family inheritance risk mapping, and supportive counselling pathways.
-                </p>
-              </div>
-            </div>
-
-            <div className="video-card">
-              <div className="video-embed-container">
-                <iframe
-                  src="https://www.youtube.com/embed/pvLvTrLkhWU"
-                  title="Gene Clinic Programme Episode 03"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="video-card-info">
-                <h4>Episode 03: Hereditary Diseases & DNA Screening</h4>
-                <p>
-                  පාරම්පරික රෝග සහ ඩී.එන්.ඒ. පරික්ෂාව. Learn how DNA panel screening identifies genetic predispositions for cardiac, oncological, and rare familial diseases.
-                </p>
-              </div>
-            </div>
-
-            <div className="video-card">
-              <div className="video-embed-container">
-                <iframe
-                  src="https://www.youtube.com/embed/N3OH0ulxZqs"
-                  title="Gene Clinic Programme Episode 04"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                  allowFullScreen
-                ></iframe>
-              </div>
-              <div className="video-card-info">
-                <h4>Episode 04: Genomics for Wellness & Lifestyle</h4>
-                <p>
-                  නිරෝගී දිවියකට ජාන විද්‍යාව. Exploring how wellness genomics can translate your genetic variants into actionable guidance for nutrition, exercise, and metabolism.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Strong Appointment Section */}
-      <section className="section section-light" style={{ position: 'relative', zIndex: 1, backgroundColor: 'rgba(2, 132, 199, 0.03)' }}>
-        <div className="container text-center">
-          <h2>Book an Appointment for Counselling</h2>
-          <p className="lead-text mt-4 mb-6" style={{ maxWidth: '800px', margin: '16px auto 32px' }}>
-            Schedule a counselling session for genetic counselling, wellness counselling, precision medicine consultation, personalized management planning, nutrition guidance, cancer risk awareness, NCD prevention awareness, report interpretation, or online video consultation.
-          </p>
-          <Link to="/appointments" className="btn btn-primary" style={{ padding: '16px 40px', fontSize: '1.1rem' }}>
-            Book Appointment
-          </Link>
-        </div>
-      </section>
-
-      {/* Wellness Blueprint Dashboard Preview */}
-      <section className="section section-light" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="container grid grid-2 align-center" style={{ gap: '48px' }}>
-          <div className="card card-glass">
-            <h3>Visual Genetic Predispositions</h3>
-            <div className="mt-6 flex-col gap-3">
-              <div className="flex-row-between p-2 rounded-md bg-secondary border">
-                <span>Nutrition & Satiety Response</span>
-                <span className="badge badge-accent">Green Zone (Good)</span>
-              </div>
-              <div className="flex-row-between p-2 rounded-md bg-secondary border">
-                <span>Detoxification Efficiency</span>
-                <span className="badge badge-gold">Amber Zone (Average)</span>
-              </div>
-              <div className="flex-row-between p-2 rounded-md bg-secondary border">
-                <span>Dementia Risk Profile</span>
-                <span className="badge" style={{ backgroundColor: 'rgba(239, 68, 68, 0.15)', color: '#ef4444' }}>Red Zone (Risk)</span>
-              </div>
-            </div>
-          </div>
-          <div>
-            <span className="badge badge-gold mb-4">Me360 Profiler</span>
-            <h2>Your DNA Speaks. We Help You Understand It.</h2>
-            <p className="mt-4">
-              Our Wellness Blueprint maps out nutrition, fitness, weight, detoxification profile, food sensitivities, health predispositions, and dementia risk variables.
-            </p>
-            <p className="xsmall-text text-muted mt-4">
-              <strong>Medical Disclaimer:</strong> Genetic insights are not a diagnosis and should be interpreted alongside clinical examinations by a qualified healthcare professional.
-            </p>
-            <Link to="/blueprint" className="btn btn-primary mt-6">
-              View Blueprint Details
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* NIPT Section */}
-      <section className="section" style={{ position: 'relative', zIndex: 1 }}>
-        <div className="container grid grid-2 align-center" style={{ gap: '48px' }}>
-          <div>
-            <span className="badge badge-accent mb-4">Prenatal Care</span>
-            <h2>NIPT & Prenatal Genetic Screening Guidance</h2>
-            <p className="mt-4">
-              Non-invasive prenatal screening (NIPT) allows safe, early screening for chromosomal aneuploidies like trisomies 21, 18, and 13 from around 10 weeks of pregnancy. 
-            </p>
-            <p className="small-text text-muted mt-2">
-              NIPT is a screening test, not a diagnostic test. High-risk results should be verified via confirmatory diagnostic testing coordinated with your clinician.
-            </p>
-            <div className="mt-6 flex-row-center gap-4">
-              <Link to="/appointments?type=NIPT%20consultation" className="btn btn-primary">
-                Book NIPT Consultation
-              </Link>
-              <Link to="/nipt" className="btn btn-secondary">
-                Learn More
-              </Link>
-            </div>
-          </div>
-          <div className="card card-glass text-center">
-            <h3>Trisomy Screening</h3>
-            <div className="mt-4 flex-col gap-2 align-center">
-              <div className="badge badge-accent py-2 w-full justify-center">Down Syndrome (Trisomy 21) Screen</div>
-              <div className="badge badge-accent py-2 w-full justify-center">Edwards Syndrome (Trisomy 18) Screen</div>
-              <div className="badge badge-accent py-2 w-full justify-center">Patau Syndrome (Trisomy 13) Screen</div>
-            </div>
+          <div className="cta-banner-gradient">
+            <h2 style={{ color: 'white', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 800, margin: 0, lineHeight: 1.25, textAlign: 'left' }}>
+              Ready to understand<br />your genetic health?
+            </h2>
+            <a href="#book-consultation" className="btn" style={{ backgroundColor: 'white', color: '#092e3c', padding: '14px 32px', borderRadius: '50px', fontWeight: 700 }}>
+              Book Your Consultation →
+            </a>
           </div>
         </div>
       </section>

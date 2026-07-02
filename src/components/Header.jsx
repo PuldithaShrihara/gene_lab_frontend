@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react';
 import logoImg from '../assets/logo.png';
-import LoginButton from './LoginButton';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -54,9 +53,9 @@ export default function Header() {
 
             {/* Services Dropdown */}
             <li className="nav-item-dropdown">
-              <span className={`nav-link ${location.pathname === '/services' ? 'active' : ''}`} style={{ cursor: 'default' }}>
+              <Link to="/services" className={`nav-link ${location.pathname === '/services' ? 'active' : ''}`}>
                 Services <ChevronDown size={14} />
-              </span>
+              </Link>
               <div className="dropdown-menu" style={{ minWidth: '240px' }}>
                 <Link to="/services" className="dropdown-item">Genetic Counselling</Link>
                 <Link to="/services" className="dropdown-item">Wellness Counselling</Link>
@@ -68,21 +67,21 @@ export default function Header() {
               </div>
             </li>
 
+
             <li>
-              <Link to="/request-genetic-test" className={`nav-link ${location.pathname === '/request-genetic-test' ? 'active' : ''}`}>
-                Request Genetic Test
+              <Link to="/faq" className={`nav-link ${location.pathname === '/faq' ? 'active' : ''}`}>
+                FAQ
               </Link>
             </li>
 
             {/* Resources Dropdown */}
             <li className="nav-item-dropdown">
-              <span className={`nav-link ${['/education', '/articles', '/faq', '/journey'].includes(location.pathname) ? 'active' : ''}`} style={{ cursor: 'default' }}>
+              <span className={`nav-link ${['/education', '/articles', '/journey'].includes(location.pathname) ? 'active' : ''}`} style={{ cursor: 'default' }}>
                 Resources <ChevronDown size={14} />
               </span>
               <div className="dropdown-menu">
                 <Link to="/education" className="dropdown-item">Education</Link>
                 <Link to="/articles" className="dropdown-item">Articles</Link>
-                <Link to="/faq" className="dropdown-item">FAQ / Q & A</Link>
                 <Link to="/journey" className="dropdown-item">Patient Journey</Link>
               </div>
             </li>
@@ -112,13 +111,14 @@ export default function Header() {
             {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
           </button>
           
-          <div className="hide-tablet" style={{ display: 'flex', alignItems: 'center' }}>
-            <LoginButton />
+          <div className="hide-tablet" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+            <Link to="/request-genetic-test" className="btn btn-secondary btn-sm" style={{ padding: '8px 16px', fontWeight: 600 }}>
+              Request Test
+            </Link>
+            <Link to="/appointments" className="btn btn-primary btn-sm">
+              Book Appointment
+            </Link>
           </div>
-
-          <Link to="/appointments" className="btn btn-primary btn-sm hide-tablet">
-            Book Appointment
-          </Link>
 
           {/* Mobile Menu Button */}
           <button
@@ -144,7 +144,7 @@ export default function Header() {
             <li className="mobile-nav-group-title">About</li>
             <li><Link to="/about" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>About Doctor</Link></li>
             <li><Link to="/clinic" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>The Gene Clinic</Link></li>
-            <li className="mobile-nav-group-title">Services</li>
+            <li className="mobile-nav-group-title"><Link to="/services" onClick={closeMenu} style={{ color: 'inherit', textDecoration: 'none' }}>Services</Link></li>
             <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Genetic Counselling</Link></li>
             <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Wellness Counselling</Link></li>
             <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Precision Medicine</Link></li>
@@ -154,10 +154,10 @@ export default function Header() {
             <li><Link to="/appointments" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Online Video Consultation</Link></li>
             <li><Link to="/request-genetic-test" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Request Genetic Test</Link></li>
 
-            <li className="mobile-nav-group-title">Resources</li>
+            <li className="mobile-nav-group-title">Resources & Support</li>
+            <li><Link to="/faq" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>FAQ / Q & A</Link></li>
             <li><Link to="/education" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Education</Link></li>
             <li><Link to="/articles" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Articles</Link></li>
-            <li><Link to="/faq" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>FAQ / Q & A</Link></li>
             <li><Link to="/journey" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Patient Journey</Link></li>
 
             <li className="mobile-nav-group-title">More</li>
@@ -178,12 +178,14 @@ export default function Header() {
               </div>
             </li>
             <li className="mobile-drawer-cta" style={{ marginTop: '24px' }}>
-              <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '12px' }}>
-                <LoginButton />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                <Link to="/request-genetic-test" onClick={closeMenu} className="btn btn-secondary w-full text-center">
+                  Request Genetic Test
+                </Link>
+                <Link to="/appointments" onClick={closeMenu} className="btn btn-primary w-full text-center">
+                  Book Appointment
+                </Link>
               </div>
-              <Link to="/appointments" onClick={closeMenu} className="btn btn-primary w-full text-center">
-                Book Appointment
-              </Link>
             </li>
           </ul>
         </nav>

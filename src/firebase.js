@@ -14,11 +14,16 @@ const firebaseConfig = {
   appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
 
-let app;
-try {
-  app = initializeApp(firebaseConfig);
-} catch (error) {
-  console.warn("Firebase config error (may be missing ENV variables). Using empty app.");
+let app = null;
+
+if (firebaseConfig.apiKey) {
+  try {
+    app = initializeApp(firebaseConfig);
+  } catch (error) {
+    console.warn("Firebase initialization error:", error);
+  }
+} else {
+  console.warn("Firebase API Key is missing. Running without Firebase.");
 }
 
 export const auth = app ? getAuth(app) : null;
