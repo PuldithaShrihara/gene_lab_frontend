@@ -12,7 +12,8 @@ import {
   MessageSquare,
   Upload,
   Sparkles,
-  Inbox
+  Inbox,
+  Download
 } from 'lucide-react';
 
 export default function Articles() {
@@ -143,6 +144,26 @@ export default function Articles() {
                 <div className="flex-row align-center gap-1" style={{ display: 'flex', alignItems: 'center' }}>
                   <Clock size={14} className="text-secondary" />
                   <span>{selectedArticle.readTime}</span>
+                </div>
+                
+                <div className="flex-row align-center ml-auto" style={{ marginLeft: 'auto' }}>
+                  <button
+                    onClick={() => {
+                      const content = `${selectedArticle.title}\n\nBy ${selectedArticle.author} | ${selectedArticle.date}\n\n${selectedArticle.content}`;
+                      const blob = new Blob([content], { type: 'text/plain' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = `${selectedArticle.slug || 'article'}.txt`;
+                      a.click();
+                      URL.revokeObjectURL(url);
+                    }}
+                    className="btn btn-secondary btn-sm"
+                    style={{ padding: '4px 10px', fontSize: '0.75rem', display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--text-main)' }}
+                    title="Download Article as Text"
+                  >
+                    <Download size={14} /> Download
+                  </button>
                 </div>
               </div>
 
@@ -291,21 +312,49 @@ export default function Articles() {
                           <Clock size={12} />
                           <span className="xsmall-text">{article.readTime}</span>
                         </div>
-                        <button 
-                          onClick={() => handleSelectArticle(article)} 
-                          className="btn btn-secondary btn-sm"
-                          style={{ 
-                            padding: '6px 14px', 
-                            fontSize: '0.75rem', 
-                            fontWeight: 700, 
-                            color: 'var(--text-main)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '4px'
-                          }}
-                        >
-                          Read Article <ArrowRight size={12} />
-                        </button>
+                        <div className="flex-row align-center gap-2">
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              const content = `${article.title}\n\nBy ${article.author} | ${article.date}\n\n${article.content}`;
+                              const blob = new Blob([content], { type: 'text/plain' });
+                              const url = URL.createObjectURL(blob);
+                              const a = document.createElement('a');
+                              a.href = url;
+                              a.download = `${article.slug || 'article'}.txt`;
+                              a.click();
+                              URL.revokeObjectURL(url);
+                            }}
+                            className="btn btn-secondary btn-sm"
+                            style={{ 
+                              padding: '6px 10px', 
+                              fontSize: '0.75rem', 
+                              color: 'var(--text-main)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              gap: '4px'
+                            }}
+                            title="Download Article"
+                          >
+                            <Download size={14} /> Download
+                          </button>
+                          <button 
+                            onClick={() => handleSelectArticle(article)} 
+                            className="btn btn-secondary btn-sm"
+                            style={{ 
+                              padding: '6px 14px', 
+                              fontSize: '0.75rem', 
+                              fontWeight: 700, 
+                              color: 'var(--text-main)',
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '4px'
+                            }}
+                          >
+                            Read Article <ArrowRight size={12} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
