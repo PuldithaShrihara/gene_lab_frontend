@@ -7,64 +7,6 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    location: 'Colombo',
-    date: '',
-    message: ''
-  });
-  const [formLoading, setFormLoading] = useState(false);
-  const [formSuccess, setFormSuccess] = useState(false);
-  const [formError, setFormError] = useState('');
-
-  const handleFormSubmit = async (e) => {
-    e.preventDefault();
-    setFormLoading(true);
-    setFormError('');
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/api/appointments`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          appointmentType: 'Genetic Counselling',
-          location: formData.location,
-          mode: formData.location === 'Online Video Consultation' ? 'Online' : 'In-person',
-          reason: 'Initial Consultation Request',
-          message: formData.message,
-          date: formData.date,
-          consent: true
-        }),
-      });
-
-      if (response.ok) {
-        setFormSuccess(true);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          location: 'Colombo',
-          date: '',
-          message: ''
-        });
-      } else {
-        const errData = await response.json();
-        setFormError(errData.error || 'Failed to submit appointment request.');
-      }
-    } catch (err) {
-      setFormError('Connection error: could not connect to server. Please try again later.');
-    } finally {
-      setFormLoading(false);
-    }
-  };
-
   return (
     <div className="home-page animate-fade-in">
       {/* Hero Section */}
@@ -348,159 +290,96 @@ export default function Home() {
             ></iframe>
           </div>
 
-          {/* Collaborative Network Sub-Section */}
+          {/* Collaborative Network & Channelling Section */}
           <div className="text-center" style={{ marginTop: '64px', marginBottom: '32px' }}>
-            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>Collaborative Network</span>
-            <h3 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Mini Collaborative Centres</h3>
+            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>Hospital Consultations</span>
+            <h3 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Channelling Partner Hospitals</h3>
             <p style={{ maxWidth: '640px', margin: '8px auto 0', fontSize: '0.95rem', color: 'var(--text-muted)' }}>
-              The following partner clinics and labs collect and forward genetic test samples directly to The Gene Clinic for coordination and analysis.
+              Directly book/channel a consultation session with Dr. L.B. Lahiru Prabodha at these leading medical centers.
             </p>
           </div>
 
-          <div className="grid grid-3" style={{ gap: '24px' }}>
-            {/* Center 1 */}
-            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left' }}>
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Ruhuna Hospital Diagnostics</h4>
-              <p className="xsmall-text text-muted" style={{ margin: '0 0 12px', lineHeight: '1.4' }}>
-                Main sample intake and molecular preparation partnership point in the Southern Province.
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--accent)', fontWeight: 700 }}>
-                <MapPin size={12} /> Galle, Sri Lanka
-              </div>
-            </div>
-
-            {/* Center 2 */}
-            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left' }}>
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Matara Nursing Home Laboratory</h4>
-              <p className="xsmall-text text-muted" style={{ margin: '0 0 12px', lineHeight: '1.4' }}>
-                Specialized prenatal cfDNA and NIPT sample extraction/collection partner.
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--accent)', fontWeight: 700 }}>
-                <MapPin size={12} /> Matara, Sri Lanka
-              </div>
-            </div>
-
-            {/* Center 3 */}
-            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left' }}>
-              <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Western Province Collection Centre</h4>
-              <p className="xsmall-text text-muted" style={{ margin: '0 0 12px', lineHeight: '1.4' }}>
-                Authorized wellness genomics and DNA panel prep lab for Colombo inquiries.
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: 'var(--accent)', fontWeight: 700 }}>
-                <MapPin size={12} /> Colombo, Sri Lanka
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Form Section */}
-      <section id="book-consultation" className="section" style={{ padding: '80px 0' }}>
-        <div className="container" style={{ maxWidth: '800px' }}>
-          <div className="text-center mb-10">
-            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>Get In Touch</span>
-            <h2 style={{ fontSize: '2.2rem', fontWeight: 800 }}>Book a consultation</h2>
-            <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', marginTop: '8px' }}>
-              Fill in the form below and our team will confirm your appointment within 24 hours.
-            </p>
-          </div>
-
-          {/* Form Card */}
-          <div className="card" style={{ padding: '40px', borderRadius: '24px' }}>
-            {formSuccess ? (
-              <div className="text-center py-8">
-                <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 20px' }}>
-                  <CheckCircle2 size={36} />
-                </div>
-                <h3 style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '8px' }}>Appointment Request Sent</h3>
-                <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', maxWidth: '400px', margin: '0 auto 24px' }}>
-                  Thank you for requesting an appointment. Our coordinator will contact you shortly to confirm the date and time.
+          <div className="grid grid-4" style={{ gap: '24px' }}>
+            {/* Ninewells Hospital */}
+            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyBetween: 'space-between', justifyContent: 'space-between' }}>
+              <div>
+                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Ninewells Hospital</h4>
+                <p className="xsmall-text text-muted" style={{ margin: '0 0 16px', lineHeight: '1.4' }}>
+                  Clinical Geneticist & Genetic Counselor
                 </p>
-                <button onClick={() => setFormSuccess(false)} className="btn" style={{ backgroundColor: 'var(--accent)', color: 'white' }}>
-                  Send Another Request
-                </button>
               </div>
-            ) : (
-              <form onSubmit={handleFormSubmit} className="consultation-form flex-col gap-6">
-                {formError && (
-                  <div style={{ display: 'flex', gap: '8px', alignItems: 'center', padding: '12px 16px', backgroundColor: '#fef2f2', border: '1px solid #fee2e2', borderRadius: '8px', color: '#dc2626', fontSize: '0.9rem' }}>
-                    <AlertCircle size={18} />
-                    <span>{formError}</span>
-                  </div>
-                )}
+              <a 
+                href="https://www.doc.lk/channel/5915?doctor=L.B.+LAHIRU+PROBODHA&hospital=0&specialization=0&date=" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-sm" 
+                style={{ backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.8rem', padding: '10px 14px', width: '100%', textDecoration: 'none', fontWeight: 700 }}
+              >
+                Channel Now
+              </a>
+            </div>
 
-                <div className="grid grid-2" style={{ gap: '20px' }}>
-                  <div className="form-group flex-col" style={{ gap: '6px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Full Name</label>
-                    <input 
-                      type="text" 
-                      required
-                      value={formData.name}
-                      onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                      placeholder="Your full name" 
-                    />
-                  </div>
-                  <div className="form-group flex-col" style={{ gap: '6px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Email Address</label>
-                    <input 
-                      type="email" 
-                      required
-                      value={formData.email}
-                      onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                      placeholder="Your email address" 
-                    />
-                  </div>
-                </div>
+            {/* Asiri Hospital Galle */}
+            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Asiri Hospital - Galle</h4>
+                <p className="xsmall-text text-muted" style={{ margin: '0 0 16px', lineHeight: '1.4' }}>
+                  Clinical Geneticist & Genetic Counselor
+                </p>
+              </div>
+              <a 
+                href="https://www.doc.lk/channel/8822?doctor=L.B.+LAHIRU+PROBODHA&hospital=0&specialization=0&date=" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-sm" 
+                style={{ backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.8rem', padding: '10px 14px', width: '100%', textDecoration: 'none', fontWeight: 700 }}
+              >
+                Channel Now
+              </a>
+            </div>
 
-                <div className="grid grid-2" style={{ gap: '20px' }}>
-                  <div className="form-group flex-col" style={{ gap: '6px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Phone Number</label>
-                    <input 
-                      type="tel" 
-                      required
-                      value={formData.phone}
-                      onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                      placeholder="Your phone number" 
-                    />
-                  </div>
-                  <div className="form-group flex-col" style={{ gap: '6px' }}>
-                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Preferred Location</label>
-                    <select 
-                      value={formData.location}
-                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                    >
-                      <option value="Colombo">Colombo Clinic</option>
-                      <option value="Galle">Galle Clinic</option>
-                      <option value="Online Video Consultation">Online Video Consultation</option>
-                    </select>
-                  </div>
-                </div>
+            {/* Asiri Hospital Matara */}
+            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Asiri Hospital - Matara</h4>
+                <p className="xsmall-text text-muted" style={{ margin: '0 0 16px', lineHeight: '1.4' }}>
+                  Clinical Geneticist & Genetic Counselor (Galle Road)
+                </p>
+              </div>
+              <a 
+                href="https://www.doc.lk/channel/23622?doctor=L.B.+LAHIRU+PROBODHA&hospital=0&specialization=0&date=" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-sm" 
+                style={{ backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.8rem', padding: '10px 14px', width: '100%', textDecoration: 'none', fontWeight: 700 }}
+              >
+                Channel Now
+              </a>
+            </div>
 
-                <div className="form-group flex-col" style={{ gap: '6px' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Preferred Date</label>
-                  <input 
-                    type="date" 
-                    required
-                    value={formData.date}
-                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
-                  />
-                </div>
+            {/* Durdans Hospital */}
+            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+              <div>
+                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Durdans Hospital</h4>
+                <p className="xsmall-text text-muted" style={{ margin: '0 0 16px', lineHeight: '1.4' }}>
+                  Genetic Counselor (Colombo 03)
+                </p>
+              </div>
+              <a 
+                href="https://www.doc.lk/channel/30355?doctor=L.B.+LAHIRU+PROBODHA&hospital=0&specialization=0&date=" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="btn btn-sm" 
+                style={{ backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.8rem', padding: '10px 14px', width: '100%', textDecoration: 'none', fontWeight: 700 }}
+              >
+                Channel Now
+              </a>
+            </div>
+          </div>
 
-                <div className="form-group flex-col" style={{ gap: '6px' }}>
-                  <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)', textAlign: 'left' }}>Message / Inquiry</label>
-                  <textarea 
-                    value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                    placeholder="Tell us about your medical history or questions you have..." 
-                    style={{ minHeight: '120px', resize: 'none' }}
-                  />
-                </div>
-
-                <button type="submit" disabled={formLoading} className="btn w-full" style={{ backgroundColor: 'var(--accent)', color: 'white', height: '50px', fontWeight: 700 }}>
-                  {formLoading ? 'Submitting...' : 'Send Appointment Request →'}
-                </button>
-              </form>
-            )}
+          {/* Hotline Assist callout */}
+          <div style={{ marginTop: '32px', backgroundColor: 'rgba(2, 132, 199, 0.03)', border: '1px dashed var(--secondary)', borderRadius: '12px', padding: '16px', fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-main)' }}>
+            📞 Need channeling assistance? Call <a href="tel:0117990990" style={{ color: 'var(--secondary)', textDecoration: 'underline' }}>0117990990</a> for agent support.
           </div>
         </div>
       </section>
@@ -512,9 +391,9 @@ export default function Home() {
             <h2 style={{ color: 'white', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 800, margin: 0, lineHeight: 1.25, textAlign: 'left' }}>
               Ready to understand<br />your genetic health?
             </h2>
-            <a href="#book-consultation" className="btn" style={{ backgroundColor: 'white', color: '#092e3c', padding: '14px 32px', borderRadius: '50px', fontWeight: 700 }}>
+            <Link to="/appointments" className="btn" style={{ backgroundColor: 'white', color: '#092e3c', padding: '14px 32px', borderRadius: '50px', fontWeight: 700, textDecoration: 'none' }}>
               Book Your Consultation →
-            </a>
+            </Link>
           </div>
         </div>
       </section>
