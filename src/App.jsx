@@ -1,37 +1,35 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 
-// Shared Layout Components
 import TopBar from './components/TopBar';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import WhatsAppFloat from './components/WhatsAppFloat';
-import StickyMobileCTA from './components/StickyMobileCTA';
 import CallbackModal from './components/CallbackModal';
+import ScrollToTop from './components/ScrollToTop';
 
 // Pages
-import Home from './pages/Home';
-import About from './pages/About';
-import Clinic from './pages/Clinic';
-import Services from './pages/Services';
-import TestPackages from './pages/TestPackages';
-import WellnessBlueprint from './pages/WellnessBlueprint';
-import Nipt from './pages/Nipt';
-import Journey from './pages/Journey';
-import Articles from './pages/Articles';
-import Appointments from './pages/Appointments';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminLogin from './pages/AdminLogin';
-import Research from './pages/Research';
+import Home from './pages/user/Home';
+import About from './pages/user/About';
+import Clinic from './pages/user/Clinic';
+import Services from './pages/user/Services';
+import TestPackages from './pages/user/TestPackages';
+import WellnessBlueprint from './pages/user/WellnessBlueprint';
+import Nipt from './pages/user/Nipt';
+import Journey from './pages/user/Journey';
+import Articles from './pages/user/Articles';
+import Appointments from './pages/user/Appointments';
+import AdminDashboard from './pages/admin/AdminDashboard';
+import AdminLogin from './pages/admin/AdminLogin';
+import Research from './pages/user/Research';
 // New Pages
-import RequestGeneticTest from './pages/RequestGeneticTest';
-import Education from './pages/Education';
-import Faq from './pages/Faq';
-import PatientRegistration from './pages/PatientRegistration';
-import PartnerLaboratories from './pages/PartnerLaboratories';
-import Reviews from './pages/Reviews';
-import Contact from './pages/Contact';
-import Profile from './pages/Profile';
+import RequestGeneticTest from './pages/user/RequestGeneticTest';
+import Education from './pages/user/Education';
+import Faq from './pages/user/Faq';
+import PatientRegistration from './pages/user/PatientRegistration';
+import PartnerLaboratories from './pages/user/PartnerLaboratories';
+import Reviews from './pages/user/Reviews';
+import Contact from './pages/user/Contact';
+import Profile from './pages/user/Profile';
 
 // Simple Legal Subpages to resolve footer links
 function PrivacyPolicy() {
@@ -67,6 +65,7 @@ export default function App() {
 
   return (
     <Router>
+      <ScrollToTop />
       <div className="app-wrapper">
         <TopBar onOpenCallbackModal={() => setIsCallbackOpen(true)} />
         <Header />
@@ -82,8 +81,9 @@ export default function App() {
             <Route path="/nipt" element={<Nipt />} />
             <Route path="/journey" element={<Journey />} />
             <Route path="/appointments" element={<Appointments />} />
-            <Route path="/admin" element={<AdminDashboard />} />
-            <Route path="/admin/login" element={<AdminLogin />} />
+            <Route path="/admin-dashboard" element={<AdminDashboard />} />
+            <Route path="/admin-login" element={<AdminLogin />} />
+            <Route path="/admin" element={<Navigate to="/admin-dashboard" replace />} />
             <Route path="/research" element={<Research />} />
             <Route path="/test-packages" element={<TestPackages onOpenCallbackModal={() => setIsCallbackOpen(true)} />} />
             <Route path="/wellness-blueprint" element={<WellnessBlueprint />} />
@@ -104,8 +104,6 @@ export default function App() {
         <Footer />
         
         {/* Floating actions */}
-        <WhatsAppFloat />
-        <StickyMobileCTA />
         
         {/* Callback Request Modal */}
         <CallbackModal isOpen={isCallbackOpen} onClose={() => setIsCallbackOpen(false)} />

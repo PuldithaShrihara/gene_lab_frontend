@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../config';
-import { useAuth } from '../context/AuthContext';
-import LoginRequiredCard from '../components/LoginRequiredCard';
+import { API_BASE_URL } from '../../config';
+import { useAuth } from '../../context/AuthContext';
+import LoginRequiredCard from '../../components/LoginRequiredCard';
 import { 
   Calendar, 
   CheckCircle2, 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Star, CheckCircle2, AlertCircle, Shield, MessageSquare } from 'lucide-react';
-import { API_BASE_URL } from '../config';
-import { useAuth } from '../context/AuthContext';
-import LoginRequiredCard from '../components/LoginRequiredCard';
+import { API_BASE_URL } from '../../config';
+import { useAuth } from '../../context/AuthContext';
+import LoginRequiredCard from '../../components/LoginRequiredCard';
 
 export default function Reviews() {
   const [reviews, setReviews] = useState([]);

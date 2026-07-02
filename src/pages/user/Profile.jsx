@@ -1,5 +1,5 @@
 import React from 'react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 import { Link, Navigate } from 'react-router-dom';
 import { Calendar, FileText, UserPlus, Mail } from 'lucide-react';
 

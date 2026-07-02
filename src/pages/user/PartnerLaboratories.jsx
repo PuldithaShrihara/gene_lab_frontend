@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Building2, CheckCircle2, AlertCircle, Shield, Mail, Phone, MapPin } from 'lucide-react';
-import { API_BASE_URL } from '../config';
-import { useAuth } from '../context/AuthContext';
-import LoginRequiredCard from '../components/LoginRequiredCard';
+import { API_BASE_URL } from '../../config';
+import { useAuth } from '../../context/AuthContext';
+import LoginRequiredCard from '../../components/LoginRequiredCard';
 
 export default function PartnerLaboratories() {
   const [labName, setLabName] = useState('');

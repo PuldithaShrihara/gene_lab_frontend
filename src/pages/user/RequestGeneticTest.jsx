@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ClipboardList, CheckCircle2, AlertCircle, Phone, MessageSquare, Shield, HelpCircle, Upload, ArrowRight } from 'lucide-react';
-import { API_BASE_URL } from '../config';
-import { useAuth } from '../context/AuthContext';
-import LoginRequiredCard from '../components/LoginRequiredCard';
+import { API_BASE_URL } from '../../config';
+import { useAuth } from '../../context/AuthContext';
+import LoginRequiredCard from '../../components/LoginRequiredCard';
 
 export default function RequestGeneticTest() {
   const [formData, setFormData] = useState({

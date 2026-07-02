@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, MessageSquare, Clock, CheckCircle2, AlertCircle, Shield } from 'lucide-react';
-import { API_BASE_URL } from '../config';
-import { useAuth } from '../context/AuthContext';
-import LoginRequiredCard from '../components/LoginRequiredCard';
-import QuickAccessLinks from '../components/QuickAccessLinks';
+import { Mail, Phone, MapPin, MessageSquare, Clock, CheckCircle2, AlertCircle, Shield, Calendar, FileText, MessageCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { API_BASE_URL } from '../../config';
+import { useAuth } from '../../context/AuthContext';
+import LoginRequiredCard from '../../components/LoginRequiredCard';
+import QuickAccessLinks from '../../components/QuickAccessLinks';
 
 const FacebookIcon = ({ size = 20, ...props }) => (
   <svg
@@ -137,6 +138,71 @@ export default function Contact() {
             <p className="lead-text" style={{ color: 'var(--text-muted)', lineHeight: '1.7', margin: 0 }}>
               Have questions about our testing packages, counselling services, or report timelines? Reach out to our coordinators today.
             </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Contact Us Support Section (Copied from FAQ) */}
+      <section className="section bg-secondary" style={{ padding: '60px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
+        <div className="container" style={{ maxWidth: '1000px' }}>
+          <div className="text-center" style={{ marginBottom: '40px' }}>
+            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '16px' }}>Still have questions?</h2>
+            <p className="lead-text text-muted" style={{ maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
+              If you cannot find the answer you need, contact The Gene Clinic team for assistance with appointments, genetic test requests, report interpretation, or patient services.
+            </p>
+          </div>
+
+          {/* Contact Details Grid */}
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '40px' }}>
+            <a href="tel:+94701917000" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', textDecoration: 'none', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(2, 132, 199, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--secondary)', flexShrink: 0 }}>
+                <Phone size={24} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>Call Now</div>
+                <div style={{ fontSize: '1.1rem', color: 'var(--text-main)', fontWeight: 700 }}>+94 70 191 7000</div>
+              </div>
+            </a>
+            
+            <a href="https://wa.me/94701917000" target="_blank" rel="noopener noreferrer" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', textDecoration: 'none', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#dcfce3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16a34a', flexShrink: 0 }}>
+                <MessageCircle size={24} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>WhatsApp Chat</div>
+                <div style={{ fontSize: '1.1rem', color: 'var(--text-main)', fontWeight: 700 }}>+94 70 191 7000</div>
+              </div>
+            </a>
+
+            <a href="mailto:thegeneclinic@gmail.com" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', textDecoration: 'none', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(15, 118, 110, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', flexShrink: 0 }}>
+                <Mail size={24} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>Email Us</div>
+                <div style={{ fontSize: '1.05rem', color: 'var(--text-main)', fontWeight: 700 }}>thegeneclinic@gmail.com</div>
+              </div>
+            </a>
+
+            <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(2, 132, 199, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', flexShrink: 0 }}>
+                <MapPin size={24} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>Location</div>
+                <div style={{ fontSize: '1.05rem', color: 'var(--text-main)', fontWeight: 700 }}>Galle, Sri Lanka</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
+            <Link to="/appointments" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Calendar size={18} /> Book Appointment
+            </Link>
+            <Link to="/request-genetic-test" className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-secondary)', borderColor: 'var(--primary)', color: 'var(--primary)' }}>
+              <FileText size={18} /> Request Genetic Test
+            </Link>
           </div>
         </div>
       </section>

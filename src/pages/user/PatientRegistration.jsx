@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { ClipboardCheck, CheckCircle2, AlertCircle, Shield, Upload, Phone, Mail } from 'lucide-react';
-import { API_BASE_URL } from '../config';
-import { useAuth } from '../context/AuthContext';
-import LoginRequiredCard from '../components/LoginRequiredCard';
+import { API_BASE_URL } from '../../config';
+import { useAuth } from '../../context/AuthContext';
+import LoginRequiredCard from '../../components/LoginRequiredCard';
 
 export default function PatientRegistration() {
   // Form fields state
