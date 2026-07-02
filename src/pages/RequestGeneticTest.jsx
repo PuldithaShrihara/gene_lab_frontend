@@ -14,7 +14,6 @@ export default function RequestGeneticTest() {
     reasonForTesting: "",
     referralDetails: "",
     preferredContactMethod: "",
-    reportFile: null,
     consent: false
   });
   
@@ -51,11 +50,7 @@ export default function RequestGeneticTest() {
   };
 
   const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: files?.[0] || null
-    }));
+    // Left empty safely if other files needed later
   };
 
   const validateForm = () => {
@@ -95,7 +90,7 @@ export default function RequestGeneticTest() {
       reasonForTesting: formData.reasonForTesting,
       referralDetails: formData.referralDetails,
       preferredContactMethod: formData.preferredContactMethod,
-      reportFileName: formData.reportFile?.name || "",
+      reportFileName: "",
       consent: formData.consent,
       status: "New",
       source: "Website Request Genetic Test Page",
@@ -132,7 +127,6 @@ export default function RequestGeneticTest() {
         reasonForTesting: "",
         referralDetails: "",
         preferredContactMethod: "",
-        reportFile: null,
         consent: false
       });
     } catch (error) {
@@ -148,66 +142,7 @@ export default function RequestGeneticTest() {
     }
   };
 
-  // Drag and drop uploader sub-component helper
-  const FileUploader = ({ label, helper, file, onFileSelect, themeColor = 'var(--secondary)' }) => {
-    const [dragActive, setDragActive] = useState(false);
-    const id = label.replace(/\s+/g, '-').toLowerCase();
-
-    const handleDrag = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      if (e.type === "dragenter" || e.type === "dragover") {
-        setDragActive(true);
-      } else if (e.type === "dragleave") {
-        setDragActive(false);
-      }
-    };
-
-    const handleDrop = (e) => {
-      e.preventDefault();
-      e.stopPropagation();
-      setDragActive(false);
-      if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-        onFileSelect(e.dataTransfer.files[0]);
-      }
-    };
-
-    return (
-      <div className="form-group flex-col" style={{ gap: '6px' }}>
-        <label style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--text-main)' }}>{label}</label>
-        <div 
-          onDragEnter={handleDrag}
-          onDragOver={handleDrag}
-          onDragLeave={handleDrag}
-          onDrop={handleDrop}
-          onClick={() => document.getElementById(`file-input-${id}`).click()}
-          style={{
-            border: '2px dashed ' + (dragActive ? themeColor : 'var(--border-color)'),
-            borderRadius: '14px',
-            padding: '28px 16px',
-            textAlign: 'center',
-            background: dragActive ? 'rgba(2, 132, 199, 0.05)' : 'var(--bg-secondary)',
-            cursor: 'pointer',
-            transition: 'all var(--transition-fast)',
-            position: 'relative'
-          }}
-        >
-          <Upload size={28} style={{ color: themeColor, margin: '0 auto 12px' }} />
-          <p className="xsmall-text text-main" style={{ margin: '0 0 6px', fontWeight: 600, fontSize: '0.95rem' }}>
-            {file ? file.name : 'Click to upload or drag file here'}
-          </p>
-          <span className="xsmall-text text-muted" style={{ fontSize: '0.85rem' }}>{helper}</span>
-          <input 
-            id={`file-input-${id}`}
-            type="file"
-            style={{ display: 'none' }}
-            onChange={(e) => e.target.files[0] && onFileSelect(e.target.files[0])}
-            accept=".pdf,.jpg,.jpeg,.png"
-          />
-        </div>
-      </div>
-    );
-  };
+  // Drag and drop uploader sub-component helper removed
 
   return (
     <div className="request-test-page animate-fade-in" style={{ position: 'relative' }}>
@@ -601,14 +536,6 @@ export default function RequestGeneticTest() {
                         placeholder="e.g. Dr. K. Silva (Colombo General Hospital)"
                       />
                     </div>
-                    
-                    <FileUploader 
-                      label="Upload Report / Prescription (Optional)"
-                      helper="PDF, JPG, PNG accepted"
-                      file={formData.reportFile}
-                      onFileSelect={(file) => setFormData(prev => ({ ...prev, reportFile: file }))}
-                      themeColor="var(--secondary)"
-                    />
                   </div>
 
                   {/* Consent & Submit */}
@@ -703,32 +630,17 @@ export default function RequestGeneticTest() {
           </div>
 
           {/* Section 5: CTA Strip */}
-          <div className="cta-strip">
-            <div style={{ position: 'absolute', top: '-50px', right: '-50px', opacity: 0.05, transform: 'scale(1.5)' }}>
-              <svg width="200" height="200" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="50" cy="50" r="40" stroke="white" strokeWidth="2" strokeDasharray="4 4" />
-                <circle cx="50" cy="50" r="20" stroke="white" strokeWidth="2" />
-              </svg>
-            </div>
-            
-            <h2 style={{ fontSize: '1.8rem', fontWeight: 800, margin: '0 0 16px', color: '#ffffff' }}>
-              Need help understanding a genetic report?
-            </h2>
-            <p style={{ fontSize: '1.1rem', margin: '0 0 32px', color: 'rgba(255,255,255,0.8)', maxWidth: '600px', lineHeight: '1.6' }}>
-              Book a consultation or upload your report for professional genetic interpretation.
-            </p>
-            
-            <div className="flex-row gap-4" style={{ flexWrap: 'wrap', justifyContent: 'center' }}>
-              <a href="/appointments" className="btn" style={{ background: 'white', color: 'var(--primary)', padding: '14px 32px', borderRadius: '16px', fontWeight: 700, fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <Upload size={20} />
-                Upload Report
-              </a>
-              <a href="/appointments" className="btn btn-accent" style={{ padding: '14px 32px', borderRadius: '16px', fontWeight: 700, fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-                Book Appointment
-                <ArrowRight size={20} />
-              </a>
-            </div>
-          </div>
+          <section className="quick-whatsapp-section">
+            <a
+              href="https://wa.me/94701917000"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="whatsapp-inquiry-btn"
+              aria-label="Contact The Gene Clinic on WhatsApp"
+            >
+              <MessageSquare size={18} style={{ marginRight: '8px' }} /> WhatsApp Inquiry
+            </a>
+          </section>
           
         </div>
       </section>

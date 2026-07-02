@@ -94,17 +94,16 @@ export default function Articles() {
           <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', lineHeight: '1.2', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em' }}>
             Articles & Resources
           </h1>
-          <p className="lead-text" style={{ fontSize: 'clamp(1rem, 3vw, 1.12rem)', color: 'var(--text-muted)', lineHeight: '1.7', margin: '0 auto 32px' }}>
-            Simple, medically responsible articles to help patients and families understand genetic testing, counselling, NIPT, wellness genomics, and report interpretation.
-          </p>
-          
-          <div className="flex-row-center gap-4 flex-wrap">
-            <a href="#articles-list" className="btn btn-primary" style={{ padding: '12px 28px' }}>
-              Explore Articles
+          <div className="flex-row-center mt-6">
+            <a 
+              href="https://wa.me/94701917000" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="whatsapp-inquiry-btn"
+              aria-label="Contact The Gene Clinic on WhatsApp"
+            >
+              <MessageSquare size={18} style={{ marginRight: '8px' }} /> WhatsApp Inquiry
             </a>
-            <Link to="/appointments" className="btn btn-secondary" style={{ padding: '12px 28px', color: 'var(--text-main)' }}>
-              Book Consultation
-            </Link>
           </div>
         </div>
       </section>
@@ -382,33 +381,16 @@ export default function Articles() {
       </section>
 
       {/* Final bottom CTA */}
-      <section className="section bg-secondary" style={{ padding: '96px 0', borderTop: '1px solid var(--border-color)' }}>
-        <div className="container text-center" style={{ maxWidth: '800px' }}>
-          <span className="badge badge-accent mb-4">Patient Education</span>
-          <h2 style={{ fontSize: 'clamp(2rem, 5vw, 2.6rem)', fontWeight: 800, marginBottom: '16px' }}>
-            Need help understanding a genetic topic or report?
-          </h2>
-          <p className="lead-text text-muted mb-8" style={{ fontSize: '1.1rem', lineHeight: '1.7', maxWidth: '640px', margin: '0 auto 36px' }}>
-            Book a consultation to discuss your report, family history, or test options with professional guidance.
-          </p>
-          <div className="flex-row-center gap-4 flex-wrap">
-            <Link to="/appointments" className="btn btn-primary" style={{ padding: '14px 28px' }}>
-              <Calendar size={18} /> Book Consultation
-            </Link>
-            <Link to="/appointments?action=upload" className="btn btn-secondary" style={{ padding: '14px 28px', color: 'var(--text-main)' }}>
-              <Upload size={18} /> Upload Report
-            </Link>
-            <a 
-              href="https://wa.me/94701917000" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="btn btn-secondary" 
-              style={{ padding: '14px 28px', backgroundColor: '#25D366', color: 'white', borderColor: 'transparent' }}
-            >
-              <MessageSquare size={18} /> WhatsApp Inquiry
-            </a>
-          </div>
-        </div>
+      <section className="quick-whatsapp-section">
+        <a
+          href="https://wa.me/94701917000"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="whatsapp-inquiry-btn"
+          aria-label="Contact The Gene Clinic on WhatsApp"
+        >
+          <MessageSquare size={18} style={{ marginRight: '8px' }} /> WhatsApp Inquiry
+        </a>
       </section>
 
     </div>

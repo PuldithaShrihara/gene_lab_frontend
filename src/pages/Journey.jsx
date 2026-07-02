@@ -58,8 +58,6 @@ export default function Journey() {
       subtitle: 'Collaborative Care Path',
       icon: HeartHandshake,
       desc: 'Results are explained in a clear and responsible way, including possible implications, family risk, lifestyle guidance, referral needs, or follow-up care.',
-      ctaText: 'Upload Reports',
-      ctaLink: '/appointments?action=upload'
     }
   ];
 
@@ -233,9 +231,6 @@ export default function Journey() {
                 <Link to="/appointments" className="btn btn-primary" style={{ padding: '14px 28px' }}>
                   <Calendar size={18} /> Book Consultation
                 </Link>
-                <Link to="/appointments?action=upload" className="btn btn-secondary" style={{ padding: '14px 28px', color: 'var(--text-main)' }}>
-                  <Upload size={18} /> Upload Report
-                </Link>
               </div>
             </div>
 
@@ -399,9 +394,6 @@ export default function Journey() {
                 <li className="xsmall-text text-muted" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: '1.5' }}>
                   <span>✔️</span> <span>Prepare your main questions and expectations</span>
                 </li>
-                <li className="xsmall-text text-muted" style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: '1.5' }}>
-                  <span>✔️</span> <span>Upload reports before the appointment if possible</span>
-                </li>
               </ul>
             </div>
 
@@ -432,33 +424,16 @@ export default function Journey() {
       </section>
 
       {/* Final bottom CTA Section */}
-      <section className="section bg-secondary" style={{ padding: '96px 0' }}>
-        <div className="container text-center" style={{ maxWidth: '800px' }}>
-          <span className="badge badge-accent mb-4">Diagnostic Path</span>
-          <h2 style={{ fontSize: 'clamp(2rem, 5vw, 2.6rem)', fontWeight: 800, marginBottom: '16px' }}>
-            Ready to start your genetic consultation journey?
-          </h2>
-          <p className="lead-text text-muted mb-8" style={{ fontSize: '1.1rem', lineHeight: '1.7', maxWidth: '640px', margin: '0 auto 36px' }}>
-            Book an appointment or upload your report so the clinic can guide you through the next step.
-          </p>
-          <div className="flex-row-center gap-4 flex-wrap">
-            <Link to="/appointments" className="btn btn-primary" style={{ padding: '14px 28px' }}>
-              <Calendar size={18} /> Book Appointment
-            </Link>
-            <Link to="/appointments?action=upload" className="btn btn-secondary" style={{ padding: '14px 28px', color: 'var(--text-main)' }}>
-              <Upload size={18} /> Upload Report
-            </Link>
-            <a 
-              href="https://wa.me/94701917000" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="btn btn-secondary" 
-              style={{ padding: '14px 28px', backgroundColor: '#25D366', color: 'white', borderColor: 'transparent' }}
-            >
-              <MessageSquare size={18} /> WhatsApp Inquiry
-            </a>
-          </div>
-        </div>
+      <section className="quick-whatsapp-section">
+        <a
+          href="https://wa.me/94701917000"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="whatsapp-inquiry-btn"
+          aria-label="Contact The Gene Clinic on WhatsApp"
+        >
+          <MessageSquare size={18} style={{ marginRight: '8px' }} /> WhatsApp Inquiry
+        </a>
       </section>
       
     </div>

@@ -585,37 +585,16 @@ export default function TestPackages({ onOpenCallbackModal }) {
       </section>
 
       {/* Final CTA Section */}
-      <section className="section bg-secondary" style={{ padding: '96px 0' }}>
-        <div className="container text-center" style={{ maxWidth: '800px' }}>
-          <span className="badge badge-accent mb-4">Genetic Guidance</span>
-          <h2 style={{ fontSize: 'clamp(2rem, 5vw, 2.6rem)', fontWeight: 800, marginBottom: '16px' }}>
-            Need help choosing the right genetic test?
-          </h2>
-          <p className="lead-text text-muted mb-8" style={{ fontSize: '1.1rem', lineHeight: '1.7', maxWidth: '640px', margin: '0 auto 36px' }}>
-            Our team can guide you based on your health concern, family history, pregnancy status, or previous genetic reports.
-          </p>
-          <div className="flex-row-center gap-4 flex-wrap">
-            <Link to="/appointments?type=General%20genetic%20consultation" className="btn btn-primary" style={{ padding: '14px 28px' }}>
-              <ClipboardList size={18} /> Book Consultation
-            </Link>
-            <button 
-              onClick={() => onOpenCallbackModal('Report review and upload inquiry')} 
-              className="btn btn-secondary" 
-              style={{ padding: '14px 28px', color: 'var(--text-main)' }}
-            >
-              <Upload size={18} /> Upload Report
-            </button>
-            <a 
-              href="https://wa.me/94701917000" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="btn btn-secondary" 
-              style={{ padding: '14px 28px', backgroundColor: '#25D366', color: 'white', borderColor: 'transparent' }}
-            >
-              <MessageSquare size={18} /> WhatsApp Inquiry
-            </a>
-          </div>
-        </div>
+      <section className="quick-whatsapp-section">
+        <a
+          href="https://wa.me/94701917000"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="whatsapp-inquiry-btn"
+          aria-label="Contact The Gene Clinic on WhatsApp"
+        >
+          <MessageSquare size={18} style={{ marginRight: '8px' }} /> WhatsApp Inquiry
+        </a>
       </section>
       
     </div>

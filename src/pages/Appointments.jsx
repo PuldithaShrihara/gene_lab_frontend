@@ -56,9 +56,6 @@ export default function Appointments() {
     preferredTimeSlot: "",
     reason: "",
     message: "",
-    geneticReport: null,
-    medicalReport: null,
-    referralLetter: null,
     consent: false
   });
 
@@ -264,9 +261,9 @@ export default function Appointments() {
           preferredTimeSlot: formData.preferredTimeSlot,
           reason: combinedReason,
           message: formData.message,
-          geneticReportName: formData.geneticReport?.name || "",
-          medicalReportName: formData.medicalReport?.name || "",
-          referralLetterName: formData.referralLetter?.name || "",
+          geneticReportName: "",
+          medicalReportName: "",
+          referralLetterName: "",
           consent: formData.consent,
           // TODO: Integrate payment gateway in a future phase after confirming the payment provider.
           paymentStatus: "Pending",
@@ -1016,65 +1013,7 @@ export default function Appointments() {
                         </div>
                       </div>
 
-                      {/* Section 4: Report Upload */}
-                      <div id="uploader-section">
-                        <div className="form-section-title">
-                          <Upload size={18} className="text-accent" /> 4. Clinical Report Uploads
-                        </div>
-                        
-                        <p className="xsmall-text text-muted mb-4" style={{ lineHeight: '1.5' }}>
-                          To optimize your session, please upload copies of relevant reports if available. Handled securely under clinical confidentiality guidelines.
-                        </p>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '20px' }}>
-                          <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label htmlFor="geneticReport" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Genetic Report (Optional)</label>
-                            <input
-                              id="geneticReport"
-                              name="geneticReport"
-                              type="file"
-                              accept=".pdf,.jpg,.jpeg,.png"
-                              className="premium-input"
-                              onChange={handleFileChange}
-                              style={{ padding: '10px' }}
-                            />
-                            {formData.geneticReport && <span className="xsmall-text text-muted" style={{ fontWeight: 600 }}>Selected: {formData.geneticReport.name}</span>}
-                            <span className="xsmall-text text-light" style={{ fontSize: '0.75rem' }}>PDF, JPG, PNG accepted</span>
-                          </div>
-                          
-                          <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label htmlFor="medicalReport" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Medical Report (Optional)</label>
-                            <input
-                              id="medicalReport"
-                              name="medicalReport"
-                              type="file"
-                              accept=".pdf,.jpg,.jpeg,.png"
-                              className="premium-input"
-                              onChange={handleFileChange}
-                              style={{ padding: '10px' }}
-                            />
-                            {formData.medicalReport && <span className="xsmall-text text-muted" style={{ fontWeight: 600 }}>Selected: {formData.medicalReport.name}</span>}
-                            <span className="xsmall-text text-light" style={{ fontSize: '0.75rem' }}>PDF, JPG, PNG accepted</span>
-                          </div>
-
-                          <div className="form-group flex-col" style={{ gap: '6px' }}>
-                            <label htmlFor="referralLetter" style={{ fontSize: '0.82rem', fontWeight: 700, color: 'var(--text-main)' }}>Referral Letter (Optional)</label>
-                            <input
-                              id="referralLetter"
-                              name="referralLetter"
-                              type="file"
-                              accept=".pdf,.jpg,.jpeg,.png"
-                              className="premium-input"
-                              onChange={handleFileChange}
-                              style={{ padding: '10px' }}
-                            />
-                            {formData.referralLetter && <span className="xsmall-text text-muted" style={{ fontWeight: 600 }}>Selected: {formData.referralLetter.name}</span>}
-                            <span className="xsmall-text text-light" style={{ fontSize: '0.75rem' }}>Upload request sheets if available</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Section 5: Consent & Submit */}
+                      {/* Section 4: Consent & Submit */}
                       <div style={{ borderTop: '1px solid var(--border-color)', paddingTop: '24px' }}>
                         <div className="flex-col align-start" style={{ padding: '24px', background: 'rgba(2, 132, 199, 0.03)', border: '1px solid rgba(2, 132, 199, 0.12)', borderRadius: '18px', marginBottom: '24px', transform: 'none', boxShadow: 'none' }}>
                           <div className="flex-row-center text-accent mb-3" style={{ width: '32px', height: '32px', borderRadius: '50%', background: 'rgba(15, 118, 110, 0.08)' }}>
@@ -1150,7 +1089,6 @@ export default function Appointments() {
               <div className="border-top pt-4">
                 <ul className="flex-col gap-3 pl-4 text-muted xsmall-text" style={{ listStyleType: 'disc', lineHeight: '1.5' }}>
                   <li>Pre-test consultation is recommended before choosing exomes.</li>
-                  <li>Upload reports ahead of scheduled timings to save clinic wait durations.</li>
                   <li>NIPT screening panels require specialized counseling interpretations.</li>
                 </ul>
               </div>
