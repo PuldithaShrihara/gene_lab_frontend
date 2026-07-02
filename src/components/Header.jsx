@@ -74,16 +74,20 @@ export default function Header() {
               </Link>
             </li>
 
-            {/* Resources Dropdown */}
-            <li className="nav-item-dropdown">
-              <span className={`nav-link ${['/education', '/articles', '/journey'].includes(location.pathname) ? 'active' : ''}`} style={{ cursor: 'default' }}>
-                Resources <ChevronDown size={14} />
-              </span>
-              <div className="dropdown-menu">
-                <Link to="/education" className="dropdown-item">Education</Link>
-                <Link to="/articles" className="dropdown-item">Articles</Link>
-                <Link to="/journey" className="dropdown-item">Patient Journey</Link>
-              </div>
+            <li>
+              <Link to="/education" className={`nav-link ${location.pathname === '/education' ? 'active' : ''}`}>
+                Education
+              </Link>
+            </li>
+            <li>
+              <Link to="/articles" className={`nav-link ${location.pathname === '/articles' ? 'active' : ''}`}>
+                Articles
+              </Link>
+            </li>
+            <li>
+              <Link to="/journey" className={`nav-link ${location.pathname === '/journey' ? 'active' : ''}`}>
+                Patient Journey
+              </Link>
             </li>
 
             {/* More Dropdown */}

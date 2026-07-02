@@ -568,19 +568,19 @@ h3 {
 .desktop-nav .nav-list {
   display: flex;
   align-items: center;
-  gap: 8px; /* Slightly reduced gap from 11px to fit larger logo */
+  gap: 16px; /* Elegant spacing for larger font sizes */
   list-style: none;
 }
 .nav-link {
   color: var(--text-muted);
-  font-size: 0.8rem; /* Slightly reduced font size from 0.83rem */
-  font-weight: 600;
+  font-size: 0.98rem; /* Increased from 0.8rem for high legibility */
+  font-weight: 700; /* Prominent semi-bold weight */
   white-space: nowrap; /* Prevent menu breaking into 2 lines */
-  padding: 8px 0;
+  padding: 10px 0;
   border-bottom: 2px solid transparent;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 6px;
 }
 .nav-link:hover, .nav-link.active {
   color: var(--secondary);

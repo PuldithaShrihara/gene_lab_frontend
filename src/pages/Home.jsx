@@ -226,7 +226,7 @@ export default function Home() {
         <div className="container">
           <div className="text-center mb-12">
             <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>Where to find us</span>
-            <h2 style={{ fontSize: '2.2rem', fontWeight: 800 }}>Clinics in Colombo, Galle & Matara</h2>
+            <h2 style={{ fontSize: '2.2rem', fontWeight: 800 }}>Our Centres</h2>
             <p style={{ maxWidth: '640px', margin: '12px auto 0', fontSize: '1.05rem', color: 'var(--text-muted)' }}>
               Three convenient branch locations across Sri Lanka, with online appointments available for patients nationwide and internationally.
             </p>
