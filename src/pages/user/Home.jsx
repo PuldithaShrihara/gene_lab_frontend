@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import ClinicLocationsMap from "../../components/ClinicLocationsMap";
 import { API_BASE_URL } from '../../config';
 import { 
   ShieldCheck, Dna, FileText, Heart, Microscope, Video, 
@@ -7,396 +8,316 @@ import {
 } from 'lucide-react';
 
 export default function Home() {
+  const [openAboutCard, setOpenAboutCard] = useState(null);
+
   return (
-    <div className="home-page animate-fade-in">
+    <div className="home-page animate-fade-in" style={{ backgroundColor: '#fafbfc' }}>
       {/* Hero Section */}
       <section className="section hero-section" style={{ padding: '80px 0 60px', position: 'relative', overflow: 'hidden' }}>
         <div className="container">
-          <div className="hero-container" style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '48px', alignItems: 'center' }}>
+          <div className="hero-container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '48px', alignItems: 'center' }}>
             
             {/* Hero Left Content */}
-            <div className="hero-content" style={{ textAlign: 'left' }}>
-              <span className="badge badge-accent mb-4" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)', fontWeight: 700 }}>
+            <div className="hero-content" style={{ textAlign: 'left', paddingRight: '40px' }}>
+              <span className="badge mb-4" style={{ backgroundColor: '#e0f4f5', color: 'var(--accent)', fontWeight: 700, padding: '6px 16px', borderRadius: '50px', fontSize: '0.85rem', textTransform: 'uppercase', letterSpacing: '0.5px' }}>
                 🧬 Clinical Genetics & Counselling
               </span>
-              <h1 style={{ fontSize: 'clamp(2.4rem, 5vw, 3.4rem)', lineHeight: '1.15', marginBottom: '24px', fontWeight: 800 }}>
-                Expert genetic care, <span className="font-decoded">decoded</span> for you.
+              <h1 style={{ fontFamily: 'var(--font-heading)', fontSize: 'clamp(2.8rem, 5vw, 4.2rem)', lineHeight: '1.1', marginBottom: '24px', fontWeight: 600, color: 'var(--primary)' }}>
+                Expert genetic<br/>care, <span style={{ fontStyle: 'italic', color: 'var(--accent)' }}>decoded</span><br/>for you.
               </h1>
-              <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', lineHeight: '1.65', marginBottom: '32px' }}>
-                Dr. Lahiru Prabodha provides specialist clinical genetics services—from genetic testing interpretation to individualized counseling and preventative condition management across Colombo & Galle.
+              <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', lineHeight: '1.65', marginBottom: '32px', maxWidth: '480px' }}>
+                Dr. Lahiru Prabodha provides specialist clinical genetics consultations—from genetic testing interpretation to individualized risk management and preventive health.
               </p>
               <div className="hero-actions" style={{ display: 'flex', gap: '16px', alignItems: 'center' }}>
-                <a href="#book-consultation" className="btn" style={{ backgroundColor: 'var(--accent)', color: 'white', padding: '14px 32px' }}>
+                <a href="#book-consultation" className="btn" style={{ backgroundColor: 'var(--accent)', color: 'white', padding: '14px 32px', borderRadius: '50px', fontWeight: 600, border: 'none', boxShadow: '0 4px 14px rgba(10,142,151,0.3)' }}>
                   Book a Consultation
                 </a>
-                <Link to="/about" className="btn btn-secondary" style={{ padding: '14px 32px' }}>
-                  Learn More
-                </Link>
               </div>
             </div>
 
             {/* Hero Right: Doctor Card */}
             <div className="hero-visual" style={{ position: 'relative' }}>
-              <div className="card" style={{ padding: '32px 28px', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-lg)' }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '20px', marginBottom: '20px' }}>
-                  <div style={{ width: '56px', height: '56px', borderRadius: '50%', backgroundColor: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 800, fontSize: '1.25rem' }}>
+              <div className="card" style={{ padding: '32px', background: '#ffffff', borderRadius: '24px', border: '1px solid var(--border-color)', boxShadow: '0 20px 40px rgba(26,44,66,0.08)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '24px', marginBottom: '24px' }}>
+                  <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '1.5rem' }}>
                     LP
                   </div>
                   <div style={{ textAlign: 'left' }}>
-                    <h3 style={{ fontSize: '1.3rem', margin: 0, fontWeight: 800 }}>Dr. Lahiru Prabodha</h3>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', display: 'block', margin: '2px 0 6px' }}>Clinical Geneticist</span>
-                    <div style={{ display: 'flex', gap: '6px', flexWrap: 'wrap' }}>
-                      <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', background: 'var(--bg-tertiary)', borderRadius: '4px', border: '1px solid var(--border-color)' }}>MBBS</span>
-                      <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', background: 'var(--bg-tertiary)', borderRadius: '4px', border: '1px solid var(--border-color)' }}>MPhil (Human Genetics)</span>
-                      <span style={{ fontSize: '0.68rem', fontWeight: 700, padding: '3px 8px', background: 'var(--bg-tertiary)', borderRadius: '4px', border: '1px solid var(--border-color)' }}>MSc</span>
+                    <h3 style={{ fontSize: '1.25rem', margin: 0, fontWeight: 700, color: 'var(--primary)' }}>Dr. Lahiru Prabodha</h3>
+                    <span style={{ fontSize: '0.9rem', color: 'var(--text-muted)', display: 'block', margin: '2px 0 8px' }}>Clinical Geneticist & Counsellor</span>
+                    <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 600, padding: '4px 10px', background: '#f1f5f9', color: 'var(--primary)', borderRadius: '50px' }}>MBBS</span>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 600, padding: '4px 10px', background: '#f1f5f9', color: 'var(--primary)', borderRadius: '50px' }}>MPhil (Human Gen)</span>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 600, padding: '4px 10px', background: '#e0f4f5', color: 'var(--accent)', borderRadius: '50px' }}>PhD</span>
                     </div>
                   </div>
                 </div>
 
-                {/* 4 Credentials Boxes in 2x2 grid */}
-                <div className="credentials-grid">
-                  <div className="credential-box">
-                    <span className="credential-tag">Clinical Practice</span>
-                    <span className="credential-text">Clinical Genetics & Counselling</span>
+                <div className="credentials-grid" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div className="credential-box" style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px' }}>
+                    <span className="credential-tag" style={{ fontSize: '0.75rem', color: 'var(--text-light)', fontWeight: 600, textTransform: 'uppercase' }}>Clinical Practice</span>
+                    <span className="credential-text" style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary)', marginTop: '4px' }}>Clinical Genetics & Counselling</span>
                   </div>
-                  <div className="credential-box">
-                    <span className="credential-tag">Academics</span>
-                    <span className="credential-text">Senior Lecturer, Ruhuna Uni</span>
+                  <div className="credential-box" style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px' }}>
+                    <span className="credential-tag" style={{ fontSize: '0.75rem', color: 'var(--text-light)', fontWeight: 600, textTransform: 'uppercase' }}>Academics</span>
+                    <span className="credential-text" style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary)', marginTop: '4px' }}>Senior Lecturer, Ruhuna Uni</span>
                   </div>
-                  <div className="credential-box">
-                    <span className="credential-tag">Lab Leadership</span>
-                    <span className="credential-text">Head, Molecular Genetics Lab</span>
+                  <div className="credential-box" style={{ background: '#f8fafc', padding: '16px', borderRadius: '16px' }}>
+                    <span className="credential-tag" style={{ fontSize: '0.75rem', color: 'var(--text-light)', fontWeight: 600, textTransform: 'uppercase' }}>Expertise</span>
+                    <span className="credential-text" style={{ display: 'block', fontSize: '0.9rem', fontWeight: 600, color: 'var(--primary)', marginTop: '4px' }}>Specialist: Prenatal & Cancer</span>
                   </div>
-                  <div className="credential-box">
-                    <span className="credential-tag">Expertise</span>
-                    <span className="credential-text">Specialist: Prenatal, Cancer, Wellness</span>
+                  <div className="credential-box" style={{ background: '#e0f4f5', padding: '16px', borderRadius: '16px', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                    <span className="credential-text" style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.9rem', fontWeight: 700, color: 'var(--accent)' }}>
+                      <span style={{ display: 'inline-block', width: '8px', height: '8px', borderRadius: '50%', backgroundColor: 'var(--accent)' }}></span>
+                      Accepting New Patients
+                    </span>
+                    <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginTop: '4px' }}>Colombo, Galle, Online</span>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-          {/* Trust Items Container below Hero */}
-          <div className="trust-items-container">
-            <div className="trust-item-new">
-              <HeartHandshake size={20} />
-              <span>Patient-centric care</span>
+      {/* Stats Section */}
+      <section style={{ borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', background: '#ffffff', padding: '40px 0' }}>
+        <div className="container">
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'center', flexWrap: 'wrap', gap: '24px' }}>
+            <div style={{ flex: '1', minWidth: '150px' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: 600, color: 'var(--accent)' }}>2000+</div>
+              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginTop: '8px' }}>Patients Counselled</div>
             </div>
-            <div className="trust-item-new">
-              <GraduationCap size={20} />
-              <span>Certified & research-led</span>
+            <div style={{ width: '1px', height: '60px', background: 'var(--border-color)' }} className="hide-mobile"></div>
+            <div style={{ flex: '1', minWidth: '150px' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: 600, color: 'var(--accent)' }}>120+</div>
+              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginTop: '8px' }}>Conditions Covered</div>
             </div>
-            <div className="trust-item-new">
-              <Activity size={20} />
-              <span>Expert accuracy</span>
+            <div style={{ width: '1px', height: '60px', background: 'var(--border-color)' }} className="hide-mobile"></div>
+            <div style={{ flex: '1', minWidth: '150px' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: 600, color: 'var(--accent)' }}>98%</div>
+              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginTop: '8px' }}>Diagnostic Accuracy</div>
             </div>
-            <div className="trust-item-new">
-              <ShieldCheck size={20} />
-              <span>Privacy guaranteed</span>
+            <div style={{ width: '1px', height: '60px', background: 'var(--border-color)' }} className="hide-mobile"></div>
+            <div style={{ flex: '1', minWidth: '150px' }}>
+              <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: 600, color: 'var(--accent)' }}>13 YRS</div>
+              <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginTop: '8px' }}>Clinical Experience</div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Services Section */}
-      <section className="section section-light" style={{ padding: '80px 0' }}>
+      <section className="section" style={{ padding: '80px 0', background: '#fafbfc' }}>
         <div className="container">
-          <div className="text-center mb-12">
-            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>What We Offer</span>
-            <h2 style={{ fontSize: '2.2rem', fontWeight: 800 }}>Comprehensive genetic services under one roof</h2>
-            <p style={{ maxWidth: '640px', margin: '12px auto 0', fontSize: '1.05rem', color: 'var(--text-muted)' }}>
+          <div className="mb-12">
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>What We Offer</span>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.8rem', fontWeight: 600, color: 'var(--primary)', marginTop: '8px', maxWidth: '500px', lineHeight: '1.2' }}>
+              Comprehensive genetic services under one roof
+            </h2>
+            <p style={{ marginTop: '16px', fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '600px', lineHeight: '1.6' }}>
               Every consultation is personally led by Dr. Prabodha, ensuring clinical accuracy and compassionate guidance at every step.
             </p>
           </div>
 
-          <div className="grid grid-3" style={{ marginTop: '48px' }}>
+          <div className="grid grid-3" style={{ gap: '24px' }}>
             {/* Card 1 */}
-            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
-                <FileText size={22} />
+            <div className="card" style={{ background: '#ffffff', borderRadius: '20px', padding: '32px', border: '1px solid var(--border-color)', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#e0f4f5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <span style={{ fontSize: '24px' }}>📄</span>
               </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Genetic Report Interpretation</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
-                Comprehensive post-test report analysis to help you understand variants, risk factors, and recommended next steps.
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '12px' }}>Genetic Report<br/>Interpretation</h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                We translate complex clinical reports into plain language and guide your next clinical steps with clarity and care.
               </p>
             </div>
 
             {/* Card 2 */}
-            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
-                <Heart size={22} />
+            <div className="card" style={{ background: '#ffffff', borderRadius: '20px', padding: '32px', border: '1px solid var(--border-color)', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#e0f4f5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <span style={{ fontSize: '24px' }}>👨‍👩‍👧</span>
               </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Prenatal Risk Assessment</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
-                Specialized pre-test and post-test counselling for NIPT, diagnostic testing, and familial inheritance risk planning.
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '12px' }}>Family Risk Assessment</h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Understand hereditary patterns of adult onset cancers and conditions. We reconstruct and analyse family pedigrees.
               </p>
             </div>
 
             {/* Card 3 */}
-            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
-                <Dna size={22} />
+            <div className="card" style={{ background: '#ffffff', borderRadius: '20px', padding: '32px', border: '1px solid var(--border-color)', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#e0f4f5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <span style={{ fontSize: '24px' }}>🧬</span>
               </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Organogenetics & Genomics</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
-                Proactive wellness screening analysis, helping you align lifestyle options with your genetic blueprint.
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '12px' }}>Reproductive Genetics</h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Pre-conception screening, carrier screening, and prenatal testing guidance to support a healthy pregnancy.
               </p>
             </div>
 
             {/* Card 4 */}
-            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
-                <Microscope size={22} />
+            <div className="card" style={{ background: '#ffffff', borderRadius: '20px', padding: '32px', border: '1px solid var(--border-color)', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#e0f4f5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <span style={{ fontSize: '24px' }}>🔬</span>
               </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Genetic Testing Guidance</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
-                Helping select the right genomic panels to avoid unnecessary costs and maximize diagnostic yield.
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '12px' }}>Genetic Testing Guidance</h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Expert recommendations for selecting the most appropriate testing panel without unnecessary costs.
               </p>
             </div>
 
             {/* Card 5 */}
-            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
-                <ShieldCheck size={22} />
+            <div className="card" style={{ background: '#ffffff', borderRadius: '20px', padding: '32px', border: '1px solid var(--border-color)', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#e0f4f5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <span style={{ fontSize: '24px' }}>🛡️</span>
               </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Inherited Conditions Management</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
-                Long-term monitoring guidelines, prevention pathways, and coordinate care with specialists.
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '12px' }}>Inherited Condition Management</h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Long-term surveillance plans, prevention strategies, and specialist coordination for ongoing health monitoring.
               </p>
             </div>
 
             {/* Card 6 */}
-            <div className="card flex-col-card" style={{ borderRadius: '20px', padding: '32px', background: 'var(--bg-secondary)' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
-                <Video size={22} />
+            <div className="card" style={{ background: '#ffffff', borderRadius: '20px', padding: '32px', border: '1px solid var(--border-color)', transition: 'all 0.3s ease', cursor: 'pointer' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#e0f4f5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
+                <span style={{ fontSize: '24px' }}>💻</span>
               </div>
-              <h3 style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '12px' }}>Online Video Resource</h3>
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
-                Remote sessions for international patients and follow-up reviews.
+              <h3 style={{ fontSize: '1.2rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '12px' }}>Online Consultations</h3>
+              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', margin: 0 }}>
+                Secure video sessions for follow up consultations and report interpretation from the comfort of your home.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* About Doctor Section */}
-      <section className="section" style={{ padding: '80px 0' }}>
-        <div className="container grid grid-2 align-center" style={{ gap: '60px' }}>
-          
-          {/* Left Graphic */}
-          <div className="dna-graphic-container">
-            <Dna size={80} className="animate-pulse" style={{ color: 'var(--accent)', opacity: 0.8 }} />
+      {/* About The Gene Clinic Section */}
+      <section className="section bg-white" style={{ padding: '80px 0' }}>
+        <div className="container">
+          <div className="text-center" style={{ marginBottom: '40px' }}>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.8rem', fontWeight: 600, color: 'var(--primary)' }}>About The Gene Clinic</h2>
+            <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '700px', margin: '16px auto 0' }}>
+              Learn about our clinic, clinical genetics services, and the specialist leading your care.
+            </p>
           </div>
+          <div className="grid grid-2" style={{ gap: '32px' }}>
+            {/* Card 1: Doctor */}
+            <div className="card" style={{ background: '#ffffff', borderRadius: '16px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)', padding: '32px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(2, 132, 199, 0.1)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <ShieldCheck size={24} />
+                </div>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 700, margin: 0, color: 'var(--primary)' }}>Dr. L. B. Lahiru Prabodha</h3>
+              </div>
+              <p style={{ fontSize: '1rem', color: 'var(--text-muted)', marginBottom: '16px', lineHeight: '1.6' }}>
+                Clinical Geneticist and Genetic Counsellor with experience in clinical genetics, genomic medicine, NIPT, and genetic report interpretation.
+              </p>
+              
+              {openAboutCard === 'doctor' && (
+                <div className="animate-fade-in" style={{ padding: '20px 0 16px', borderTop: '1px solid var(--border-color)', marginTop: '8px' }}>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}><CheckCircle2 size={18} className="text-accent mt-1" style={{ flexShrink: 0 }} /> <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>Clinical Geneticist and Genetic Counsellor</span></li>
+                    <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}><CheckCircle2 size={18} className="text-accent mt-1" style={{ flexShrink: 0 }} /> <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>Supports genetic counselling, report interpretation, wellness genomics, NIPT, and clinical genetics guidance</span></li>
+                    <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}><CheckCircle2 size={18} className="text-accent mt-1" style={{ flexShrink: 0 }} /> <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.5' }}>Provides professional guidance for patients and families</span></li>
+                  </ul>
+                  <Link to="/about" className="btn btn-secondary btn-sm" style={{ padding: '10px 20px' }}>View Doctor Profile</Link>
+                </div>
+              )}
+              
+              <button 
+                onClick={() => setOpenAboutCard(openAboutCard === 'doctor' ? null : 'doctor')}
+                aria-expanded={openAboutCard === 'doctor'}
+                style={{ background: 'none', border: 'none', color: 'var(--accent)', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', padding: 0, marginTop: openAboutCard === 'doctor' ? '16px' : '8px', display: 'flex', alignItems: 'center', gap: '6px' }}
+              >
+                {openAboutCard === 'doctor' ? 'Show Less' : 'Read More'}
+              </button>
+            </div>
 
-          {/* Right Text */}
-          <div style={{ textAlign: 'left' }}>
-            <span className="badge badge-accent mb-4" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>About the Doctor</span>
-            <h2 style={{ fontSize: '2.2rem', fontWeight: 800, marginBottom: '20px' }}>Dr. Lahiru Prabodha</h2>
-            <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '16px' }}>
-              Dr. Prabodha is a leading clinical geneticist with over 10 years of experience in genomic medicine, molecular biology research, and genetic counselling across the Western and Southern provinces.
-            </p>
-            <p style={{ fontSize: '1.05rem', color: 'var(--text-muted)', lineHeight: '1.7', marginBottom: '24px' }}>
-              He completed his postgraduate training in clinical genetics and genomics and has worked in closely integrated teams at leading hospitals in Colombo and Galle to provide cancer-risk assessments and support families.
-            </p>
-            
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>
-                <CheckCircle2 size={18} style={{ color: 'var(--accent)' }} />
-                <span>Member—University of Colombo</span>
+            {/* Card 2: Clinic */}
+            <div className="card" style={{ background: '#ffffff', borderRadius: '16px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)', padding: '32px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '16px' }}>
+                <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(2, 132, 199, 0.1)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Dna size={24} />
+                </div>
+                <h3 style={{ fontSize: '1.4rem', fontWeight: 700, margin: 0, color: 'var(--primary)' }}>The Gene Clinic</h3>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>
-                <CheckCircle2 size={18} style={{ color: 'var(--accent)' }} />
-                <span>MD in Clinical Genetics</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>
-                <CheckCircle2 size={18} style={{ color: 'var(--accent)' }} />
-                <span>Board Certified Specialist</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', fontSize: '0.95rem', fontWeight: 600, color: 'var(--text-muted)' }}>
-                <CheckCircle2 size={18} style={{ color: 'var(--accent)' }} />
-                <span>Member, International Society of Neurogenetics</span>
-              </div>
+              <p style={{ fontSize: '1rem', color: 'var(--text-muted)', marginBottom: '16px', lineHeight: '1.6' }}>
+                The Gene Clinic by GenSek Health Private Limited provides genetic counselling, wellness counselling, NIPT, precision medicine, and personalized management support.
+              </p>
+              
+              {openAboutCard === 'clinic' && (
+                <div className="animate-fade-in" style={{ padding: '20px 0 16px', borderTop: '1px solid var(--border-color)', marginTop: '8px' }}>
+                  <ul style={{ listStyle: 'none', padding: 0, margin: '0 0 24px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}><CheckCircle2 size={18} className="text-accent mt-1" style={{ flexShrink: 0 }} /> <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.5' }}><strong>Brand:</strong> The Gene Clinic</span></li>
+                    <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}><CheckCircle2 size={18} className="text-accent mt-1" style={{ flexShrink: 0 }} /> <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.5' }}><strong>Company:</strong> GenSek Health Private Limited</span></li>
+                    <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}><CheckCircle2 size={18} className="text-accent mt-1" style={{ flexShrink: 0 }} /> <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.5' }}><strong>Services:</strong> Genetic Counselling, Wellness Counselling, NIPT, Precision Medicine, Personalized Management, Report Interpretation</span></li>
+                    <li style={{ display: 'flex', gap: '12px', alignItems: 'flex-start' }}><CheckCircle2 size={18} className="text-accent mt-1" style={{ flexShrink: 0 }} /> <span style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.5' }}><strong>Focus:</strong> Wellness, Nutrition, Cancer Prevention Awareness, NCD Prevention Awareness, and Online Video Consultation</span></li>
+                  </ul>
+                  <Link to="/clinic" className="btn btn-secondary btn-sm" style={{ padding: '10px 20px' }}>Explore The Clinic</Link>
+                </div>
+              )}
+              
+              <button 
+                onClick={() => setOpenAboutCard(openAboutCard === 'clinic' ? null : 'clinic')}
+                aria-expanded={openAboutCard === 'clinic'}
+                style={{ background: 'none', border: 'none', color: 'var(--accent)', fontWeight: 700, fontSize: '0.95rem', cursor: 'pointer', padding: 0, marginTop: openAboutCard === 'clinic' ? '16px' : '8px', display: 'flex', alignItems: 'center', gap: '6px' }}
+              >
+                {openAboutCard === 'clinic' ? 'Show Less' : 'Read More'}
+              </button>
             </div>
           </div>
         </div>
       </section>
 
       {/* Locations Section */}
-      <section className="section section-light" style={{ padding: '80px 0' }}>
+      <section className="section" style={{ padding: '80px 0', background: '#fafbfc' }}>
         <div className="container">
-          <div className="text-center mb-12">
-            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>Where to find us</span>
-            <h2 style={{ fontSize: '2.2rem', fontWeight: 800 }}>Our Centres</h2>
-            <p style={{ maxWidth: '640px', margin: '12px auto 0', fontSize: '1.05rem', color: 'var(--text-muted)' }}>
-              Three convenient branch locations across Sri Lanka, with online appointments available for patients nationwide and internationally.
+          <div className="mb-12">
+            <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>Where to find us</span>
+            <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.8rem', fontWeight: 600, color: 'var(--primary)', marginTop: '8px' }}>Clinics in Colombo & Galle</h2>
+            <p style={{ marginTop: '16px', fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '600px', lineHeight: '1.6' }}>
+              Consultations are offered across key medical centres to ensure accessible care for patients across Sri Lanka.
             </p>
           </div>
 
-          <div className="grid grid-3" style={{ marginTop: '48px', gap: '32px' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px' }}>
             {/* Colombo Clinic */}
-            <div className="card" style={{ padding: '32px', background: 'var(--bg-secondary)', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+            <div className="card" style={{ background: '#ffffff', borderRadius: '24px', padding: '40px', border: '1px solid var(--border-color)', display: 'flex', gap: '20px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
                 <MapPin size={22} />
               </div>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '12px' }}>Colombo Clinic</h3>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px', flexGrow: 1 }}>
-                Consultations at our partner hospital in Colombo—convenient for patients seeking post-test clinical planning.
-              </p>
-              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: 'var(--accent)', fontWeight: 700, textDecoration: 'underline' }}>
-                View Location / Directions
-              </a>
+              <div>
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '12px' }}>Colombo Clinic</h3>
+                <p style={{ fontSize: '1rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px' }}>
+                  Weekly appointments at Ninewells Hospital & Durdans Hospital. Convenient for patients seeking post-test clinical planning.
+                </p>
+                <a href="#" className="btn btn-sm" style={{ background: '#e0f4f5', color: 'var(--accent)', padding: '8px 16px', borderRadius: '50px', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', textDecoration: 'none' }}>
+                  View Locations / Booking
+                </a>
+              </div>
             </div>
 
             {/* Galle Clinic */}
-            <div className="card" style={{ padding: '32px', background: 'var(--bg-secondary)', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
+            <div className="card" style={{ background: '#ffffff', borderRadius: '24px', padding: '40px', border: '1px solid var(--border-color)', display: 'flex', gap: '20px' }}>
+              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>
                 <MapPin size={22} />
               </div>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '12px' }}>Galle Clinic</h3>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px', flexGrow: 1 }}>
-                Dr. Prabodha conducts consultations at our Galle clinic, serving patients in the Southern Province with testing guidance.
-              </p>
-              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: 'var(--accent)', fontWeight: 700, textDecoration: 'underline' }}>
-                View Location / Directions
-              </a>
-            </div>
-
-            {/* Matara Clinic */}
-            <div className="card" style={{ padding: '32px', background: 'var(--bg-secondary)', borderRadius: '20px', display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'rgba(8, 127, 140, 0.08)', color: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '20px' }}>
-                <MapPin size={22} />
-              </div>
-              <h3 style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '12px' }}>Matara Clinic</h3>
-              <p style={{ fontSize: '0.95rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px', flexGrow: 1 }}>
-                Specialist clinical genetics consultations and local patient intake/coordination services for Matara and surrounding areas.
-              </p>
-              <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" style={{ fontSize: '0.9rem', color: 'var(--accent)', fontWeight: 700, textDecoration: 'underline' }}>
-                View Location / Directions
-              </a>
-            </div>
-          </div>
-
-          {/* Map Embed Card */}
-          <div className="card mt-8" style={{ padding: '16px', background: 'var(--bg-secondary)', borderRadius: '20px', overflow: 'hidden', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-sm)' }}>
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m12!1m8!1m3!1d1016832.2223846666!2d80.2000000!3d6.4000000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!2m1!1sColombo%2C%20Galle%2C%20Matara%20Sri%20Lanka!5e0!3m2!1sen!2slk!4v1719659000000!5m2!1sen!2slk"
-              width="100%"
-              height="380"
-              style={{ border: 0, borderRadius: '16px' }}
-              allowFullScreen=""
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title="Colombo, Galle & Matara Clinic Branches Map"
-            ></iframe>
-          </div>
-
-          {/* Collaborative Network & Channelling Section */}
-          <div className="text-center" style={{ marginTop: '64px', marginBottom: '32px' }}>
-            <span className="badge badge-accent mb-2" style={{ backgroundColor: 'rgba(8, 127, 140, 0.1)', color: 'var(--accent)' }}>Hospital Consultations</span>
-            <h3 style={{ fontSize: '1.75rem', fontWeight: 800 }}>Channelling Partner Hospitals</h3>
-            <p style={{ maxWidth: '640px', margin: '8px auto 0', fontSize: '0.95rem', color: 'var(--text-muted)' }}>
-              Directly book/channel a consultation session with Dr. L.B. Lahiru Prabodha at these leading medical centers.
-            </p>
-          </div>
-
-          <div className="grid grid-4" style={{ gap: '24px' }}>
-            {/* Ninewells Hospital */}
-            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyBetween: 'space-between', justifyContent: 'space-between' }}>
               <div>
-                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Ninewells Hospital</h4>
-                <p className="xsmall-text text-muted" style={{ margin: '0 0 16px', lineHeight: '1.4' }}>
-                  Clinical Geneticist & Genetic Counselor
+                <h3 style={{ fontSize: '1.3rem', fontWeight: 700, color: 'var(--primary)', marginBottom: '12px' }}>Galle Clinic</h3>
+                <p style={{ fontSize: '1rem', color: 'var(--text-muted)', lineHeight: '1.6', marginBottom: '24px' }}>
+                  Consultations at Asiri Hospital Galle & Matara. Dedicated to providing genetics services to the Southern Province.
                 </p>
+                <a href="#" className="btn btn-sm" style={{ background: '#e0f4f5', color: 'var(--accent)', padding: '8px 16px', borderRadius: '50px', fontSize: '0.85rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.5px', textDecoration: 'none' }}>
+                  View Locations / Booking
+                </a>
               </div>
-              <a 
-                href="https://www.doc.lk/channel/5915?doctor=L.B.+LAHIRU+PROBODHA&hospital=0&specialization=0&date=" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn btn-sm" 
-                style={{ backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.8rem', padding: '10px 14px', width: '100%', textDecoration: 'none', fontWeight: 700 }}
-              >
-                Channel Now
-              </a>
-            </div>
-
-            {/* Asiri Hospital Galle */}
-            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <div>
-                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Asiri Hospital - Galle</h4>
-                <p className="xsmall-text text-muted" style={{ margin: '0 0 16px', lineHeight: '1.4' }}>
-                  Clinical Geneticist & Genetic Counselor
-                </p>
-              </div>
-              <a 
-                href="https://www.doc.lk/channel/8822?doctor=L.B.+LAHIRU+PROBODHA&hospital=0&specialization=0&date=" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn btn-sm" 
-                style={{ backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.8rem', padding: '10px 14px', width: '100%', textDecoration: 'none', fontWeight: 700 }}
-              >
-                Channel Now
-              </a>
-            </div>
-
-            {/* Asiri Hospital Matara */}
-            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <div>
-                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Asiri Hospital - Matara</h4>
-                <p className="xsmall-text text-muted" style={{ margin: '0 0 16px', lineHeight: '1.4' }}>
-                  Clinical Geneticist & Genetic Counselor (Galle Road)
-                </p>
-              </div>
-              <a 
-                href="https://www.doc.lk/channel/23622?doctor=L.B.+LAHIRU+PROBODHA&hospital=0&specialization=0&date=" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn btn-sm" 
-                style={{ backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.8rem', padding: '10px 14px', width: '100%', textDecoration: 'none', fontWeight: 700 }}
-              >
-                Channel Now
-              </a>
-            </div>
-
-            {/* Durdans Hospital */}
-            <div className="card" style={{ padding: '24px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)', textAlign: 'left', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-              <div>
-                <h4 style={{ fontSize: '1.05rem', fontWeight: 700, marginBottom: '6px', color: 'var(--text-main)' }}>Durdans Hospital</h4>
-                <p className="xsmall-text text-muted" style={{ margin: '0 0 16px', lineHeight: '1.4' }}>
-                  Genetic Counselor (Colombo 03)
-                </p>
-              </div>
-              <a 
-                href="https://www.doc.lk/channel/30355?doctor=L.B.+LAHIRU+PROBODHA&hospital=0&specialization=0&date=" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="btn btn-sm" 
-                style={{ backgroundColor: '#dc2626', color: 'white', border: 'none', borderRadius: '8px', fontSize: '0.8rem', padding: '10px 14px', width: '100%', textDecoration: 'none', fontWeight: 700 }}
-              >
-                Channel Now
-              </a>
             </div>
           </div>
-
-          {/* Hotline Assist callout */}
-          <div style={{ marginTop: '32px', backgroundColor: 'rgba(2, 132, 199, 0.03)', border: '1px dashed var(--secondary)', borderRadius: '12px', padding: '16px', fontSize: '0.95rem', fontWeight: 700, color: 'var(--text-main)' }}>
-            📞 Need channeling assistance? Call <a href="tel:0117990990" style={{ color: 'var(--secondary)', textDecoration: 'underline' }}>0117990990</a> for agent support.
-          </div>
+          
+          <ClinicLocationsMap />
         </div>
       </section>
 
-      {/* Bottom CTA Banner */}
-      <section className="section" style={{ padding: '60px 0' }}>
-        <div className="container">
-          <div className="cta-banner-gradient">
-            <h2 style={{ color: 'white', fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', fontWeight: 800, margin: 0, lineHeight: 1.25, textAlign: 'left' }}>
-              Ready to understand<br />your genetic health?
-            </h2>
-            <Link to="/appointments" className="btn" style={{ backgroundColor: 'white', color: '#092e3c', padding: '14px 32px', borderRadius: '50px', fontWeight: 700, textDecoration: 'none' }}>
-              Book Your Consultation →
-            </Link>
-          </div>
-        </div>
-      </section>
+
     </div>
   );
 }

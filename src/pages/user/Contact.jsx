@@ -1,44 +1,8 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, MessageSquare, Clock, CheckCircle2, AlertCircle, Shield, Calendar, FileText, MessageCircle } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Mail, Phone, MapPin, MessageCircle, CheckCircle2, AlertCircle } from 'lucide-react';
 import { API_BASE_URL } from '../../config';
 import { useAuth } from '../../context/AuthContext';
-import LoginRequiredCard from '../../components/LoginRequiredCard';
-import QuickAccessLinks from '../../components/QuickAccessLinks';
-
-const FacebookIcon = ({ size = 20, ...props }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-);
-
-const WhatsappIcon = ({ size = 20, ...props }) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    {...props}
-  >
-    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-  </svg>
-);
+import ClinicLocationsMap from "../../components/ClinicLocationsMap";
 
 export default function Contact() {
   const [name, setName] = useState('');
@@ -122,277 +86,193 @@ export default function Contact() {
     }
   };
 
-  const fbLink = "https://www.facebook.com/people/The-Gene-Clinic/61567109703049/?rdid=oR2IBlj76KtjvPg9&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1KiE6odBpW%2F";
-
   return (
-    <div className="contact-page animate-fade-in bg-wave-lines" style={{ position: 'relative' }}>
+    <div className="contact-page animate-fade-in" style={{ backgroundColor: '#ffffff', minHeight: '100vh', padding: '60px 0' }}>
       
-      {/* Hero Header */}
-      <section className="section bg-secondary border-bottom" style={{ padding: '60px 0 40px' }}>
-        <div className="container" style={{ maxWidth: '1200px' }}>
-          <div style={{ maxWidth: '800px', textAlign: 'left' }}>
-            <span className="badge badge-accent mb-4">Get In Touch</span>
-            <h1 className="text-gradient" style={{ fontSize: 'clamp(2rem, 5vw, 3.2rem)', fontWeight: 800, margin: '12px 0 20px', letterSpacing: '-0.02em' }}>
-              Contact The Gene Clinic
-            </h1>
-            <p className="lead-text" style={{ color: 'var(--text-muted)', lineHeight: '1.7', margin: 0 }}>
-              Have questions about our testing packages, counselling services, or report timelines? Reach out to our coordinators today.
-            </p>
-          </div>
+      <div className="container" style={{ maxWidth: '1200px' }}>
+        
+        {/* Header Section */}
+        <div style={{ marginBottom: '40px' }}>
+          <span style={{ display: 'inline-block', backgroundColor: '#e0f2fe', color: '#0284c7', padding: '6px 12px', borderRadius: '50px', fontSize: '0.75rem', fontWeight: 800, textTransform: 'uppercase', letterSpacing: '1px', marginBottom: '16px' }}>
+            <span style={{ color: '#0284c7', marginRight: '6px' }}>●</span> CONTACT US
+          </span>
+          <h1 style={{ fontSize: 'clamp(2.5rem, 5vw, 3.5rem)', fontWeight: 400, margin: '0 0 16px', letterSpacing: '-0.02em', color: '#0f172a' }}>
+            Get in <span style={{ fontStyle: 'italic', color: '#0284c7' }}>touch</span>
+          </h1>
+          <p style={{ color: '#64748b', fontSize: '1.05rem', margin: 0, maxWidth: '500px', lineHeight: '1.6' }}>
+            Have a question before booking? Send us a message and we'll respond within one business day.
+          </p>
         </div>
-      </section>
 
-      {/* Contact Us Support Section (Copied from FAQ) */}
-      <section className="section bg-secondary" style={{ padding: '60px 0', borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)' }}>
-        <div className="container" style={{ maxWidth: '1000px' }}>
-          <div className="text-center" style={{ marginBottom: '40px' }}>
-            <h2 style={{ fontSize: '2rem', fontWeight: 800, marginBottom: '16px' }}>Still have questions?</h2>
-            <p className="lead-text text-muted" style={{ maxWidth: '700px', margin: '0 auto', fontSize: '1.1rem' }}>
-              If you cannot find the answer you need, contact The Gene Clinic team for assistance with appointments, genetic test requests, report interpretation, or patient services.
-            </p>
-          </div>
-
-          {/* Contact Details Grid */}
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: '20px', marginBottom: '40px' }}>
-            <a href="tel:+94701917000" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', textDecoration: 'none', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(2, 132, 199, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--secondary)', flexShrink: 0 }}>
-                <Phone size={24} />
-              </div>
-              <div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>Call Now</div>
-                <div style={{ fontSize: '1.1rem', color: 'var(--text-main)', fontWeight: 700 }}>+94 70 191 7000</div>
-              </div>
-            </a>
+        {/* Split Layout */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1.1fr 0.9fr', gap: '40px', alignItems: 'start' }}>
+          
+          {/* Left: Form */}
+          <div className="card" style={{ padding: '40px', position: 'relative', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '24px', boxShadow: '0 10px 40px -10px rgba(0,0,0,0.05)' }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '6px', backgroundColor: '#0d9488', borderTopLeftRadius: '24px', borderTopRightRadius: '24px' }}></div>
             
-            <a href="https://wa.me/94701917000" target="_blank" rel="noopener noreferrer" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', textDecoration: 'none', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: '#dcfce3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16a34a', flexShrink: 0 }}>
-                <MessageCircle size={24} />
-              </div>
-              <div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>WhatsApp Chat</div>
-                <div style={{ fontSize: '1.1rem', color: 'var(--text-main)', fontWeight: 700 }}>+94 70 191 7000</div>
-              </div>
-            </a>
-
-            <a href="mailto:thegeneclinic@gmail.com" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', textDecoration: 'none', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(15, 118, 110, 0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--accent)', flexShrink: 0 }}>
-                <Mail size={24} />
-              </div>
-              <div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>Email Us</div>
-                <div style={{ fontSize: '1.05rem', color: 'var(--text-main)', fontWeight: 700 }}>thegeneclinic@gmail.com</div>
-              </div>
-            </a>
-
-            <div className="card" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '20px', background: 'var(--bg-secondary)', border: '1px solid var(--border-color)', borderRadius: '16px' }}>
-              <div style={{ width: '48px', height: '48px', borderRadius: '50%', background: 'rgba(2, 132, 199, 0.05)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--text-muted)', flexShrink: 0 }}>
-                <MapPin size={24} />
-              </div>
-              <div>
-                <div style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 600, marginBottom: '4px' }}>Location</div>
-                <div style={{ fontSize: '1.05rem', color: 'var(--text-main)', fontWeight: 700 }}>Galle, Sri Lanka</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Action Buttons */}
-          <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', justifyContent: 'center' }}>
-            <Link to="/appointments" className="btn btn-primary" style={{ padding: '14px 28px', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
-              <Calendar size={18} /> Book Appointment
-            </Link>
-            <Link to="/request-genetic-test" className="btn btn-secondary" style={{ padding: '14px 28px', fontSize: '1.05rem', display: 'flex', alignItems: 'center', gap: '8px', background: 'var(--bg-secondary)', borderColor: 'var(--primary)', color: 'var(--primary)' }}>
-              <FileText size={18} /> Request Genetic Test
-            </Link>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Details & Form */}
-      <section className="section section-light" style={{ padding: '48px 0 80px' }}>
-        <div className="container" style={{ maxWidth: '1200px' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '40px', alignItems: 'start' }}>
-            
-            {/* Contact Form */}
-            <div className="card" style={{ padding: '40px', position: 'relative' }}>
-              <div style={{ position: 'absolute', top: 0, left: 0, right: 0, height: '5px', background: 'linear-gradient(90deg, var(--secondary), var(--accent))', borderTopLeftRadius: '24px', borderTopRightRadius: '24px' }}></div>
-              
-              {success ? (
-                <div className="text-center py-12">
-                  <div className="flex-row-center text-accent mb-6" style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(15, 118, 110, 0.08)', margin: '0 auto', display: 'flex' }}>
-                    <CheckCircle2 size={36} />
-                  </div>
-                  <h2>Message Sent Successfully</h2>
-                  <p className="small-text text-muted" style={{ maxWidth: '480px', margin: '16px auto 32px', lineHeight: '1.7' }}>
-                    Your general inquiry has been received. A clinical coordinator will contact you shortly using your preferred phone or email details.
-                  </p>
-                  <button onClick={() => setSuccess(false)} className="btn btn-primary" style={{ padding: '12px 32px' }}>
-                    Send Another Message
-                  </button>
+            {success ? (
+              <div className="text-center py-12">
+                <div className="flex-row-center text-accent mb-6" style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(13, 148, 136, 0.08)', margin: '0 auto', display: 'flex' }}>
+                  <CheckCircle2 size={36} color="#0d9488" />
                 </div>
-              ) : (
-                <LoginRequiredCard title="Sign in to Contact Us" message="Please sign in with Google to send your message securely.">
-                <form onSubmit={handleSubmit} className="flex-col gap-6">
-                  <div>
-                    <h2 style={{ fontSize: '1.6rem', fontWeight: 700, margin: '0 0 6px' }}>Send Us A Message</h2>
-                    <p className="small-text text-muted">Complete the intake fields below and we will contact you shortly.</p>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 700, margin: '0 0 12px' }}>Message Sent Successfully</h2>
+                <p style={{ color: '#64748b', maxWidth: '400px', margin: '0 auto 24px', lineHeight: '1.6' }}>
+                  Your inquiry has been received. Our clinical coordinator will contact you shortly.
+                </p>
+                <button onClick={() => setSuccess(false)} className="btn btn-primary" style={{ padding: '12px 28px', backgroundColor: '#0284c7', border: 'none', borderRadius: '50px' }}>
+                  Send Another Message
+                </button>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className="flex-col" style={{ gap: '24px', display: 'flex', flexDirection: 'column' }}>
+                <div>
+                  <h3 style={{ fontSize: '1.4rem', fontWeight: 600, margin: '0 0 6px', color: '#1e293b' }}>Send a Message</h3>
+                  <p style={{ fontSize: '0.9rem', color: '#64748b', margin: 0 }}>We respond to all enquiries within one business day.</p>
+                </div>
+
+                {error && (
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center', padding: '16px', background: '#fef2f2', border: '1px solid #fee2e2', color: '#b91c1c', borderRadius: '12px' }}>
+                    <AlertCircle size={18} />
+                    <span style={{ fontSize: '0.85rem' }}>{error}</span>
+                  </div>
+                )}
+
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Full Name *</label>
+                    <input
+                      type="text"
+                      value={name}
+                      onChange={e => setName(e.target.value)}
+                      placeholder="Your full name"
+                      style={{ width: '100%', height: '48px', border: `1px solid ${validationErrors.name ? '#dc2626' : '#e2e8f0'}`, borderRadius: '12px', padding: '8px 16px', background: '#f8fafc', outline: 'none', transition: 'border-color 0.2s' }}
+                    />
                   </div>
 
-                  {error && (
-                    <div className="form-alert error-alert" style={{ display: 'flex', gap: '10px', alignItems: 'center', padding: '16px', background: '#fef2f2', border: '1px solid #fee2e2', color: '#b91c1c', borderRadius: '12px' }}>
-                      <AlertCircle size={18} />
-                      <span className="xsmall-text">{error}</span>
-                    </div>
-                  )}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Email Address *</label>
+                    <input
+                      type="email"
+                      value={email}
+                      onChange={e => setEmail(e.target.value)}
+                      placeholder="your@email.com"
+                      style={{ width: '100%', height: '48px', border: `1px solid ${validationErrors.email ? '#dc2626' : '#e2e8f0'}`, borderRadius: '12px', padding: '8px 16px', background: '#f8fafc', outline: 'none', transition: 'border-color 0.2s' }}
+                    />
+                  </div>
+                </div>
 
-                  <div className="grid grid-2">
-                    <div className="form-group flex-col" style={{ gap: '6px' }}>
-                      <label style={{ fontSize: '0.82rem', fontWeight: 700 }}>Your Name *</label>
-                      <input
-                        type="text"
-                        className={`premium-input ${validationErrors.name ? 'invalid' : ''}`}
-                        value={name}
-                        onChange={e => setName(e.target.value)}
-                        placeholder="e.g. Dilhan Perera"
-                        style={{ width: '100%', height: '48px', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '8px 16px', background: 'var(--bg-secondary)', outline: 'none' }}
-                      />
-                      {validationErrors.name && <span style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.name}</span>}
-                    </div>
-
-                    <div className="form-group flex-col" style={{ gap: '6px' }}>
-                      <label style={{ fontSize: '0.82rem', fontWeight: 700 }}>Phone Number *</label>
-                      <input
-                        type="tel"
-                        className={`premium-input ${validationErrors.phone ? 'invalid' : ''}`}
-                        value={phone}
-                        onChange={e => setPhone(e.target.value)}
-                        placeholder="e.g. +94 77 123 4567"
-                        style={{ width: '100%', height: '48px', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '8px 16px', background: 'var(--bg-secondary)', outline: 'none' }}
-                      />
-                      {validationErrors.phone && <span style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.phone}</span>}
-                    </div>
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Phone Number *</label>
+                    <input
+                      type="tel"
+                      value={phone}
+                      onChange={e => setPhone(e.target.value)}
+                      placeholder="+94 77 000 0000"
+                      style={{ width: '100%', height: '48px', border: `1px solid ${validationErrors.phone ? '#dc2626' : '#e2e8f0'}`, borderRadius: '12px', padding: '8px 16px', background: '#f8fafc', outline: 'none', transition: 'border-color 0.2s' }}
+                    />
                   </div>
 
-                  <div className="grid grid-2">
-                    <div className="form-group flex-col" style={{ gap: '6px' }}>
-                      <label style={{ fontSize: '0.82rem', fontWeight: 700 }}>Email Address *</label>
-                      <input
-                        type="email"
-                        className={`premium-input ${validationErrors.email ? 'invalid' : ''}`}
-                        value={email}
-                        onChange={e => setEmail(e.target.value)}
-                        placeholder="e.g. dilhan.perera@example.com"
-                        style={{ width: '100%', height: '48px', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '8px 16px', background: 'var(--bg-secondary)', outline: 'none' }}
-                      />
-                      {validationErrors.email && <span style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.email}</span>}
-                    </div>
-
-                    <div className="form-group flex-col" style={{ gap: '6px' }}>
-                      <label style={{ fontSize: '0.82rem', fontWeight: 700 }}>Subject</label>
-                      <select
-                        className="premium-input"
-                        value={subject}
-                        onChange={e => setSubject(e.target.value)}
-                        style={{ width: '100%', height: '48px', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '8px 16px', background: 'var(--bg-secondary)', outline: 'none' }}
-                      >
-                        {subjects.map((sub, idx) => (
-                          <option key={idx} value={sub}>{sub}</option>
-                        ))}
-                      </select>
-                    </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                    <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Subject</label>
+                    <select
+                      value={subject}
+                      onChange={e => setSubject(e.target.value)}
+                      style={{ width: '100%', height: '48px', border: '1px solid #e2e8f0', borderRadius: '12px', padding: '8px 16px', background: '#f8fafc', outline: 'none', appearance: 'none' }}
+                    >
+                      {subjects.map((sub, idx) => (
+                        <option key={idx} value={sub}>{sub}</option>
+                      ))}
+                    </select>
                   </div>
+                </div>
 
-                  <div className="form-group flex-col" style={{ gap: '6px' }}>
-                    <label style={{ fontSize: '0.82rem', fontWeight: 700 }}>Message *</label>
-                    <textarea
-                      className="premium-textarea"
-                      value={message}
-                      onChange={e => setMessage(e.target.value)}
-                      placeholder="Explain your inquiry details here..."
-                      style={{ width: '100%', minHeight: '120px', border: '1px solid var(--border-color)', borderRadius: '12px', padding: '12px 16px', background: 'var(--bg-secondary)', outline: 'none', resize: 'none' }}
-                    ></textarea>
-                    {validationErrors.message && <span style={{ fontSize: '0.75rem', color: '#dc2626' }}>{validationErrors.message}</span>}
-                  </div>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                  <label style={{ fontSize: '0.8rem', fontWeight: 700, color: '#0f172a' }}>Message *</label>
+                  <textarea
+                    value={message}
+                    onChange={e => setMessage(e.target.value)}
+                    placeholder="Tell us how we can help you..."
+                    style={{ width: '100%', minHeight: '140px', border: `1px solid ${validationErrors.message ? '#dc2626' : '#e2e8f0'}`, borderRadius: '12px', padding: '16px', background: '#f8fafc', outline: 'none', resize: 'vertical', fontFamily: 'inherit' }}
+                  ></textarea>
+                </div>
 
+                <div style={{ marginTop: '8px' }}>
                   <button
                     type="submit"
                     disabled={loading}
-                    className="btn btn-primary w-full"
-                    style={{ height: '52px' }}
+                    className="btn btn-primary"
+                    style={{ height: '48px', padding: '0 24px', backgroundColor: '#0284c7', border: 'none', borderRadius: '50px', fontWeight: 600 }}
                   >
-                    {loading ? 'Sending Message...' : 'Submit Message'}
+                    {loading ? 'Sending...' : 'Send Message →'}
                   </button>
-                </form>
-                </LoginRequiredCard>
-              )}
-            </div>
-
-            {/* Sidebar with Info & Map */}
-            <div className="flex-col gap-6" style={{ position: 'sticky', top: '100px' }}>
-              
-              {/* Contact Cards */}
-              <div className="card" style={{ padding: '28px', background: 'var(--bg-secondary)' }}>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '20px', fontWeight: 700 }}>Clinic Information</h3>
-                
-                <div className="flex-col gap-5">
-                  <div className="flex-row gap-3" style={{ display: 'flex', alignItems: 'flex-start' }}>
-                    <MapPin size={20} className="text-secondary" style={{ flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <h5 style={{ margin: '0 0 2px', fontSize: '0.88rem', fontWeight: 700 }}>Location</h5>
-                      <p className="xsmall-text text-muted" style={{ margin: 0, lineHeight: '1.5' }}>
-                        The Gene Clinic (by GenSek Health Private Limited),<br />
-                        Colombo, Sri Lanka
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex-row gap-3" style={{ display: 'flex', alignItems: 'flex-start' }}>
-                    <Phone size={20} className="text-secondary" style={{ flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <h5 style={{ margin: '0 0 2px', fontSize: '0.88rem', fontWeight: 700 }}>Phone Lines</h5>
-                      <p className="xsmall-text text-muted" style={{ margin: 0, lineHeight: '1.5' }}>
-                        Clinic Hotline: +94 77 123 4567<br />
-                        Practitioner Support: +94 77 987 6543
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex-row gap-3" style={{ display: 'flex', alignItems: 'flex-start' }}>
-                    <Mail size={20} className="text-secondary" style={{ flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <h5 style={{ margin: '0 0 2px', fontSize: '0.88rem', fontWeight: 700 }}>Email Details</h5>
-                      <p className="xsmall-text text-muted" style={{ margin: 0, lineHeight: '1.5' }}>
-                        Inquiries: info@gensekhealth.com<br />
-                        Support: clinic@gensekhealth.com
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex-row gap-3" style={{ display: 'flex', alignItems: 'flex-start' }}>
-                    <Clock size={20} className="text-secondary" style={{ flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <h5 style={{ margin: '0 0 2px', fontSize: '0.88rem', fontWeight: 700 }}>Operational Hours</h5>
-                      <p className="xsmall-text text-muted" style={{ margin: 0, lineHeight: '1.5' }}>
-                        Monday - Friday: 08:30 AM - 05:30 PM<br />
-                        Saturday: 09:00 AM - 01:00 PM<br />
-                        Sunday & Holidays: Closed
-                      </p>
-                    </div>
-                  </div>
                 </div>
-              </div>
+              </form>
+            )}
+          </div>
 
-              {/* Quick Access Card */}
-              <div className="card" style={{ padding: '28px', background: 'var(--bg-secondary)', borderRadius: '16px', border: '1px solid var(--border-color)' }}>
-                <h3 style={{ fontSize: '1.2rem', marginBottom: '16px', fontWeight: 700 }}>Quick Access</h3>
-                <QuickAccessLinks variant="labeled" theme="light" />
+          {/* Right: Contact Cards & Map */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            
+            <a href="https://wa.me/94770000000" target="_blank" rel="noopener noreferrer" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '24px', textDecoration: 'none', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', boxShadow: '0 4px 20px -10px rgba(0,0,0,0.03)' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#dcfce3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16a34a', flexShrink: 0 }}>
+                <MessageCircle size={20} />
               </div>
+              <div>
+                <div style={{ fontSize: '0.95rem', color: '#0f172a', fontWeight: 700, marginBottom: '2px' }}>WhatsApp</div>
+                <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Chat with us directly</div>
+              </div>
+            </a>
 
+            <a href="tel:+94770000000" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '24px', textDecoration: 'none', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', boxShadow: '0 4px 20px -10px rgba(0,0,0,0.03)' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#fce7f3', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#db2777', flexShrink: 0 }}>
+                <Phone size={20} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.95rem', color: '#0f172a', fontWeight: 700, marginBottom: '2px' }}>+94 77 000 0000</div>
+                <div style={{ fontSize: '0.8rem', color: '#64748b' }}>Mon–Fri, 8am–6pm</div>
+              </div>
+            </a>
+
+            <a href="mailto:info@thegeneclinic.lk" className="card hover-scale" style={{ display: 'flex', alignItems: 'center', gap: '16px', padding: '24px', textDecoration: 'none', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', boxShadow: '0 4px 20px -10px rgba(0,0,0,0.03)' }}>
+              <div style={{ width: '40px', height: '40px', borderRadius: '50%', background: '#fef3c7', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#d97706', flexShrink: 0 }}>
+                <Mail size={20} />
+              </div>
+              <div>
+                <div style={{ fontSize: '0.95rem', color: '#0f172a', fontWeight: 700, marginBottom: '2px' }}>info@thegeneclinic.lk</div>
+                <div style={{ fontSize: '0.8rem', color: '#64748b' }}>We reply within 24 hours</div>
+              </div>
+            </a>
+
+            <div className="card" style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', padding: '24px', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', boxShadow: '0 4px 20px -10px rgba(0,0,0,0.03)', marginTop: '8px' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#db2777', flexShrink: 0 }}>
+                <MapPin size={18} />
+              </div>
+              <div>
+                <div style={{ fontSize: '1rem', color: '#0f172a', fontWeight: 700, marginBottom: '6px' }}>Colombo Clinic</div>
+                <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>Partner hospital, Colombo 5</div>
+                <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Mon, Wed, Fri — Morning sessions</div>
+              </div>
             </div>
+
+            <div className="card" style={{ display: 'flex', alignItems: 'flex-start', gap: '16px', padding: '24px', background: '#ffffff', border: '1px solid #e2e8f0', borderRadius: '16px', boxShadow: '0 4px 20px -10px rgba(0,0,0,0.03)' }}>
+              <div style={{ width: '36px', height: '36px', borderRadius: '50%', background: '#e0f2fe', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#db2777', flexShrink: 0 }}>
+                <MapPin size={18} />
+              </div>
+              <div>
+                <div style={{ fontSize: '1rem', color: '#0f172a', fontWeight: 700, marginBottom: '6px' }}>Galle Clinic</div>
+                <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '4px' }}>Southern Province clinic, Galle</div>
+                <div style={{ fontSize: '0.85rem', color: '#64748b' }}>Tue, Thu — Afternoon sessions</div>
+              </div>
+            </div>
+
+            <ClinicLocationsMap />
 
           </div>
         </div>
-      </section>
 
+      </div>
     </div>
   );
 }

@@ -15,7 +15,7 @@ import Services from './pages/user/Services';
 import TestPackages from './pages/user/TestPackages';
 import WellnessBlueprint from './pages/user/WellnessBlueprint';
 import Nipt from './pages/user/Nipt';
-import Journey from './pages/user/Journey';
+
 import Articles from './pages/user/Articles';
 import Appointments from './pages/user/Appointments';
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -79,7 +79,7 @@ export default function App() {
             <Route path="/packages" element={<TestPackages onOpenCallbackModal={() => setIsCallbackOpen(true)} />} />
             <Route path="/blueprint" element={<WellnessBlueprint />} />
             <Route path="/nipt" element={<Nipt />} />
-            <Route path="/journey" element={<Journey />} />
+
             <Route path="/appointments" element={<Appointments />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
             <Route path="/admin-login" element={<AdminLogin />} />

@@ -5,17 +5,7 @@ import logoImg from '../assets/logo.png';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
-  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'light');
   const location = useLocation();
-
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  const toggleTheme = () => {
-    setTheme(theme === 'light' ? 'dark' : 'light');
-  };
 
   const closeMenu = () => setIsOpen(false);
 
@@ -40,16 +30,6 @@ export default function Header() {
               </Link>
             </li>
 
-            {/* About Dropdown */}
-            <li className="nav-item-dropdown">
-              <span className={`nav-link ${location.pathname === '/about' || location.pathname === '/clinic' ? 'active' : ''}`} style={{ cursor: 'default' }}>
-                About <ChevronDown size={14} />
-              </span>
-              <div className="dropdown-menu">
-                <Link to="/about" className="dropdown-item">About Doctor</Link>
-                <Link to="/clinic" className="dropdown-item">The Gene Clinic</Link>
-              </div>
-            </li>
 
             {/* Services Dropdown */}
             <li className="nav-item-dropdown">
@@ -84,11 +64,6 @@ export default function Header() {
                 Articles
               </Link>
             </li>
-            <li>
-              <Link to="/journey" className={`nav-link ${location.pathname === '/journey' ? 'active' : ''}`}>
-                Patient Journey
-              </Link>
-            </li>
 
             {/* More Dropdown */}
             <li className="nav-item-dropdown">
@@ -107,14 +82,6 @@ export default function Header() {
 
         {/* Desktop Header Actions */}
         <div className="header-actions">
-          <button
-            onClick={toggleTheme}
-            className="theme-toggle"
-            aria-label="Toggle dark mode"
-          >
-            {theme === 'light' ? <Moon size={18} /> : <Sun size={18} />}
-          </button>
-          
           <div className="hide-tablet" style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
             <Link to="/request-genetic-test" className="btn btn-secondary btn-sm" style={{ padding: '8px 16px', fontWeight: 600 }}>
               Request Test
@@ -145,9 +112,7 @@ export default function Header() {
               </Link>
             </li>
 
-            <li className="mobile-nav-group-title">About</li>
-            <li><Link to="/about" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>About Doctor</Link></li>
-            <li><Link to="/clinic" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>The Gene Clinic</Link></li>
+
             <li className="mobile-nav-group-title"><Link to="/services" onClick={closeMenu} style={{ color: 'inherit', textDecoration: 'none' }}>Services</Link></li>
             <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Genetic Counselling</Link></li>
             <li><Link to="/services" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Wellness Counselling</Link></li>
@@ -162,7 +127,6 @@ export default function Header() {
             <li><Link to="/faq" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>FAQ / Q & A</Link></li>
             <li><Link to="/education" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Education</Link></li>
             <li><Link to="/articles" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Articles</Link></li>
-            <li><Link to="/journey" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Patient Journey</Link></li>
 
             <li className="mobile-nav-group-title">More</li>
             <li><Link to="/patient-registration" onClick={closeMenu} className="mobile-nav-link pl-4" style={{ fontSize: '0.9rem' }}>Patient Registration</Link></li>
