@@ -13,9 +13,9 @@ export default function Home() {
   return (
     <div className="home-page animate-fade-in" style={{ backgroundColor: '#fafbfc' }}>
       {/* Hero Section */}
-      <section className="section hero-section" style={{ padding: '80px 0 60px', position: 'relative', overflow: 'hidden' }}>
-        <div className="container">
-          <div className="hero-container" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: '48px', alignItems: 'center' }}>
+      <section className="home-hero" style={{ position: 'relative', overflow: 'hidden' }}>
+        <div className="page-container">
+          <div className="home-hero-grid">
             
             {/* Hero Left Content */}
             <div className="hero-content" style={{ textAlign: 'left', paddingRight: '40px' }}>
@@ -36,8 +36,8 @@ export default function Home() {
             </div>
 
             {/* Hero Right: Doctor Card */}
-            <div className="hero-visual" style={{ position: 'relative' }}>
-              <div className="card" style={{ padding: '32px', background: '#ffffff', borderRadius: '24px', border: '1px solid var(--border-color)', boxShadow: '0 20px 40px rgba(26,44,66,0.08)' }}>
+            <div className="hero-visual">
+              <div className="hero-card" style={{ padding: '32px', background: '#ffffff', borderRadius: '24px', border: '1px solid var(--border-color)', boxShadow: '0 20px 40px rgba(26,44,66,0.08)' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '16px', borderBottom: '1px solid var(--border-color)', paddingBottom: '24px', marginBottom: '24px' }}>
                   <div style={{ width: '64px', height: '64px', borderRadius: '50%', backgroundColor: 'var(--accent)', color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '1.5rem' }}>
                     LP
@@ -81,9 +81,9 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section style={{ borderTop: '1px solid var(--border-color)', borderBottom: '1px solid var(--border-color)', background: '#ffffff', padding: '40px 0' }}>
-        <div className="container">
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', textAlign: 'center', flexWrap: 'wrap', gap: '24px' }}>
+      <section className="stats-section" style={{ background: '#ffffff' }}>
+        <div className="page-container">
+          <div className="stats-grid">
             <div style={{ flex: '1', minWidth: '150px' }}>
               <div style={{ fontFamily: 'var(--font-heading)', fontSize: '2.5rem', fontWeight: 600, color: 'var(--accent)' }}>2000+</div>
               <div style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.5px', marginTop: '8px' }}>Patients Counselled</div>
@@ -108,8 +108,8 @@ export default function Home() {
       </section>
 
       {/* Services Section */}
-      <section className="section" style={{ padding: '80px 0', background: '#fafbfc' }}>
-        <div className="container">
+      <section className="home-section" style={{ background: '#fafbfc' }}>
+        <div className="page-container">
           <div className="mb-12">
             <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>What We Offer</span>
             <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.8rem', fontWeight: 600, color: 'var(--primary)', marginTop: '8px', maxWidth: '500px', lineHeight: '1.2' }}>
@@ -120,7 +120,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-3" style={{ gap: '24px' }}>
+          <div className="services-grid">
             {/* Card 1 */}
             <div className="card" style={{ background: '#ffffff', borderRadius: '20px', padding: '32px', border: '1px solid var(--border-color)', transition: 'all 0.3s ease', cursor: 'pointer' }}>
               <div style={{ width: '48px', height: '48px', borderRadius: '12px', backgroundColor: '#e0f4f5', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '24px' }}>
@@ -191,8 +191,8 @@ export default function Home() {
       </section>
 
       {/* About The Gene Clinic Section */}
-      <section className="section bg-white" style={{ padding: '80px 0' }}>
-        <div className="container">
+      <section className="home-section bg-white">
+        <div className="page-container">
           <div className="text-center" style={{ marginBottom: '40px' }}>
             <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.8rem', fontWeight: 600, color: 'var(--primary)' }}>About The Gene Clinic</h2>
             <p style={{ fontSize: '1.1rem', color: 'var(--text-muted)', maxWidth: '700px', margin: '16px auto 0' }}>
@@ -269,8 +269,8 @@ export default function Home() {
       </section>
 
       {/* Locations Section */}
-      <section className="section" style={{ padding: '80px 0', background: '#fafbfc' }}>
-        <div className="container">
+      <section className="home-section" style={{ background: '#fafbfc' }}>
+        <div className="page-container">
           <div className="mb-12">
             <span style={{ fontSize: '0.85rem', fontWeight: 700, color: 'var(--accent)', textTransform: 'uppercase', letterSpacing: '1px' }}>Where to find us</span>
             <h2 style={{ fontFamily: 'var(--font-heading)', fontSize: '2.8rem', fontWeight: 600, color: 'var(--primary)', marginTop: '8px' }}>Clinics in Colombo & Galle</h2>
@@ -279,7 +279,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '32px' }}>
+          <div className="clinic-location-grid">
             {/* Colombo Clinic */}
             <div className="card" style={{ background: '#ffffff', borderRadius: '24px', padding: '40px', border: '1px solid var(--border-color)', display: 'flex', gap: '20px' }}>
               <div style={{ width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'var(--accent)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'white', flexShrink: 0 }}>

@@ -1,107 +1,103 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { API_BASE_URL } from '../../config';
-import { Lock, User } from 'lucide-react';
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:5000";
 
 export default function AdminLogin() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const handleLogin = async (e) => {
+  const [formData, setFormData] = useState({
+    username: "",
+    password: ""
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE_URL}/api/admin/login`, {
-        method: 'POST',
+      const response = await fetch(`${API_BASE_URL}/api/admin/login`, {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json"
         },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify(formData)
       });
 
-      const data = await res.json();
+      const data = await response.json();
 
-      if (!res.ok) {
-        throw new Error(data.error || 'Invalid admin username or password.');
+      if (!response.ok) {
+        throw new Error(data.error || "Invalid admin username or password");
       }
 
-      localStorage.setItem('adminToken', data.token);
-      localStorage.setItem('adminUser', data.username);
-      
-      // Redirect to dashboard
-      navigate('/admin-dashboard');
+      localStorage.setItem("adminToken", data.token);
+      localStorage.setItem("adminUser", data.username || formData.username);
+
+      navigate("/admin-dashboard");
     } catch (err) {
-      setError(err.message || 'Invalid admin username or password.');
+      setError(err.message || "Admin login failed");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="animate-fade-in bg-wave-lines" style={{ minHeight: '80vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '40px 20px' }}>
-      <div className="card" style={{ maxWidth: '440px', width: '100%', padding: '40px', background: 'var(--bg-secondary)', borderRadius: '24px', border: '1px solid var(--border-color)', boxShadow: 'var(--shadow-md)' }}>
-        <div className="text-center mb-8">
-          <div className="flex-row-center mx-auto mb-4" style={{ width: '64px', height: '64px', borderRadius: '50%', background: 'rgba(2, 132, 199, 0.1)', color: 'var(--secondary)' }}>
-            <Lock size={32} />
-          </div>
-          <h1 style={{ fontSize: '1.8rem', fontWeight: 800, color: 'var(--text-main)', marginBottom: '8px' }}>Admin Login</h1>
-          <p className="small-text text-muted">Authorized access for The Gene Clinic administration</p>
+    <main className="admin-login-page">
+      <section className="admin-login-card">
+        <div className="admin-login-header">
+          <span className="admin-login-badge">Admin Access</span>
+          <h1>Admin Login</h1>
+          <p>Login to manage website data, users, appointments, test requests, and payments.</p>
         </div>
 
-        {error && (
-          <div className="alert alert-danger" style={{ padding: '12px 16px', background: 'rgba(239, 68, 68, 0.1)', color: '#ef4444', borderRadius: '12px', fontSize: '0.9rem', marginBottom: '24px', border: '1px solid rgba(239, 68, 68, 0.2)' }}>
-            {error}
-          </div>
-        )}
-
-        <form onSubmit={handleLogin} className="flex-col gap-5">
-          <div className="form-group">
-            <label className="form-label" style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)' }}>Username</label>
-            <div style={{ position: 'relative' }}>
-              <User size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-              <input
-                type="text"
-                className="form-control"
-                style={{ paddingLeft: '44px', paddingRight: '16px', height: '48px', borderRadius: '12px' }}
-                placeholder="Enter admin username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-            </div>
+        <form onSubmit={handleSubmit} className="admin-login-form">
+          <div className="form-field">
+            <label htmlFor="username">Username</label>
+            <input
+              id="username"
+              name="username"
+              type="text"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Enter admin username"
+              required
+            />
           </div>
 
-          <div className="form-group">
-            <label className="form-label" style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--text-muted)' }}>Password</label>
-            <div style={{ position: 'relative' }}>
-              <Lock size={18} style={{ position: 'absolute', left: '16px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
-              <input
-                type="password"
-                className="form-control"
-                style={{ paddingLeft: '44px', paddingRight: '16px', height: '48px', borderRadius: '12px' }}
-                placeholder="Enter admin password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-              />
-            </div>
+          <div className="form-field">
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              name="password"
+              type="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Enter admin password"
+              required
+            />
           </div>
 
-          <button 
-            type="submit" 
-            className="btn btn-primary mt-2"
-            style={{ height: '52px', borderRadius: '14px', fontSize: '1rem', fontWeight: 700, width: '100%' }}
-            disabled={loading}
-          >
-            {loading ? 'Authenticating...' : 'Login to Dashboard'}
+          {error && <p className="admin-login-error">{error}</p>}
+
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? "Logging in..." : "Login to Dashboard"}
           </button>
         </form>
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

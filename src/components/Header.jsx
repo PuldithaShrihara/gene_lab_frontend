@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sun, Moon, ChevronDown } from 'lucide-react';
 import logoImg from '../assets/logo.png';
+import gensekLogoImg from '../assets/gensek-logo.png';
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,16 +11,29 @@ export default function Header() {
   const closeMenu = () => setIsOpen(false);
 
   return (
-    <header className="main-header">
-      <div className="container header-container">
-        {/* Logo */}
-        <Link to="/" className="header-logo" onClick={closeMenu}>
-          <img src={logoImg} alt="The Gene Clinic Logo" className="logo-image" style={{ height: '110px', width: 'auto', objectFit: 'contain', margin: '-24px 0' }} />
-          <div className="logo-text">
-            <span className="logo-name" style={{ fontSize: '1.5rem', lineHeight: '1.1' }}>The Gene Clinic</span>
-            <span className="logo-sub" style={{ fontSize: '0.8rem', textTransform: 'none', letterSpacing: '0.02em', whiteSpace: 'nowrap' }}>GenSek Health Private Limited</span>
-          </div>
-        </Link>
+    <header className="site-header">
+      <div className="site-header-inner">
+        {/* Logos Container */}
+        <div className="header-logos-container" style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
+          
+          {/* First Logo: The Gene Clinic */}
+          <Link to="/" className="header-logo" onClick={closeMenu} style={{ display: 'flex', alignItems: 'center', gap: '10px', textDecoration: 'none', color: 'inherit' }}>
+            <img src={logoImg} alt="The Gene Clinic Logo" className="logo-image" style={{ height: '60px', width: 'auto', objectFit: 'contain' }} />
+            <div className="logo-text" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+              <span className="logo-name" style={{ fontSize: '1.6rem', fontWeight: 'bold', fontFamily: 'serif', color: '#002B49', lineHeight: '1.1' }}>The Gene Clinic</span>
+              <span className="logo-sub" style={{ fontSize: '0.75rem', fontWeight: '600', color: '#4A7C94', letterSpacing: '0.05em', whiteSpace: 'nowrap', marginTop: '2px' }}>CENTER FOR PERSONALIZED<br/>MEDICINE AND GENOMICS</span>
+            </div>
+          </Link>
+
+          {/* Divider */}
+          <div className="logo-divider" style={{ width: '1px', height: '50px', backgroundColor: '#CBD5E1', margin: '0 5px' }}></div>
+
+          {/* Second Logo: Gensek Health */}
+          <Link to="/" className="header-second-logo" onClick={closeMenu} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', justifyContent: 'center', textDecoration: 'none', color: 'inherit' }}>
+            <span style={{ fontSize: '0.75rem', color: '#64748B', marginBottom: '2px', lineHeight: '1' }}>A GenSek Health Company</span>
+            <img src={gensekLogoImg} alt="Gensek Health Logo" style={{ height: '32px', width: 'auto', objectFit: 'contain' }} />
+          </Link>
+        </div>
 
         {/* Desktop Navigation */}
         <nav className="desktop-nav">

@@ -52,7 +52,9 @@ export default function Footer() {
               <span style={{ color: 'var(--border-color)' }}>|</span>
               <Link to="/terms-conditions" style={{ fontSize: '0.85rem', color: 'var(--text-muted)', textDecoration: 'none' }}>Terms & Conditions</Link>
               <span style={{ color: 'var(--border-color)' }}>|</span>
-              <Link to="/admin-login" style={{ fontSize: '0.85rem', color: 'var(--text-light)', textDecoration: 'none' }}>Admin</Link>
+              <Link to="/admin-login" className="footer-link footer-admin-link">
+                Admin Login
+              </Link>
             </div>
           </div>
         </div>
