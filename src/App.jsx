@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from 'react-router-dom';
 
 import TopBar from './components/TopBar';
 import Header from './components/Header';
@@ -61,14 +61,24 @@ function TermsConditions() {
 }
 
 export default function App() {
-  const [isCallbackOpen, setIsCallbackOpen] = useState(false);
-
   return (
     <Router>
+      <AppContent />
+    </Router>
+  );
+}
+
+function AppContent() {
+  const [isCallbackOpen, setIsCallbackOpen] = useState(false);
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith('/admin');
+
+  return (
+    <>
       <ScrollToTop />
       <div className="app-wrapper">
-        <TopBar onOpenCallbackModal={() => setIsCallbackOpen(true)} />
-        <Header />
+        {!isAdminRoute && <TopBar onOpenCallbackModal={() => setIsCallbackOpen(true)} />}
+        {!isAdminRoute && <Header />}
         
         <main className="main-content">
           <Routes>
@@ -101,13 +111,11 @@ export default function App() {
           </Routes>
         </main>
 
-        <Footer />
-        
-        {/* Floating actions */}
+        {!isAdminRoute && <Footer />}
         
         {/* Callback Request Modal */}
         <CallbackModal isOpen={isCallbackOpen} onClose={() => setIsCallbackOpen(false)} />
       </div>
-    </Router>
+    </>
   );
 }

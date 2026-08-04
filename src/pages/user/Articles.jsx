@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import React, { useEffect, useState, useMemo } from 'react';
+import { useLocation, Link, useSearchParams } from 'react-router-dom';
 import { API_BASE_URL } from '../../config';
 import { 
   BookOpen, 
@@ -25,24 +25,68 @@ import {
 export default function Articles() {
   const [articles, setArticles] = useState([]);
   const [selectedArticle, setSelectedArticle] = useState(null);
-  const [searchTerm, setSearchTerm] = useState('');
-  const [activeChip, setActiveChip] = useState('All');
+  
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialSearch = searchParams.get('search') || '';
+  const initialCategory = searchParams.get('category') || 'All';
+  
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  
   const location = useLocation();
 
+  // Debounce Search & URL Sync
   useEffect(() => {
+    const delay = setTimeout(() => {
+      setSearchParams(prev => {
+        const newParams = new URLSearchParams(prev);
+        if (searchTerm.trim()) newParams.set('search', searchTerm.trim());
+        else newParams.delete('search');
+        
+        if (selectedCategory && selectedCategory !== 'All') newParams.set('category', selectedCategory);
+        else newParams.delete('category');
+        
+        return newParams;
+      }, { replace: true });
+    }, 300);
+    return () => clearTimeout(delay);
+  }, [searchTerm, selectedCategory, setSearchParams]);
+
+  // Initial Fetch
+  useEffect(() => {
+    let isMounted = true;
+    setLoading(true);
     fetch(`${API_BASE_URL}/api/articles`)
       .then(res => res.json())
       .then(data => {
-        setArticles(data);
-        // Check if hash exists in URL
-        const hash = location.hash.replace('#', '');
-        if (hash) {
-          const matched = data.find(a => a.slug === hash);
-          if (matched) setSelectedArticle(matched);
+        if (isMounted) {
+          setArticles(data);
+          setLoading(false);
         }
       })
-      .catch(err => console.log('Failed to load articles:', err));
-  }, [location.hash]);
+      .catch(err => {
+        if (isMounted) {
+          console.error('Failed to load articles:', err);
+          setError('Failed to load articles');
+          setLoading(false);
+        }
+      });
+      return () => { isMounted = false; };
+  }, []);
+
+  // Handle Hash Selection
+  useEffect(() => {
+    if (articles.length === 0) return;
+    const hash = location.hash.replace('#', '');
+    if (hash) {
+      const matched = articles.find(a => a.slug === hash);
+      if (matched) setSelectedArticle(matched);
+    } else {
+      setSelectedArticle(null);
+    }
+  }, [location.hash, articles]);
 
   const handleSelectArticle = (article) => {
     setSelectedArticle(article);
@@ -66,45 +110,53 @@ export default function Articles() {
     'Report Interpretation': ['Report Interpretation', 'Clinical Advice']
   };
 
-  const filteredArticles = articles.filter(a => {
-    const search = searchTerm.toLowerCase();
-    
-    // Search query matches title, summary, category, or keyword if exists
-    const matchesSearch = search === '' || 
-      a.title?.toLowerCase().includes(search) ||
-      a.summary?.toLowerCase().includes(search) ||
-      a.category?.toLowerCase().includes(search);
-      
-    if (!matchesSearch) return false;
-    
-    // Chip filter matches
-    if (activeChip === 'All') return true;
-    
-    const targetCategories = categoriesMap[activeChip] || [activeChip];
-    if (targetCategories.includes(a.category)) return true;
-    
-    // Fallback: see if title/summary/category matches the chip text
-    const chipQuery = activeChip.toLowerCase();
-    return (
-      a.title?.toLowerCase().includes(chipQuery) ||
-      a.summary?.toLowerCase().includes(chipQuery) ||
-      a.category?.toLowerCase().includes(chipQuery)
-    );
-  });
+  const normalize = (str) => (str || '').toLowerCase().replace(/[-_]/g, ' ').trim();
 
-  const getCategoryCount = (category) => {
-    if (category === 'All') return articles.length;
+  const filteredArticles = useMemo(() => {
     return articles.filter(a => {
-      const targetCategories = categoriesMap[category] || [category];
-      if (targetCategories.includes(a.category)) return true;
-      const chipQuery = category.toLowerCase();
-      return (
-        a.title?.toLowerCase().includes(chipQuery) ||
-        a.summary?.toLowerCase().includes(chipQuery) ||
-        a.category?.toLowerCase().includes(chipQuery)
-      );
-    }).length;
-  };
+      // 1. Category Match
+      let matchesCategory = selectedCategory === 'All';
+      if (!matchesCategory) {
+        const targetCategories = (categoriesMap[selectedCategory] || [selectedCategory]).map(normalize);
+        const articleCat = normalize(a.category);
+        matchesCategory = targetCategories.includes(articleCat);
+      }
+      
+      // 2. Search Match
+      const search = searchTerm.trim().toLowerCase();
+      let matchesSearch = search === '';
+      
+      if (!matchesSearch) {
+        const searchableText = [
+          a.title,
+          a.category,
+          a.topic,
+          a.summary,
+          a.content,
+          ...(a.keywords || [])
+        ].filter(Boolean).join(' ').toLowerCase();
+        
+        matchesSearch = searchableText.includes(search);
+      }
+      
+      return matchesCategory && matchesSearch;
+    });
+  }, [articles, selectedCategory, searchTerm]);
+
+  const chips = ['All', 'Genetic Testing', 'Genetic Counselling', 'NIPT', 'Wellness Genomics', 'Pregnancy', 'Report Interpretation'];
+
+  const categoryCounts = useMemo(() => {
+    const counts = {};
+    chips.forEach(chip => {
+      if (chip === 'All') {
+        counts[chip] = articles.length;
+      } else {
+        const targetCategories = (categoriesMap[chip] || [chip]).map(normalize);
+        counts[chip] = articles.filter(a => targetCategories.includes(normalize(a.category))).length;
+      }
+    });
+    return counts;
+  }, [articles]);
 
   return (
     <div className="articles-page animate-fade-in bg-wave-lines" style={{ position: 'relative' }}>
@@ -246,6 +298,7 @@ export default function Articles() {
                     placeholder="Search articles by title, keyword, category, or topic..." 
                     value={searchTerm}
                     onChange={e => setSearchTerm(e.target.value)}
+                    aria-label="Search articles by title, keyword, category, or topic"
                   />
                 </div>
 
@@ -256,23 +309,14 @@ export default function Articles() {
                     paddingBottom: '4px'
                   }}
                 >
-                  {['All', 'Genetic Testing', 'Genetic Counselling', 'NIPT', 'Wellness Genomics', 'Pregnancy', 'Report Interpretation'].map((chip) => {
-                    const count = getCategoryCount(chip);
+                  {chips.map((chip) => {
+                    const count = categoryCounts[chip] || 0;
                     return (
                       <button
                         key={chip}
-                        onClick={() => setActiveChip(chip)}
-                        className="btn btn-sm"
-                        style={{
-                          padding: '8px 16px',
-                          fontSize: '0.8rem',
-                          borderRadius: '50px',
-                          backgroundColor: activeChip === chip ? 'var(--secondary)' : 'var(--bg-primary)',
-                          color: activeChip === chip ? 'white' : 'var(--text-main)',
-                          border: activeChip === chip ? '1px solid var(--secondary)' : '1px solid var(--border-color)',
-                          boxShadow: 'none',
-                          whiteSpace: 'nowrap'
-                        }}
+                        onClick={() => setSelectedCategory(chip)}
+                        className={`chip-btn ${selectedCategory === chip ? 'active' : ''}`}
+                        aria-pressed={selectedCategory === chip}
                       >
                         {chip} ({count})
                       </button>
@@ -284,8 +328,16 @@ export default function Articles() {
 
 
 
-              {/* Grid List */}
-              {filteredArticles.length > 0 ? (
+              {/* Grid List or Loading/Error States */}
+              {loading ? (
+                <div className="text-center py-12">
+                  <p className="text-muted">Loading articles...</p>
+                </div>
+              ) : error ? (
+                <div className="text-center py-12">
+                  <p className="text-muted" style={{ color: 'var(--gold)' }}>{error}</p>
+                </div>
+              ) : filteredArticles.length > 0 ? (
                 <div className="grid grid-3" style={{ gap: '24px', marginTop: '24px' }}>
                   {filteredArticles.map((article) => {
                     let IconComponent = BookOpen;
@@ -421,7 +473,7 @@ export default function Articles() {
                   <button 
                     onClick={() => {
                       setSearchTerm('');
-                      setActiveChip('All');
+                      setSelectedCategory('All');
                     }} 
                     className="btn btn-secondary" 
                     style={{ padding: '10px 24px' }}
